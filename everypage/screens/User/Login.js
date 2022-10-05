@@ -1,11 +1,13 @@
-import { View, Text } from "react-native";
 import React from "react";
+import { Center, Text, VStack } from "native-base";
 
 const Login = ({ navigation }) => {
   return (
-    <View>
-      <Text>Login</Text>
-    </View>
+    <VStack>
+      <Center>
+        <Text>Hello</Text>
+      </Center>
+    </VStack>
   );
 };
 
