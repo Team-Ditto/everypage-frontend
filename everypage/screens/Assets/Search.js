@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const Search = ({ navigation }) => {
   return (
-    <Box display="flex" width="100%">
+    <Box display="flex" width="100%" mt={2}>
       <HStack display="flex" justifyContent="center" alignItems="center">
         <Input
           ml={2}
