@@ -7,6 +7,7 @@ import {
 import { Input, Box, Icon, IconButton, HStack } from "native-base";
 
 const BottomTab = ({ navigation }) => {
+  // we can use the navigation to navigate to the next pages
   return (
     <HStack mt={5}>
       <IconButton
