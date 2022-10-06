@@ -6,7 +6,6 @@ const Home = ({ navigation }) => {
   return (
     <VStack>
       <Search navigation={navigation} />
-      <BottomTab  navigation={navigation} />
     </VStack>
   );
 };

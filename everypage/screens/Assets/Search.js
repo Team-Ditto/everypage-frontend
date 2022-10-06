@@ -8,6 +8,7 @@ const Search = ({ navigation }) => {
         <Input
           ml={2}
           width="85%"
+          variant="rounded"
           InputLeftElement={
             <Icon as={<Ionicons name="search" />} size={5} ml="2" />
           }
