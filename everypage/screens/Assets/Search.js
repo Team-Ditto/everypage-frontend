@@ -19,7 +19,7 @@ const Search = ({ navigation }) => {
               ml="2"
               mr="2"
               onPress={() => {
-                console.log("Open the barcode scanner");
+                navigation.navigate("Scanner");
               }}
             />
           }
