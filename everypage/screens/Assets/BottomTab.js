@@ -107,6 +107,9 @@ const Styles = StyleSheet.create({
   hContainerStyle: {
     display: "flex",
     justifyContent: "space-between",
+    position: "absolute",
+    bottom: 30,
+    width: "100%",
   },
 });
 
