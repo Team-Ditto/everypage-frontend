@@ -8,9 +8,7 @@ const IndexScreen = ({ navigation }) => {
   return (
     <VStack style={Style.mainContainerStyle}>
       <Home style={{ flex: 1 }} navigation={navigation} />
-      <Text mx={2} my={2}>
-        All (9)
-      </Text>
+
       <Button
         style={{ flex: 2 }}
         onPress={() => {
@@ -35,8 +33,8 @@ const Style = StyleSheet.create({
   mainContainerStyle: {
     position: "relative",
     flex: 1,
-    height: "100%",
-  },
+    height: "100%"
+  }
 });
 
 export default IndexScreen;
