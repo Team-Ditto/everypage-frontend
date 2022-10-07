@@ -1,0 +1,155 @@
+import React, { useState } from "react";
+import {
+  HStack,
+  Image,
+  Select,
+  Text,
+  VStack,
+  Switch,
+  CheckIcon,
+} from "native-base";
+import { StyleSheet } from "react-native";
+import BottomTab from "../../Assets/BottomTab";
+const SingleBook = ({ navigation }) => {
+  const [isShareable, setIsShareable] = useState(false);
+  let [service, setService] = useState("");
+  return (
+    <>
+      <VStack style={Styles.mainContainer}>
+        <HStack>
+          <Image
+            source={{
+              uri: "https://wallpaperaccess.com/full/317501.jpg",
+            }}
+            alt="Alternate Text"
+            size="xl"
+          />
+          <VStack>
+            <Text style={Styles.bookTitle}>Book title</Text>
+            <Text style={Styles.bookAuthor}>Book Author</Text>
+            {isShareable ? (
+              <Select
+                accessibilityLabel="Choose..."
+                placeholder="Choose..."
+                size="sm"
+                minWidth="120"
+                selectedValue={service}
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                ml={15}
+                onValueChange={(itemValue) => setService(itemValue)}
+              >
+                <Select.Item label="Available" value="available" />
+                <Select.Item label="In use" value="in-use" />
+                <Select.Item label="Hold" value="hold" />
+              </Select>
+            ) : (
+              ""
+            )}
+          </VStack>
+        </HStack>
+        <VStack style={Styles.secondHalfContainer}>
+          <Text style={Styles.subHeading}>Details</Text>
+          <HStack style={Styles.subHstack}>
+            <Text style={Styles.subTitle}>Genre</Text>
+            <Text>Comics</Text>
+          </HStack>
+          <HStack style={Styles.subHstack}>
+            <Text style={Styles.subTitle}>Edition</Text>
+            <Text>First</Text>
+          </HStack>
+          <HStack style={Styles.subHstack}>
+            <Text style={Styles.subTitle}>Language</Text>
+            <Text>First</Text>
+          </HStack>
+          <HStack style={Styles.subHstack}>
+            <Text style={Styles.subTitle}>ISBN</Text>
+            <Text>First</Text>
+          </HStack>
+          <HStack style={Styles.subHstack}>
+            <Text style={Styles.subTitle}>Condition</Text>
+            <Text>First</Text>
+          </HStack>
+
+          <VStack>
+            <Text style={Styles.subHeading}>Reading Info</Text>
+            <HStack style={Styles.subHstack}>
+              <Text style={Styles.subTitle}>Reading Status</Text>
+              <Text>Reading</Text>
+            </HStack>
+            <HStack style={Styles.subHstack}>
+              <Text style={Styles.subTitle}>Location</Text>
+              <Text>Shelf 001</Text>
+            </HStack>
+          </VStack>
+          <VStack>
+            <HStack style={Styles.shareStack}>
+              <Text style={Styles.subHeading}>Share</Text>
+              <Switch
+                size="sm"
+                mt={3}
+                value={isShareable}
+                onValueChange={(value) => {
+                  setIsShareable(value);
+                }}
+              />
+            </HStack>
+            <Text color="muted.500">
+              Book is Available for others user to request
+            </Text>
+          </VStack>
+          <VStack>
+            <Text style={Styles.subHeading}>Notes</Text>
+            <Text>This book I purchased online in Sep 2020</Text>
+          </VStack>
+        </VStack>
+      </VStack>
+      <BottomTab />
+    </>
+  );
+};
+
+const Styles = StyleSheet.create({
+  mainContainer: {
+    padding: 15,
+  },
+  bookTitle: {
+    paddingTop: 2,
+    paddingLeft: 15,
+    marginRight: 15,
+    fontSize: 24,
+    fontWeight: "bold",
+    flexWrap: "wrap",
+  },
+  bookAuthor: {
+    color: "grey",
+    fontSize: 14,
+    paddingLeft: 15,
+  },
+  subHeading: {
+    fontWeight: "bold",
+    paddingBottom: 15,
+    paddingTop: 15,
+    fontSize: 18,
+  },
+  subHstack: {
+    paddingTop: 5,
+  },
+  shareStack: {
+    paddingTop: 5,
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  subTitle: {
+    color: "grey",
+    width: 150,
+  },
+  titleColor: {
+    color: "grey",
+  },
+});
+
+export default SingleBook;
