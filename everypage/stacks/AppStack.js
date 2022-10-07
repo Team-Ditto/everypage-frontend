@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import configureStore from "../redux/store";
 import Login from "../screens/User/Login";
 import Signup from "../screens/User/Signup";
+import MyLibrary from "../screens/myLibrary/MyLibrary";
 
 const reduxStore = configureStore();
 const AppStack = () => {
@@ -16,6 +17,7 @@ const AppStack = () => {
           <Stack.Screen name="Home" component={IndexScreen} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="My Library" component={MyLibrary} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
