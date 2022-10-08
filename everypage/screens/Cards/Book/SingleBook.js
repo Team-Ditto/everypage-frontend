@@ -18,13 +18,14 @@ const SingleBook = ({ navigation }) => {
       <VStack style={Styles.mainContainer}>
         <HStack>
           <Image
+            style={Styles.ImageContainerStyle}
             source={{
               uri: "https://wallpaperaccess.com/full/317501.jpg",
             }}
             alt="Alternate Text"
             size="xl"
           />
-          <VStack>
+          <VStack style={Styles.bookTitleAuthContainer}>
             <Text style={Styles.bookTitle}>Book title</Text>
             <Text style={Styles.bookAuthor}>Book Author</Text>
             {isShareable ? (
@@ -32,7 +33,7 @@ const SingleBook = ({ navigation }) => {
                 accessibilityLabel="Choose..."
                 placeholder="Choose..."
                 size="sm"
-                minWidth="120"
+                w="120"
                 selectedValue={service}
                 _selectedItem={{
                   bg: "teal.600",
@@ -115,6 +116,13 @@ const SingleBook = ({ navigation }) => {
 const Styles = StyleSheet.create({
   mainContainer: {
     padding: 15,
+    display: "flex",
+  },
+  ImageContainerStyle: {
+    width: "40%",
+  },
+  bookTitleAuthContainer: {
+    width: "60%",
   },
   bookTitle: {
     paddingTop: 2,
