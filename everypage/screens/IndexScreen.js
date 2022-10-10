@@ -18,7 +18,7 @@ const IndexScreen = ({ navigation }) => {
     // =============================
   }, [navigation]);
   return (
-    <VStack style={Style.mainContainerStyle}>
+    <VStack style={Style.mainContainerStyle} bg="muted.50">
       <Home style={{ flex: 1 }} navigation={navigation} />
       <Text mx={2} my={2}>
         All (9)

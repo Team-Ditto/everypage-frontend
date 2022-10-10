@@ -19,7 +19,7 @@ import { StyleSheet } from "react-native";
 const BottomTab = ({ navigation }) => {
   // we can use the navigation to navigate to the next pages
   return (
-    <HStack style={Styles.hContainerStyle}>
+    <HStack style={Styles.hContainerStyle} bg="muted.50">
       <VStack ml={2}>
         <IconButton
           icon={
@@ -108,7 +108,7 @@ const Styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     position: "absolute",
-    bottom: 30,
+    bottom: 20,
     width: "100%",
   },
 });
