@@ -1,5 +1,5 @@
 import React from "react";
-import { VStack, Center, Divider } from "native-base";
+import { VStack, Center, Divider, FlatList } from "native-base";
 import WishlistBookCard from "../Assets/WishlistBookCard";
 
 const ForLater = () => {
@@ -7,37 +7,46 @@ const ForLater = () => {
     {
       bookName: "American Gods",
       owner: "Tom",
-      writer: "Neil Gaiman",
+      author: "Neil Gaiman",
       status: "Available",
+      bookCover: "https://picsum.photos/200/300.jpg",
     },
     {
       bookName: "The Hunger Games",
       owner: "Jim",
-      writer: "Suzanne Collins",
+      author: "Suzanne Collins",
       status: "Available",
+      bookCover: "https://picsum.photos/200/300.jpg",
     },
     {
       bookName: "Somehow I Manage",
       owner: "Ruby",
-      writer: "Michel G. Scott",
+      author: "Michel G. Scott",
       status: "Available",
+      bookCover: "https://picsum.photos/200/300.jpg",
     },
     {
       bookName: "The Handmaid's Tale",
       owner: "Julia",
-      writer: "Margaret Atwood",
+      author: "Margaret Atwood",
       status: "Available",
+      bookCover: "https://picsum.photos/200/300.jpg",
     },
   ];
 
   return (
-    <VStack>
-      <Center>
-        <VStack space="4" divider={<Divider />}>
-          <WishlistBookCard data={dummy} />
-        </VStack>
-      </Center>
-    </VStack>
+    <FlatList
+      width="100%"
+      data={dummy}
+      renderItem={({ item }) => (
+        <WishlistBookCard
+          bookName={item.bookName}
+          owner={item.owner}
+          author={item.author}
+          status={item.status}
+        />
+      )}
+    />
   );
 };
 

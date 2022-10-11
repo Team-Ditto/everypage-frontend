@@ -30,7 +30,7 @@ const Wishlist = ({ navigation }) => {
   return (
     <VStack style={Style.mainContainerStyle}>
       <Home style={{ flex: 1 }} navigation={navigation} />
-      <Tab2.Navigator>
+      <Tab2.Navigator style={Style.mainStyle}>
         <Tab2.Screen name="For Later" component={ForLater123} />
         <Tab2.Screen name="Requested" component={Requested123} />
       </Tab2.Navigator>
@@ -43,6 +43,11 @@ const Style = StyleSheet.create({
   mainContainerStyle: {
     position: "relative",
     flex: 1,
+    height: "100%",
+  },
+  mainStyle: {
+    position: "relative",
+    flex: 0.8,
     height: "100%",
   },
 });

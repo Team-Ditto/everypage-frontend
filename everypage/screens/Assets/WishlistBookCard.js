@@ -1,22 +1,37 @@
-import { Center, HStack, Image, Text, VStack, Divider, Box } from "native-base";
+import {
+  Image,
+  Text,
+  VStack,
+  Divider,
+  Box,
+  Heading,
+  Button,
+  HStack,
+} from "native-base";
 import { StyleSheet } from "react-native";
 import React from "react";
 
-const WishlistBookCard = () => {
+const WishlistBookCard = (props) => {
+  const { bookName, owner, author, status, bookCover } = props;
+
   return (
     <Box border="1" borderRadius="md">
       <VStack space="4" divider={<Divider />}>
-        <Box px="4" pt="4">
-          NativeBase
-        </Box>
-        <Box px="4">
-          NativeBase is a free and open source framework that enable developers
-          to build high-quality mobile apps using React Native iOS and Android
-          apps with a fusion of ES6.
-        </Box>
-        <Box px="4" pb="4">
-          GeekyAnts
-        </Box>
+        <HStack>
+          <Box px="4" pt="4">
+            <Image
+              alt={bookName + " cover"}
+              source={{ uri: "https://wallpaperaccess.com/full/317501.jpg" }}
+              size="xl"
+            />
+          </Box>
+          <Box>
+            <Heading>{bookName}</Heading>
+            <Text>{author}</Text>
+            <Text>{owner}</Text>
+            <Button>{status}</Button>
+          </Box>
+        </HStack>
       </VStack>
     </Box>
   );
