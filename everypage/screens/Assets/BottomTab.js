@@ -48,6 +48,9 @@ const BottomTab = ({ navigation }) => {
               as={<MaterialIcons name="favorite" size={34} color="black" />}
             />
           }
+          onPress={() => {
+            navigation.navigate("Wishlist");
+          }}
         />
         <Text>Wishlist</Text>
       </VStack>
