@@ -2,7 +2,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { Fab, Icon, Text, VStack } from "native-base";
 import { useEffect } from "react";
 import { Button, StyleSheet } from "react-native";
-import BottomTab from "./Assets/BottomTab";
 import Home from "./Main/Index";
 
 const IndexScreen = ({ navigation }) => {

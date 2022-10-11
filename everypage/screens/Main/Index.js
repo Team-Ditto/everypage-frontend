@@ -1,5 +1,4 @@
 import { VStack, Text, Button } from "native-base";
-import BottomTab from "../Assets/BottomTab";
 import Search from "../Assets/Search";
 
 const Home = ({ navigation }) => {

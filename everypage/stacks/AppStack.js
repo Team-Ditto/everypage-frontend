@@ -16,9 +16,9 @@ const AppStack = () => {
   return (
     <Provider store={reduxStore}>
       <NavigationContainer>
-        <Stack.Navigator initialRoute="Home">
+        <Stack.Navigator initialRoute="BottomTab">
           <Stack.Screen
-            name="Home"
+            name="BottomTab"
             component={TabStack}
             options={({ route }) => ({
               headerShown: false,

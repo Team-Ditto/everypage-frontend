@@ -9,7 +9,6 @@ import {
   CheckIcon,
 } from "native-base";
 import { StyleSheet } from "react-native";
-import BottomTab from "../../Assets/BottomTab";
 const SingleBook = ({ navigation }) => {
   const [isShareable, setIsShareable] = useState(false);
   let [service, setService] = useState("");
@@ -108,7 +107,6 @@ const SingleBook = ({ navigation }) => {
           </VStack>
         </VStack>
       </VStack>
-      <BottomTab />
     </>
   );
 };
