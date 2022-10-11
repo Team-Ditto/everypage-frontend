@@ -18,6 +18,14 @@ const IndexScreen = ({ navigation }) => {
         }}
         title="Login Page"
       />
+
+      <Button
+        style={{ flex: 2 }}
+        onPress={() => {
+          navigation.navigate("Signup");
+        }}
+        title="Signup Page"
+      />
       <Fab
         renderInPortal={false}
         shadow={2}
