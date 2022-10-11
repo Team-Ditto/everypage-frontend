@@ -3,7 +3,7 @@ import { Fab, Icon, Text, VStack } from "native-base";
 import { useEffect } from "react";
 import { Button, StyleSheet } from "react-native";
 import BottomTab from "./Assets/BottomTab";
-import Home from "./Home/Index";
+import Home from "./Main/Index";
 
 const IndexScreen = ({ navigation }) => {
   useEffect(() => {
@@ -35,10 +35,9 @@ const IndexScreen = ({ navigation }) => {
         shadow={2}
         variant="solid"
         bg="muted.50"
-        bottom={95}
+        bottom={5}
         icon={<Icon color="black" as={AntDesign} name="plus" size="sm" />}
       />
-      <BottomTab style={Style.bottomTabStyle} navigation={navigation} />
     </VStack>
   );
 };
