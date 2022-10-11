@@ -34,17 +34,6 @@ const Wishlist = ({ navigation }) => {
         <Tab2.Screen name="For Later" component={ForLater123} />
         <Tab2.Screen name="Requested" component={Requested123} />
       </Tab2.Navigator>
-      <Text mx={2} my={2}>
-        All (3)
-      </Text>
-      <Fab
-        renderInPortal={false}
-        shadow={2}
-        variant="solid"
-        bg="muted.50"
-        bottom={95}
-        icon={<Icon color="black" as={AntDesign} name="plus" size="sm" />}
-      />
       <BottomTab style={Style.bottomTabStyle} navigation={navigation} />
     </VStack>
   );
