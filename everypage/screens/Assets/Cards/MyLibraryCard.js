@@ -1,7 +1,7 @@
 import { Box, AspectRatio, Image, VStack, Text } from "native-base";
 
-const MyLibraryCard = ({ props, navigation }) => {
-  // const title, author, image, id = props;
+const MyLibraryCard = ({ data, navigation }) => {
+  const { title, author, imageSrc } = data;
 
   return (
     <>
@@ -22,18 +22,15 @@ const MyLibraryCard = ({ props, navigation }) => {
           <AspectRatio w="100%" ratio={164 / 210}>
             <Image
               source={{
-                uri:
-                  "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg"
+                uri: imageSrc
               }}
-              alt="Book's cover image"
+              alt={title}
             />
           </AspectRatio>
           <Box px={2} pt={1} pb={3}>
             <VStack>
-              <Text fontWeight="semibold">
-                Harry Potter and the Socerer's Stone
-              </Text>
-              <Text>J. K. Rowling</Text>
+              <Text fontWeight="semibold">{title}</Text>
+              <Text>{author}</Text>
             </VStack>
           </Box>
         </VStack>
