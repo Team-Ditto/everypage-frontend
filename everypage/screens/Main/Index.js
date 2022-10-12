@@ -1,4 +1,4 @@
-import { VStack, Text, Box, Fab, Icon } from "native-base";
+import { VStack, Text, Box, Fab, Icon, Button } from "native-base";
 import Search from "../Assets/Search";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
@@ -32,14 +32,14 @@ const Home = ({ navigation }) => {
           })}
         </Box>
       </ScrollView>
-      <TouchableOpacity
+      <Button
         style={Styles.floatingBtnStyle}
         onPress={() => {
           navigation.navigate("AddBook");
         }}
       >
         <Icon color="grey" as={<AntDesign name="plus" />} size="sm" />
-      </TouchableOpacity>
+      </Button>
     </VStack>
   );
 };

@@ -1,10 +1,18 @@
-import { Box, AspectRatio, Image, VStack, Text } from "native-base";
+import { Box, AspectRatio, Image, VStack, Text, Pressable } from "native-base";
 
 const MyLibraryCard = ({ data, navigation }) => {
   const { title, author, imageSrc } = data;
 
   return (
-    <Box alignItems="center" w="164">
+    <Pressable
+      onPress={() => {
+        navigation.navigate("SingleBook", {
+          libCardData: data,
+        });
+      }}
+      alignItems="center"
+      w="164"
+    >
       <VStack>
         <AspectRatio w="100%" ratio={164 / 210}>
           <Image
@@ -21,7 +29,7 @@ const MyLibraryCard = ({ data, navigation }) => {
           </VStack>
         </Box>
       </VStack>
-    </Box>
+    </Pressable>
   );
 };
 

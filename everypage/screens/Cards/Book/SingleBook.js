@@ -9,8 +9,9 @@ import {
   CheckIcon,
 } from "native-base";
 import { StyleSheet } from "react-native";
-const SingleBook = ({ navigation }) => {
+const SingleBook = ({ route, navigation }) => {
   const [isShareable, setIsShareable] = useState(false);
+  const [libCardData, setlibCardData] = useState(route.params.libCardData);
   let [service, setService] = useState("");
   return (
     <>
@@ -19,14 +20,14 @@ const SingleBook = ({ navigation }) => {
           <Image
             style={Styles.ImageContainerStyle}
             source={{
-              uri: "https://wallpaperaccess.com/full/317501.jpg",
+              uri: libCardData.imageSrc,
             }}
             alt="Alternate Text"
             size="xl"
           />
           <VStack style={Styles.bookTitleAuthContainer}>
-            <Text style={Styles.bookTitle}>Book title</Text>
-            <Text style={Styles.bookAuthor}>Book Author</Text>
+            <Text style={Styles.bookTitle}>{libCardData.title}</Text>
+            <Text style={Styles.bookAuthor}>{libCardData.author} </Text>
             {isShareable ? (
               <Select
                 accessibilityLabel="Choose..."
