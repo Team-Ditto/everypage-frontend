@@ -19,24 +19,6 @@ const IndexScreen = ({ navigation }) => {
   return (
     <VStack style={Style.mainContainerStyle} bg="muted.50">
       <Home style={{ flex: 1 }} navigation={navigation} />
-      <Text mx={2} my={2}>
-        All (9)
-      </Text>
-      <Button
-        style={{ flex: 2 }}
-        onPress={() => {
-          navigation.navigate("Login");
-        }}
-        title="Login Page"
-      />
-      <Fab
-        renderInPortal={false}
-        shadow={2}
-        variant="solid"
-        bg="muted.50"
-        bottom={5}
-        icon={<Icon color="black" as={AntDesign} name="plus" size="sm" />}
-      />
     </VStack>
   );
 };
