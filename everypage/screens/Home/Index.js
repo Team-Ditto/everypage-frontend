@@ -3,13 +3,17 @@ import BottomTab from "../Assets/BottomTab";
 import Search from "../Assets/Search";
 import MyLibraryCard from "../Assets/Cards/MyLibraryCard";
 import { ScrollView } from "react-native";
+import { useState } from "react";
+import { LibraryData } from "../../constants/LibraryData";
 
 const Home = ({ navigation }) => {
+  const [libData, SetLibData] = useState(LibraryData);
+
   return (
     <VStack>
       <Search navigation={navigation} />
       <Text mx={2} my={2}>
-        All (9)
+        All ({libData.length})
       </Text>
       <ScrollView>
         <Box
@@ -20,14 +24,11 @@ const Home = ({ navigation }) => {
           flexWrap="wrap"
           justifyContent="space-evenly"
         >
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
-          <MyLibraryCard navigation={navigation} />
+          {libData.map((data, id) => {
+            return (
+              <MyLibraryCard key={id} data={data} navigation={navigation} />
+            );
+          })}
         </Box>
       </ScrollView>
     </VStack>
