@@ -7,10 +7,42 @@ import MyLibraryCard from "../Cards/Library/MyLibraryCard";
 import { AntDesign } from "@expo/vector-icons";
 const Home = ({ navigation }) => {
   const [libData, SetLibData] = useState(LibraryData);
+  const genreData = [
+    "Art",
+    "Crime",
+    "Fiction",
+    "Biology",
+    "Art",
+    "Crime",
+    "Fiction",
+    "Biology",
+  ];
   return (
     <VStack>
       {/* Search component */}
       <Search navigation={navigation} />
+      {/* button slider */}
+      <Text m={2}>Genre</Text>
+      <ScrollView
+        style={{ display: "flex", flexDirection: "row", margin: 5 }}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        {genreData.map((genre, idx) => {
+          return (
+            <Box mx={1} key={idx} h={60}>
+              <Button
+                px={5}
+                variant={"solid"}
+                color={"muted.800"}
+                borderRadius="sm"
+              >
+                {genre}
+              </Button>
+            </Box>
+          );
+        })}
+      </ScrollView>
 
       {/* My Library Data Collection */}
       <Text mx={2} my={2}>
@@ -18,12 +50,12 @@ const Home = ({ navigation }) => {
       </Text>
       <ScrollView>
         <Box
-          px={2}
           py={3}
+          px={2}
           w="100%"
           flexDirection="row"
           flexWrap="wrap"
-          justifyContent="space-evenly"
+          justifyContent="space-between"
         >
           {libData.map((data, id) => {
             return (
@@ -52,7 +84,7 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    bottom: 100,
+    bottom: 200,
     width: 55,
     height: 55,
     right: 10,
@@ -66,6 +98,12 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 6,
+  },
+
+  buttonSliderContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "10",
   },
 });
 export default Home;

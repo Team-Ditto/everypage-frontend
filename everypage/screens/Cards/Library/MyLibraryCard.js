@@ -11,7 +11,8 @@ const MyLibraryCard = ({ data, navigation }) => {
         });
       }}
       alignItems="center"
-      w="164"
+      w="47%"
+      mx={1}
     >
       <VStack>
         <AspectRatio w="100%" ratio={164 / 210}>
@@ -22,7 +23,7 @@ const MyLibraryCard = ({ data, navigation }) => {
             alt={title}
           />
         </AspectRatio>
-        <Box px={2} pt={1} pb={3}>
+        <Box pt={1} pb={3}>
           <VStack>
             <Text fontWeight="semibold">{title}</Text>
             <Text>{author}</Text>
