@@ -1,7 +1,24 @@
-import { Box, AspectRatio, Image, VStack, Text, Pressable } from "native-base";
-
-const MyLibraryCard = ({ data, navigation }) => {
+import {
+  Box,
+  AspectRatio,
+  Image,
+  VStack,
+  Text,
+  Pressable,
+  Button,
+  IconButton,
+  Icon,
+} from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
+import { useEffect, useState } from "react";
+const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
   const { title, author, imageSrc } = data;
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  const HandleWishlistPress = () => {
+    setIsWishlisted(!isWishlisted);
+  };
 
   return (
     <Pressable
@@ -16,12 +33,61 @@ const MyLibraryCard = ({ data, navigation }) => {
     >
       <VStack>
         <AspectRatio w="100%" ratio={164 / 210}>
-          <Image
-            source={{
-              uri: imageSrc,
-            }}
-            alt={title}
-          />
+          <VStack style={{ display: "flex", position: "relative" }}>
+            <Image
+              w="100%"
+              h="100%"
+              source={{
+                uri: imageSrc,
+              }}
+              alt={title}
+            />
+            {showWishListIcon ? (
+              <Box
+                mt={2}
+                mr={2}
+                bg="muted.50"
+                position="absolute"
+                borderRadius="full"
+                right="0"
+              >
+                <IconButton
+                  variant="ghost"
+                  icon={
+                    <Icon
+                      color="muted.900"
+                      size="xl"
+                      onPress={HandleWishlistPress}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      as={
+                        <TouchableOpacity>
+                          {isWishlisted ? (
+                            <MaterialIcons
+                              name="favorite"
+                              size={30}
+                              color="black"
+                            />
+                          ) : (
+                            <MaterialIcons
+                              name="favorite-border"
+                              size={30}
+                              color="black"
+                            />
+                          )}
+                        </TouchableOpacity>
+                      }
+                    />
+                  }
+                />
+              </Box>
+            ) : (
+              ""
+            )}
+          </VStack>
         </AspectRatio>
         <Box pt={1} pb={3}>
           <VStack>
