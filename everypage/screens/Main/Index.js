@@ -1,12 +1,15 @@
-import { VStack, Text, Box, Fab, Icon, Button } from "native-base";
+import { VStack, Text, Box, Button } from "native-base";
 import Search from "../Assets/Search";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native";
 import { useState } from "react";
+
 import { LibraryData } from "../../constants/LibraryData";
 import MyLibraryCard from "../Cards/Library/MyLibraryCard";
-import { AntDesign } from "@expo/vector-icons";
+import FloatingButtons from "../Assets/FloatingButtons";
+
 const Home = ({ navigation }) => {
-  const [libData, SetLibData] = useState(LibraryData);
+  const [libData, setLibData] = useState(LibraryData);
+
   const genreData = [
     "Art",
     "Crime",
@@ -15,8 +18,9 @@ const Home = ({ navigation }) => {
     "Art",
     "Crime",
     "Fiction",
-    "Biology",
+    "Biology"
   ];
+
   return (
     <VStack>
       {/* Search component */}
@@ -64,46 +68,9 @@ const Home = ({ navigation }) => {
           })}
         </Box>
       </ScrollView>
-      <Button
-        style={Styles.floatingBtnStyle}
-        onPress={() => {
-          navigation.navigate("AddBook");
-        }}
-      >
-        <Icon color="grey" as={<AntDesign name="plus" />} size="sm" />
-      </Button>
+      <FloatingButtons navigation={navigation} />
     </VStack>
   );
 };
 
-const Styles = StyleSheet.create({
-  floatingBtnStyle: {
-    backgroundColor: "white",
-    position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    bottom: 200,
-    width: 55,
-    height: 55,
-    right: 10,
-    borderColor: "grey",
-    borderRadius: 100,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-
-  buttonSliderContainer: {
-    display: "flex",
-    flexDirection: "row",
-    width: "10",
-  },
-});
 export default Home;
