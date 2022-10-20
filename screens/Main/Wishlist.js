@@ -1,6 +1,5 @@
 import { VStack, Text, Center, Box, HStack, Button } from "native-base";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Search from "../Assets/Search";
 import ForLater from "../Wishlist/ForLater";
 import Requested from "../Wishlist/Requested";
