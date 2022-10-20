@@ -1,10 +1,30 @@
-import { View, Text } from "react-native";
+import { VStack, Text, Center, Box, HStack, Button } from "native-base";
 import React from "react";
+import { useState } from "react";
+import Search from "../Assets/Search";
 
-export default function Wishlist() {
+import { LibraryData } from "../../constants/LibraryData";
+
+export default function Wishlist({ navigation }) {
+  const [libData, setLibData] = useState(LibraryData);
+
   return (
-    <View>
+    <VStack>
+      <Search navigation={navigation} />
+
+      <HStack>
+        <Button>
+          For Later
+        </Button>
+        <Button>
+          Requested
+        </Button>
+      </HStack>
+
+      { /* curScreen="forLater" ? <ForLater /> : <Requested /> */ } 
+
       <Text>Wishlist</Text>
-    </View>
+    </VStack>
   );
+
 }
