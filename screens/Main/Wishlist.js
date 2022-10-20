@@ -31,7 +31,7 @@ export default function Wishlist({ navigation }) {
       <Text>Wishlist</Text>
       <VStack>
         <Box>
-          { isForLater ? <ForLater /> : <Requested /> } 
+          { isForLater ? <ForLater libData={libData} /> : <Requested libData={libData} /> } 
         </Box>
       </VStack>
     </VStack>

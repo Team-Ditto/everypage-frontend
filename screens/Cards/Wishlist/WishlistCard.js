@@ -1,162 +1,131 @@
-import React, { useState } from "react";
 import {
-  HStack,
-  Image,
-  Select,
-  Text,
-  VStack,
-  Switch,
-  CheckIcon,
-} from "native-base";
-import { StyleSheet } from "react-native";
-const SingleBook = ({ route, navigation }) => {
-  const [isShareable, setIsShareable] = useState(false);
-  const [libCardData, setlibCardData] = useState(route.params.libCardData);
-  let [service, setService] = useState("");
-  return (
-    <>
-      <VStack style={Styles.mainContainer}>
-        <HStack>
-          <Image
-            style={Styles.ImageContainerStyle}
-            source={{
-              uri: libCardData.imageSrc,
-            }}
-            alt="Alternate Text"
-            size="xl"
-          />
-          <VStack style={Styles.bookTitleAuthContainer}>
-            <Text style={Styles.bookTitle}>{libCardData.title}</Text>
-            <Text style={Styles.bookAuthor}>{libCardData.author} </Text>
-            {isShareable ? (
-              <Select
-                accessibilityLabel="Choose..."
-                placeholder="Choose..."
-                size="sm"
-                w="120"
-                selectedValue={service}
-                _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                ml={15}
-                onValueChange={(itemValue) => setService(itemValue)}
-              >
-                <Select.Item label="Available" value="available" />
-                <Select.Item label="In use" value="in-use" />
-                <Select.Item label="Hold" value="hold" />
-              </Select>
-            ) : (
-              ""
-            )}
-          </VStack>
-        </HStack>
-        <VStack style={Styles.secondHalfContainer}>
-          <Text style={Styles.subHeading}>Details</Text>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Genre</Text>
-            <Text>Comics</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Edition</Text>
-            <Text>First</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Language</Text>
-            <Text>First</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>ISBN</Text>
-            <Text>First</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Condition</Text>
-            <Text>First</Text>
-          </HStack>
-
-          <VStack>
-            <Text style={Styles.subHeading}>Reading Info</Text>
-            <HStack style={Styles.subHstack}>
-              <Text style={Styles.subTitle}>Reading Status</Text>
-              <Text>Reading</Text>
+    Box,
+    AspectRatio,
+    Image,
+    VStack,
+    Text,
+    Pressable,
+    Button,
+    IconButton,
+    Icon,
+    HStack,
+  } from "native-base";
+  import { MaterialIcons } from "@expo/vector-icons";
+  import { TouchableOpacity } from "react-native";
+  import { useEffect, useState } from "react";
+  const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
+    const { title, author, imageSrc } = data;
+    const [isWishlisted, setIsWishlisted] = useState(false);
+  
+    const HandleWishlistPress = () => {
+      setIsWishlisted(!isWishlisted);
+    };
+  
+    return (
+/*       <Pressable
+        onPress={() => {
+          navigation.navigate("SingleBook", {
+            libCardData: data,
+          });
+        }}
+        alignItems="center"
+        w="100%"
+        mx={1}
+      > */
+        <VStack>
+            <HStack >
+                <Image
+                    w="40%"
+                    h="50%"
+                    source={{
+                    uri: imageSrc,
+                    }}
+                    alt={title}
+                />
+                <Box w="55%" ml="3%">
+                    <Text fontWeight="semibold">{title}</Text>
+                    <Text>{author}</Text>
+                    <Button>Condition</Button>
+                    <Text>Owned by</Text>
+                    <HStack>
+                        <Text>Owner's pic</Text>
+                        <Text size='sm'>Owner's name</Text>
+                    </HStack>
+                </Box>
             </HStack>
-            <HStack style={Styles.subHstack}>
-              <Text style={Styles.subTitle}>Location</Text>
-              <Text>Shelf 001</Text>
-            </HStack>
-          </VStack>
-          <VStack>
-            <HStack style={Styles.shareStack}>
-              <Text style={Styles.subHeading}>Share</Text>
-              <Switch
-                size="sm"
-                mt={3}
-                value={isShareable}
-                onValueChange={(value) => {
-                  setIsShareable(value);
-                }}
-              />
-            </HStack>
-            <Text color="muted.500">
-              Book is Available for others user to request
-            </Text>
-          </VStack>
-          <VStack>
-            <Text style={Styles.subHeading}>Notes</Text>
-            <Text>This book I purchased online in Sep 2020</Text>
-          </VStack>
         </VStack>
-      </VStack>
-    </>
-  );
-};
 
-const Styles = StyleSheet.create({
-  mainContainer: {
-    padding: 15,
-    display: "flex",
-  },
-  ImageContainerStyle: {
-    width: "40%",
-  },
-  bookTitleAuthContainer: {
-    width: "60%",
-  },
-  bookTitle: {
-    paddingTop: 2,
-    paddingLeft: 15,
-    marginRight: 15,
-    fontSize: 24,
-    fontWeight: "bold",
-    flexWrap: "wrap",
-  },
-  bookAuthor: {
-    color: "grey",
-    fontSize: 14,
-    paddingLeft: 15,
-  },
-  subHeading: {
-    fontWeight: "bold",
-    paddingBottom: 15,
-    paddingTop: 15,
-    fontSize: 18,
-  },
-  subHstack: {
-    paddingTop: 5,
-  },
-  shareStack: {
-    paddingTop: 5,
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  subTitle: {
-    color: "grey",
-    width: 150,
-  },
-  titleColor: {
-    color: "grey",
-  },
-});
 
-export default SingleBook;
+
+
+        /* <VStack>
+          <AspectRatio w="100%" ratio={164 / 210}>
+            <VStack style={{ display: "flex", position: "relative" }}>
+              <Image
+                w="100%"
+                h="100%"
+                source={{
+                  uri: imageSrc,
+                }}
+                alt={title}
+              />
+              {showWishListIcon ? (
+                <Box
+                  mt={2}
+                  mr={2}
+                  bg="muted.50"
+                  position="absolute"
+                  borderRadius="full"
+                  right="0"
+                >
+                  <IconButton
+                    variant="ghost"
+                    icon={
+                      <Icon
+                        color="muted.900"
+                        size="xl"
+                        onPress={HandleWishlistPress}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        as={
+                          <TouchableOpacity>
+                            {isWishlisted ? (
+                              <MaterialIcons
+                                name="favorite"
+                                size={30}
+                                color="black"
+                              />
+                            ) : (
+                              <MaterialIcons
+                                name="favorite-border"
+                                size={30}
+                                color="black"
+                              />
+                            )}
+                          </TouchableOpacity>
+                        }
+                      />
+                    }
+                  />
+                </Box>
+              ) : (
+                ""
+              )}
+            </VStack>
+          </AspectRatio>
+          <Box pt={1} pb={3}>
+            <VStack>
+              <Text fontWeight="semibold">{title}</Text>
+              <Text>{author}</Text>
+            </VStack>
+          </Box>
+        </VStack> 
+      </Pressable>*/
+    );
+  };
+  
+  export default WishlistCard;
+  
