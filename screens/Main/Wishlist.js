@@ -17,15 +17,16 @@ export default function Wishlist({ navigation }) {
   return (
     <VStack>
       <Search navigation={navigation} />
-
-      <HStack>
-        <Button onPress={() => handleInput(true)}>
+      <Box backgroundColor="#FDF5EA" mx="4%" mt="18px" borderRadius="10px" borderColor="#DC924D" borderStyle="solid" borderWidth="1px">
+      <HStack display="flex" flexDirection="row">
+        <Button backgroundColor="#DC924D" flexGrow={true} borderRadius="10px" onPress={() => handleInput(true)}>
           For Later
         </Button>
-        <Button onPress={() => handleInput(false)}>
+        <Button backgroundColor="#FDF5EA" _text={{ color: "#DC924D"}} flexGrow={true} borderRadius="10px" onPress={() => handleInput(false)}>
           Requested
         </Button>
       </HStack>
+      </Box>
       <VStack>
         <Box>
           { isForLater ? <ForLater libData={libData} /> : <Requested libData={libData} /> } 
@@ -33,5 +34,4 @@ export default function Wishlist({ navigation }) {
       </VStack>
     </VStack>
   );
-
 }
