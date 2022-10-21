@@ -1,59 +1,8 @@
 import { Checkbox, IconButton, Radio } from 'native-base';
 import React, { Component, useState } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-
-const sort = [
-  {
-    id: 1,
-    name: 'Newly Added',
-  },
-  {
-    id: 2,
-    name: 'Book Title (A-Z)',
-  },
-  {
-    id: 3,
-    name: 'Book Title (Z-A)',
-  },
-];
-
-const genre = [
-  {
-    id: 1,
-    name: 'Sc-fi',
-  },
-  {
-    id: 2,
-    name: 'Fantasy',
-  },
-  {
-    id: 3,
-    name: 'Romance',
-  },
-  {
-    id: 4,
-    name: 'Mystery',
-  },
-  {
-    id: 5,
-    name: 'Horror',
-  },
-];
-
-const location = [
-  {
-    id: 1,
-    name: 'Burnaby',
-  },
-  {
-    id: 2,
-    name: 'Vancouver',
-  },
-  {
-    id: 3,
-    name: 'Surry',
-  },
-];
+import RadioButtonRN from 'radio-buttons-react-native';
+import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView, RadioButton } from 'react-native';
+import { sort, genre, location, language, readingStatus } from '../../constants/FilterContent';
 
 const SearchSortFilter = item => {
   const [checked, setChecked] = React.useState(false);
@@ -67,7 +16,7 @@ const SearchSortFilter = item => {
   const onSelect = () => {};
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.radioUnderline}>
         <TouchableOpacity style={styles.dropdown} onPress={() => setShowSort(!showSort)}>
           <Text>Sort</Text>
@@ -86,6 +35,7 @@ const SearchSortFilter = item => {
               return (
                 <View style={styles.radioButtton}>
                   {/* <Text key={String(i)}>{item.name}</Text> */}
+                  
                   <Radio.Group>
                     <Radio value={item.id} onPress={() => setChecked(!checked)}>
                       {item.name}
@@ -152,7 +102,7 @@ const SearchSortFilter = item => {
 
         {showLanguage && (
           <View>
-            {sort.map((item, i) => {
+            {language.map((item, i) => {
               return (
                 <View style={styles.radioButtton}>
                   {/* <Text key={String(i)}>{item.name}</Text> */}
@@ -186,7 +136,7 @@ const SearchSortFilter = item => {
 
         {showReading && (
           <View>
-            {sort.map((item, i) => {
+            {readingStatus.map((item, i) => {
               return (
                 <View style={styles.radioButtton}>
                   {/* <Text key={String(i)}>{item.name}</Text> */}
@@ -239,7 +189,8 @@ const SearchSortFilter = item => {
           </View>
         )}
       </View>
-    </View>
+
+    </ScrollView>
   );
 };
 
