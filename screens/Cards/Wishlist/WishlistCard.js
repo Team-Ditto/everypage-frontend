@@ -12,9 +12,11 @@ import {
     Link,
   } from "native-base";
   const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
-    const { title, author, imageSrc, owner, ownerPicture } = data;
+    const { title, author, imageSrc, owner, ownerPicture, status } = data;
 
-    const status = [
+    let curStyle = {};
+
+    const statusStyle = [
         {
             status: "Available",
             backgroundColor: "#DCFCE7",
@@ -25,6 +27,19 @@ import {
             backgroundColor: "#FEE2E2",
             textColor: "#A01923"
         }]
+
+    switch(status) {
+        case "Available":
+            curStyle = statusStyle[0];
+            break;
+
+        case "In-use":
+            curStyle = statusStyle[1];
+            break;
+
+        default:
+            console.log("Book status not available");
+    }
   
     return (
         <VStack bgColor="#FFFFFF" borderRadius="10" mx="4%" p="15px" mb="20px">
@@ -40,8 +55,8 @@ import {
                 <Box w="55%" ml="3%">
                     <Text fontWeight="semibold" fontSize="md">{title}</Text>
                     <Text fontSize="md">{author}</Text>
-                    <Box bgColor={status[1].backgroundColor} borderRadius="4px" borderColor={status[1].textColor} borderStyle="solid" borderWidth="1px" p="4px" marginY="7px" marginRight="auto">
-                        <Text color={status[1].textColor}>{status[1].status}</Text>
+                    <Box bgColor={curStyle.backgroundColor} borderRadius="4px" borderColor={curStyle.textColor} borderStyle="solid" borderWidth="1px" p="4px" marginY="7px" marginRight="auto">
+                        <Text color={curStyle.textColor}>{curStyle.status}</Text>
                     </Box>
                     <Text fontSize="sm">Owned by</Text>
                     <HStack display="flex" flexDirection="row" gap="10px" alignItems="center">
