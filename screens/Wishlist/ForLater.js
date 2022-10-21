@@ -9,13 +9,11 @@ export default function ForLater({ libData, navigation }) {
     return (
 
         <VStack>
-            <Text fontSize="lg">
+            <Text fontSize="lg" fontWeight="800" ml="4%" mt="23px" mb="16px">
             For Later ({libData.length})
             </Text>
         <ScrollView>
             <Box
-            py={3}
-            px={2}
             w="100%"
             flexDirection="row"
             flexWrap="wrap"
