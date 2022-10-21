@@ -1,14 +1,16 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View, Text } from 'react-native';
+import React from 'react';
 
-import SearchSortFilter from "./SearchSortFilter";
+import SearchSortFilter from '../Assets/SearchSortFilter';
+import WelcomeScreen from '../Assets/WelcomeScreen';
 
 export default function Profile() {
   return (
     <View>
-      <Text>Profile</Text>
+      {/* <Text>Profile</Text> */}
       {/* <Location /> */}
-      <SearchSortFilter />
+      {/* <SearchSortFilter /> */}
+      <WelcomeScreen />
     </View>
   );
 }
