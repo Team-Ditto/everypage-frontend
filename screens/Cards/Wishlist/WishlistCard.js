@@ -20,110 +20,45 @@ import {
     const HandleWishlistPress = () => {
       setIsWishlisted(!isWishlisted);
     };
+
+    const status = [
+        {
+            status: "Available",
+            backgroundColor: "#DCFCE7",
+            textColor: "#14532D"
+        },
+        {
+            status: "In-use",
+            backgroundColor: "#FEE2E2",
+            textColor: "#A01923"
+        }]
   
     return (
-/*       <Pressable
-        onPress={() => {
-          navigation.navigate("SingleBook", {
-            libCardData: data,
-          });
-        }}
-        alignItems="center"
-        w="100%"
-        mx={1}
-      > */
-        <VStack>
-            <HStack >
+        <VStack bgColor="#FFFFFF" borderRadius="10" w="90%" p="15px" mb="20px">
+            <HStack>
                 <Image
+                borderRadius="10px"
                     w="40%"
-                    h="50%"
                     source={{
                     uri: imageSrc,
                     }}
                     alt={title}
                 />
                 <Box w="55%" ml="3%">
-                    <Text fontWeight="semibold">{title}</Text>
-                    <Text>{author}</Text>
-                    <Button>Condition</Button>
-                    <Text>Owned by</Text>
-                    <HStack>
+                    <Text fontWeight="semibold" fontSize="md">{title}</Text>
+                    <Text fontSize="md">{author}</Text>
+                    <Box bgColor={status[1].backgroundColor} borderRadius="4px" borderColor={status[1].textColor} borderStyle="solid" borderWidth="1px" p="4px" marginY="7px" marginRight="auto">
+                        <Text color={status[1].textColor}>{status[1].status}</Text>
+                    </Box>
+                    <Text fontSize="sm">Owned by</Text>
+                    <HStack h="10">
                         <Text>Owner's pic</Text>
-                        <Text size='sm'>Owner's name</Text>
+                        <Text>Owner's name</Text>
                     </HStack>
                 </Box>
             </HStack>
+            <Button mt="15px">Request to Borrow</Button>
         </VStack>
-
-
-
-
-        /* <VStack>
-          <AspectRatio w="100%" ratio={164 / 210}>
-            <VStack style={{ display: "flex", position: "relative" }}>
-              <Image
-                w="100%"
-                h="100%"
-                source={{
-                  uri: imageSrc,
-                }}
-                alt={title}
-              />
-              {showWishListIcon ? (
-                <Box
-                  mt={2}
-                  mr={2}
-                  bg="muted.50"
-                  position="absolute"
-                  borderRadius="full"
-                  right="0"
-                >
-                  <IconButton
-                    variant="ghost"
-                    icon={
-                      <Icon
-                        color="muted.900"
-                        size="xl"
-                        onPress={HandleWishlistPress}
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                        as={
-                          <TouchableOpacity>
-                            {isWishlisted ? (
-                              <MaterialIcons
-                                name="favorite"
-                                size={30}
-                                color="black"
-                              />
-                            ) : (
-                              <MaterialIcons
-                                name="favorite-border"
-                                size={30}
-                                color="black"
-                              />
-                            )}
-                          </TouchableOpacity>
-                        }
-                      />
-                    }
-                  />
-                </Box>
-              ) : (
-                ""
-              )}
-            </VStack>
-          </AspectRatio>
-          <Box pt={1} pb={3}>
-            <VStack>
-              <Text fontWeight="semibold">{title}</Text>
-              <Text>{author}</Text>
-            </VStack>
-          </Box>
-        </VStack> 
-      </Pressable>*/
     );
   };
   
