@@ -55,7 +55,7 @@ const location = [
   },
 ];
 
-const SearchSortFilter = (item) => {
+const SearchSortFilter = item => {
   const [checked, setChecked] = React.useState(false);
   const [showSort, setShowSort] = useState(false);
   const [showGenre, setShowGenre] = useState(false);
@@ -69,10 +69,7 @@ const SearchSortFilter = (item) => {
   return (
     <View>
       <View style={styles.radioUnderline}>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => setShowSort(!showSort)}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={() => setShowSort(!showSort)}>
           <Text>Sort</Text>
           <Text onPress={() => setOptionSelected(!optionSelected)}></Text>
           {/* Display the selected option from the drop down */}
@@ -107,10 +104,7 @@ const SearchSortFilter = (item) => {
       {/* Genre */}
 
       <View style={styles.radioUnderline}>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => setShowGenre(!showGenre)}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={() => setShowGenre(!showGenre)}>
           <Text>Genre</Text>
           <Text onPress={() => setOptionSelected(!optionSelected)}></Text>
           {/* Display the selected option from the drop down */}
@@ -145,10 +139,7 @@ const SearchSortFilter = (item) => {
       {/* Language */}
 
       <View style={styles.radioUnderline}>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => setShowLanguage(!showLanguage)}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={() => setShowLanguage(!showLanguage)}>
           <Text>Laguage</Text>
           <Text onPress={() => setOptionSelected(!optionSelected)}></Text>
           {/* Display the selected option from the drop down */}
@@ -178,16 +169,12 @@ const SearchSortFilter = (item) => {
             })}
           </View>
         )}
-        
       </View>
 
       {/*Reading Status  */}
 
       <View style={styles.radioUnderline}>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => setShowReading(!showReading)}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={() => setShowReading(!showReading)}>
           <Text>Reading Status</Text>
 
           <Image
@@ -221,10 +208,7 @@ const SearchSortFilter = (item) => {
       {/* Location */}
 
       <View style={styles.radioUnderline}>
-        <TouchableOpacity
-          style={styles.dropdown}
-          onPress={() => setShowLocation(!showLocation)}
-        >
+        <TouchableOpacity style={styles.dropdown} onPress={() => setShowLocation(!showLocation)}>
           <Text>Location</Text>
           <Text onPress={() => setOptionSelected(!optionSelected)}></Text>
           {/* Display the selected option from the drop down */}
@@ -286,33 +270,7 @@ const styles = StyleSheet.create({
   radioUnderline: {
     borderBottomColor: 'black',
     borderBottomWidth: 1,
-  }
+  },
 });
 
 export default SearchSortFilter;
-
-//   import { useEffect, useState } from "react";
-
-// const SearchSortFilter = ({}) =>{
-
-//     return(
-//         <VStack>
-//             <FormControl>
-//                 <Select placeholder="Sort">
-
-//                     <Select.Item label="Newly Added"/>
-//                     <Select.Item label="Book Title (A-Z)"/>
-//                     <Select.Item label="Book Title (Z-A)"/>
-
-//                 <Radio.Group >
-//                         <Radio >Newly Added</Radio>
-//                         <Radio >Book Title (A-Z)</Radio>
-//                         <Radio >Book Title (Z-A)</Radio>
-//                    </Radio.Group>
-//                    </Select>
-//             </FormControl>
-//         </VStack>
-//     )
-// }
-
-// export default SearchSortFilter;
