@@ -10,8 +10,6 @@ export default function Wishlist({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
   const [isForLater, setIsForLater] = useState(true);
 
-  //setCurScreen("forLater")
-
   function handleInput(v) {
     setIsForLater(v);
   }
@@ -28,7 +26,6 @@ export default function Wishlist({ navigation }) {
           Requested
         </Button>
       </HStack>
-      <Text>Wishlist</Text>
       <VStack>
         <Box>
           { isForLater ? <ForLater libData={libData} /> : <Requested libData={libData} /> } 

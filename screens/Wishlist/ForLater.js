@@ -9,8 +9,8 @@ export default function ForLater({ libData, navigation }) {
     return (
 
         <VStack>
-            <Text>
-            For Later page
+            <Text fontSize="lg">
+            For Later ({libData.length})
             </Text>
         <ScrollView>
             <Box
