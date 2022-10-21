@@ -9,17 +9,10 @@ import {
     IconButton,
     Icon,
     HStack,
+    Link,
   } from "native-base";
-  import { MaterialIcons } from "@expo/vector-icons";
-  import { TouchableOpacity } from "react-native";
-  import { useEffect, useState } from "react";
   const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
-    const { title, author, imageSrc } = data;
-    const [isWishlisted, setIsWishlisted] = useState(false);
-  
-    const HandleWishlistPress = () => {
-      setIsWishlisted(!isWishlisted);
-    };
+    const { title, author, imageSrc, owner, ownerPicture } = data;
 
     const status = [
         {
@@ -34,7 +27,7 @@ import {
         }]
   
     return (
-        <VStack bgColor="#FFFFFF" borderRadius="10" w="90%" p="15px" mb="20px">
+        <VStack bgColor="#FFFFFF" borderRadius="10" mx="4%" p="15px" mb="20px">
             <HStack>
                 <Image
                 borderRadius="10px"
@@ -51,9 +44,17 @@ import {
                         <Text color={status[1].textColor}>{status[1].status}</Text>
                     </Box>
                     <Text fontSize="sm">Owned by</Text>
-                    <HStack h="10">
-                        <Text>Owner's pic</Text>
-                        <Text>Owner's name</Text>
+                    <HStack display="flex" flexDirection="row" gap="10px" alignItems="center">
+                        <Image 
+                        w="30px"
+                        h="30px"
+                        borderRadius="50%"
+                        source={{
+                            uri: ownerPicture
+                        }}
+                        alt={owner}
+                        />
+                        <Link  href="https://nativebase.io" ml="5px">{owner}</Link>
                     </HStack>
                 </Box>
             </HStack>
