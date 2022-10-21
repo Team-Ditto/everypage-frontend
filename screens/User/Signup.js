@@ -1,65 +1,102 @@
-import {
-  Box,
-  HStack,
-  VStack,
-  FormControl,
-  Input,
-  Link,
-  Button,
-  Heading,
-  StatusBar,
-  Image,
-} from 'native-base';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Box, HStack, VStack, FormControl, Input, Link, Button } from 'native-base';
+import * as ImagePicker from 'expo-image-picker';
+
+import { signUpWithEmailAndPassword } from '../../firebase/firebase-service';
 
 const Signup = ({ navigation }) => {
+  // TODO:please do something with this error
+  const [err, setErr] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [singleFile, setSingleFile] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setSingleFile(result);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      if (email && password && displayName) {
+        await signUpWithEmailAndPassword(email, password, displayName, singleFile);
+
+        navigation.navigate('BottomTab');
+      }
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      setErr(true);
+    }
+  };
+
   return (
     //container start
-    <Box safeAreaTop px={3} bg="red.100" flex={1}>
-      <HStack px={1} py={3} justifyContent="center" mt="10">
+    <Box safeAreaTop px={3} bg='red.100' flex={1}>
+      <HStack px={1} py={3} justifyContent='center' mt='10'>
         <Text>Signup</Text>
       </HStack>
       <View>
         <Text>Create an account. It's free!</Text>
       </View>
-      <VStack space={3} mt="5">
+      <VStack space={3} mt='5'>
         <FormControl>
           <FormControl.Label>Name</FormControl.Label>
           <Input
             isRequired
-            placeholder="xxxxxx"
-            keyboardType="text"
-            returnKeyType="next"
+            placeholder='xxxxxx'
+            keyboardType='text'
+            returnKeyType='next'
+            value={displayName}
+            onChangeText={value => setDisplayName(value)}
           />
         </FormControl>
         <FormControl>
           <FormControl.Label>Email ID</FormControl.Label>
           <Input
             isRequired
-            placeholder="xxxxxx@gmail.com"
-            keyboardType="email-address"
-            returnKeyType="next"
-            autoCompleteType="email"
+            placeholder='xxxxxx@gmail.com'
+            keyboardType='email-address'
+            returnKeyType='next'
+            autoCompleteType='email'
+            value={email}
+            onChangeText={value => setEmail(value)}
           />
         </FormControl>
         <FormControl>
           <FormControl.Label>Password</FormControl.Label>
           <Input
             isRequired
-            placeholder="xxxxxxxxx"
+            placeholder='xxxxxxxxx'
             secureTextEntry
-            type="password"
-            returnKeyType="done"
+            type='password'
+            returnKeyType='done'
+            value={password}
+            onChangeText={value => setPassword(value)}
           />
         </FormControl>
         <Text>Atleast 8 characters</Text>
-        <Button mt="2" colorScheme="gray">
+
+        <Button onPress={pickImage}>Pick Image</Button>
+
+        <Button mt='2' colorScheme='gray' onPress={handleSubmit}>
           Next
         </Button>
-        <HStack mt="6" justifyContent="center">
+        <HStack mt='6' justifyContent='center'>
           <Text
-            fontSize="sm"
-            color="coolGray.600"
+            fontSize='sm'
+            color='coolGray.600'
             _dark={{
               color: 'warmGray.200',
             }}
