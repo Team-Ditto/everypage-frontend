@@ -10,6 +10,8 @@ import Signup from '../screens/User/Signup';
 import Scanner from '../screens/Assets/Scanner';
 import SingleBook from '../screens/Cards/Book/SingleBook';
 import AddBook from '../screens/Main/Book/AddBook';
+import Genres from '../screens/Main/Genres';
+import SearchResults from '../screens/Main/SearchResults';
 
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
@@ -18,25 +20,27 @@ const AppStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRoute='Login'>
-        {currentUser ? (
-          <>
-            <Stack.Screen
-              name='BottomTab'
-              component={TabStack}
-              options={({ route }) => ({
-                headerShown: false,
-              })}
-            />
-            <Stack.Screen name='Scanner' component={Scanner} />
-            <Stack.Screen name='SingleBook' component={SingleBook} />
-            <Stack.Screen name='AddBook' component={AddBook} />
-          </>
-        ) : (
+        {/* {currentUser ? ( */}
+        <>
+          <Stack.Screen
+            name='BottomTab'
+            component={TabStack}
+            options={({ route }) => ({
+              headerShown: false,
+            })}
+          />
+          <Stack.Screen name='Scanner' component={Scanner} />
+          <Stack.Screen name='SingleBook' component={SingleBook} />
+          <Stack.Screen name='AddBook' component={AddBook} />
+          <Stack.Screen name='Genres' component={Genres} />
+          <Stack.Screen name='SearchResults' component={SearchResults} />
+        </>
+        {/* ) : (
           <>
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='Signup' component={Signup} />
           </>
-        )}
+        )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );
