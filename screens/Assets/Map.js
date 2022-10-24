@@ -2,26 +2,25 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function Map() {
+export default function Map({ longitude = '', latitude = '' }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
           initialRegion={{
-            latitude: 49.2827,
-            longitude: -123.1207,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.09,
+            longitudeDelta: 0.09,
           }}
+          zoomEnabled={true}
+          scrollEnabled={true}
           customMapStyle={mapStyle}
         >
           <Marker
             draggable
-            coordinate={{
-              latitude: 49.2827,
-              longitude: -123.1207,
-            }}
+            coordinate={{ latitude: latitude, longitude: longitude }}
             onDragEnd={e => alert(JSON.stringify(e.nativeEvent.coordinate))}
             title={'Test Marker'}
             description={'This is a description of the marker'}

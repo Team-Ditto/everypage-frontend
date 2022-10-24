@@ -1,10 +1,35 @@
-import React from 'react';
-import { Box, VStack, Button, FormControl, Input, Link, IconButton } from 'native-base';
-import { StyleSheet, Text, View } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { Box, VStack, Button, FormControl, Input, Link, IconButton, Text, View } from 'native-base';
+import { StyleSheet } from 'react-native';
+import * as Loc from 'expo-location';
+import Map from './Map';
+import Spinner from 'react-native-loading-spinner-overlay';
 const Location = ({ navigation }) => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  useEffect(() => {
+    (async () => {
+      let { status } = await Loc.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Loc.getCurrentPositionAsync({});
+      setSpinnerVisible(false);
+      setLocation(location['coords']);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = location;
+  }
   return (
-    <Box alignItems='center' px={5}>
+    <View style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <Link
         _text={{
           color: 'gray',
@@ -18,25 +43,40 @@ const Location = ({ navigation }) => {
       >
         Skip
       </Link>
-      <View>
+      <VStack>
         <Text>Set Your Library Location.</Text>
         <Text>Set it now or updtae in your profile</Text>
-      </View>
+      </VStack>
       <FormControl>
         <FormControl.Label>Your Zip Code</FormControl.Label>
         <Input placeholder='xxx xxx' keyboardType='default' returnKeyType='next' />
         <FormControl.ErrorMessage>Zip code is required</FormControl.ErrorMessage>
       </FormControl>
-      <View>
+      <View style={{ display: 'flex', flexDirection: 'column', flex: '1', position: 'relative', height: '100%' }}>
         <Text>Use my current loaction</Text>
-        {/* geo loaction goes here */}
-
-        <Button onPress={() => {}}>Next</Button>
+        {location ? (
+          <Map longitude={location.longitude} latitude={location.latitude} />
+        ) : (
+          <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+        )}
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            dsplay: 'flex',
+            bottom: 100,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button style={{ width: '80%' }} onPress={() => {}}>
+            Next
+          </Button>
+        </View>
       </View>
-    </Box>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Location;

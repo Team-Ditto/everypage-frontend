@@ -10,6 +10,7 @@ import Scanner from '../screens/Assets/Scanner';
 import SingleBook from '../screens/Cards/Book/SingleBook';
 import TabStack from './TabStack';
 import AddBook from '../screens/Main/Book/AddBook';
+import Location from '../screens/Assets/Location';
 const reduxStore = configureStore();
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ const AppStack = () => {
           <Stack.Screen name='Scanner' component={Scanner} />
           <Stack.Screen name='SingleBook' component={SingleBook} />
           <Stack.Screen name='AddBook' component={AddBook} />
+          <Stack.Screen name='Location' component={Location} />
           <Stack.Screen
             name='BottomTab'
             component={TabStack}
