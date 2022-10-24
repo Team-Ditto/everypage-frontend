@@ -8,12 +8,14 @@ const SearchResults = ({ navigation }) => {
   const [searchResults, setSearchResults] = useState(LibraryData);
   return (
     <>
-      <VStack>
+      <VStack margin={2}>
         <Search />
-        <Text>{searchResults.length} Books</Text>
+        <Text px={2} pt={2}>
+          {searchResults.length} Books
+        </Text>
         <ScrollView>
           <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-            {searchResults.map(r => {
+            {searchResults.map((r, id) => {
               return <MyLibraryCard key={id} data={r} navigation={navigation} showWishListIcon={true} />;
             })}
           </Box>
