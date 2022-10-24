@@ -12,6 +12,8 @@ const Home = ({ navigation }) => {
   const [libData, setLibData] = useState(LibraryData);
   const [bookStatus, setBookStatus] = useState('All');
 
+  const BookStatusChangeHandle = () => {};
+
   return (
     <VStack>
       {/* Search component */}
@@ -25,13 +27,7 @@ const Home = ({ navigation }) => {
         {BOOK_STATUS.map((status, idx) => {
           return (
             <Box mx={1} key={idx} h='55px' width='120px'>
-              <Button
-                px={5}
-                variant={'solid'}
-                color={'muted.800'}
-                borderRadius='md'
-                onPress={e => setBookStatus(status)}
-              >
+              <Button px={5} borderRadius='md' onPress={e => setBookStatus(status)}>
                 {status}
               </Button>
             </Box>
@@ -41,7 +37,7 @@ const Home = ({ navigation }) => {
 
       {/* My Library Data Collection */}
       <Text mx={2} my={2}>
-        {bookStatus} {libData.length}
+        {bookStatus} ({libData.length})
       </Text>
       <ScrollView>
         <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
