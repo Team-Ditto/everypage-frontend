@@ -6,60 +6,55 @@ import {
   Input,
   Link,
   Button,
+  Text,
+  View,
   Heading,
   StatusBar,
   Image,
 } from 'native-base';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Everypage_Logo from '../../assets/Everypage_Logo.png';
+import { BlueShades, OrangeShades } from '../../assets/style/color';
 
 const Signup = ({ navigation }) => {
   return (
     //container start
-    <Box safeAreaTop px={3} bg="red.100" flex={1}>
-      <HStack px={1} py={3} justifyContent="center" mt="10">
-        <Text>Signup</Text>
-      </HStack>
+    <Box px={3} flex={1}>
+      <Image
+        style={{ width: '100%', height: 200, resizeMode: 'contain' }}
+        source={Everypage_Logo}
+        alt={'Everypage Logo'}
+      />
       <View>
-        <Text>Create an account. It's free!</Text>
+        <Text fontSize='xl'>Create an account. It's Free</Text>
       </View>
-      <VStack space={3} mt="5">
+      <VStack space={3} mt='5'>
         <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
+          <FormControl.Label>Name *</FormControl.Label>
+          <Input isRequired placeholder='xxxxxx' keyboardType='text' returnKeyType='next' />
+        </FormControl>
+        <FormControl>
+          <FormControl.Label>Email ID *</FormControl.Label>
           <Input
             isRequired
-            placeholder="xxxxxx"
-            keyboardType="text"
-            returnKeyType="next"
+            placeholder='xxxxxx@gmail.com'
+            keyboardType='email-address'
+            returnKeyType='next'
+            autoCompleteType='email'
           />
         </FormControl>
         <FormControl>
-          <FormControl.Label>Email ID</FormControl.Label>
-          <Input
-            isRequired
-            placeholder="xxxxxx@gmail.com"
-            keyboardType="email-address"
-            returnKeyType="next"
-            autoCompleteType="email"
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Password</FormControl.Label>
-          <Input
-            isRequired
-            placeholder="xxxxxxxxx"
-            secureTextEntry
-            type="password"
-            returnKeyType="done"
-          />
+          <FormControl.Label>Password *</FormControl.Label>
+          <Input isRequired placeholder='xxxxxxxxx' secureTextEntry type='password' returnKeyType='done' />
         </FormControl>
         <Text>Atleast 8 characters</Text>
-        <Button mt="2" colorScheme="gray">
+        <Button mt='6' bg={BlueShades.primaryBlue}>
           Next
         </Button>
-        <HStack mt="6" justifyContent="center">
+        <HStack mt='6' justifyContent='center'>
           <Text
-            fontSize="sm"
-            color="coolGray.600"
+            fontSize='sm'
+            color='coolGray.600'
             _dark={{
               color: 'warmGray.200',
             }}
@@ -68,8 +63,8 @@ const Signup = ({ navigation }) => {
           </Text>
           <Link
             _text={{
-              color: 'gray',
-              fontWeight: 'medium',
+              color: OrangeShades.primaryOrange,
+              fontWeight: 'bold',
             }}
             onPress={() => {
               navigation.navigate('Login');
