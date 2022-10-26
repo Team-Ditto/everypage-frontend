@@ -10,7 +10,9 @@ import SingleBook from '../screens/Cards/Book/SingleBook';
 import TabStack from './TabStack';
 import AddBook from '../screens/Main/Book/AddBook';
 import Location from '../screens/Assets/Location';
-import { BlueShades, whiteShades } from '../assets/style/color';
+import { BlackShades, BlueShades, whiteShades } from '../assets/style/color';
+import { Button } from 'native-base';
+import ReaderInfo from '../screens/User/ReaderInfo';
 
 const reduxStore = configureStore();
 const AppStack = () => {
@@ -44,7 +46,18 @@ const AppStack = () => {
           <Stack.Screen name='Scanner' component={Scanner} />
           <Stack.Screen name='SingleBook' component={SingleBook} />
           <Stack.Screen name='AddBook' component={AddBook} />
-          <Stack.Screen name='Location' component={Location} />
+          <Stack.Screen name='ReaderInfo' component={ReaderInfo} />
+          <Stack.Screen
+            name='Location'
+            component={Location}
+            options={{
+              headerStyle: {
+                backgroundColor: BlueShades.primaryBlue,
+              },
+              cardStyle: { backgroundColor: BlueShades.primaryBlue },
+              headerTintColor: whiteShades.primaryWhite,
+            }}
+          />
           <Stack.Screen
             name='BottomTab'
             component={TabStack}

@@ -5,12 +5,28 @@ import Map from './Map';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { StyleSheet } from 'react-native';
 import FieldSet from 'react-native-fieldset';
+import { whiteShades } from '../../assets/style/color';
 
 const Location = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={() => {
+            navigation.navigate('ReaderInfo');
+          }}
+          variant='unstyled'
+          _text={{
+            color: whiteShades.primaryWhite,
+          }}
+        >
+          Skip
+        </Button>
+      ),
+    });
     (async () => {
       let { status } = await Loc.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -31,7 +47,7 @@ const Location = ({ navigation }) => {
     text = location;
   }
   return (
-    <View style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+    <View bg={whiteShades.primaryWhite} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <Link
         _text={{
           color: 'gray',
@@ -50,19 +66,19 @@ const Location = ({ navigation }) => {
         <Text>Set it now or updtae in your profile</Text>
       </VStack>
       <VStack>
-            <FieldSet
-              label='Fieldset label'
-              labelPosition='left'
-              labelColor='black'
-              labelBackgroundColor='#fff'
-              labelStyle={{
-                height: 25,
-                padding: 5,
-              }}
-            >
-              <Text>Field Set Body</Text>
-            </FieldSet>
-          </VStack>
+        <FieldSet
+          label='Fieldset label'
+          labelPosition='left'
+          labelColor='black'
+          labelBackgroundColor='#fff'
+          labelStyle={{
+            height: 25,
+            padding: 5,
+          }}
+        >
+          <Text>Field Set Body</Text>
+        </FieldSet>
+      </VStack>
       <FormControl>
         <FormControl.Label>Your Zip Code</FormControl.Label>
         <Input placeholder='xxx xxx' keyboardType='default' returnKeyType='next' />

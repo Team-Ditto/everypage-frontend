@@ -18,7 +18,7 @@ import {
 import { StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Everypage_Logo from '../../assets/Everypage_Logo.png';
-import { BlackShades, BlueShades, whiteShades, OrangeShades } from '../../assets/style/color';
+import { BlackShades, BlueShades, OrangeShades, whiteShades } from '../../assets/style/color';
 // import { Header } from 'react-native/Libraries/NewAppScreen';
 
 const Login = ({ navigation }) => {
