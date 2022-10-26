@@ -46,7 +46,17 @@ const AppStack = () => {
           <Stack.Screen name='Scanner' component={Scanner} />
           <Stack.Screen name='SingleBook' component={SingleBook} />
           <Stack.Screen name='AddBook' component={AddBook} />
-          <Stack.Screen name='ReaderInfo' component={ReaderInfo} />
+          <Stack.Screen
+            name='ReaderInfo'
+            component={ReaderInfo}
+            options={{
+              headerStyle: {
+                backgroundColor: BlueShades.primaryBlue,
+              },
+              cardStyle: { backgroundColor: BlueShades.primaryBlue },
+              headerTintColor: whiteShades.primaryWhite,
+            }}
+          />
           <Stack.Screen
             name='Location'
             component={Location}

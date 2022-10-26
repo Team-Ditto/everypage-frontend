@@ -93,7 +93,13 @@ const Location = ({ navigation }) => {
             alignItems: 'center',
           }}
         >
-          <Button bg={BlueShades.primaryBlue} style={{ width: '80%'  ,borderRadius:10}} onPress={() => {}}>
+          <Button
+            bg={BlueShades.primaryBlue}
+            style={{ width: '80%', borderRadius: 10 }}
+            onPress={() => {
+              navigation.navigate('ReaderInfo');
+            }}
+          >
             Next
           </Button>
         </View>
