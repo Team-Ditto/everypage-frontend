@@ -2,30 +2,35 @@ import React from 'react';
 import {
   Box,
   HStack,
+  Text,
   VStack,
   FormControl,
   Input,
   Link,
   Button,
-  Heading,
   StatusBar,
   Icon,
   ScrollView,
+  Image,
+  View,
+  Divider,
 } from 'native-base';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import Everypage_Logo from '../../assets/Everypage_Logo.png';
+import { BlackShades, BlueShades, whiteShades, OrangeShades } from '../../assets/style/color';
 // import { Header } from 'react-native/Libraries/NewAppScreen';
 
 const Login = ({ navigation }) => {
   return (
-    <>
-      <StatusBar backgroundColor='gray' barStyle='dark-content' />
-      <ScrollView>
-        <Box px={5} bg='gray.400'>
-          <Heading mt='40' size='xl' fontWeight='extrabold'>
-            Everypages
-          </Heading>
-        </Box>
-
+    <ScrollView>
+      <StatusBar backgroundColor='white' barStyle='dark-content' />
+      <VStack>
+        <Image
+          style={{ width: '100%', height: 200, resizeMode: 'contain' }}
+          source={Everypage_Logo}
+          alt={'Everypage Logo'}
+        />
         <Box py='3' px='5'>
           <View
             _dark={{
@@ -38,7 +43,7 @@ const Login = ({ navigation }) => {
             <Text>To organize and track your books and discover, borrow and lend books around you.</Text>
           </View>
 
-          <VStack space={10} mt='10' backgroundColor=''>
+          <VStack space={5} mt='5'>
             <FormControl>
               <FormControl.Label>Email ID</FormControl.Label>
               <Input
@@ -51,35 +56,21 @@ const Login = ({ navigation }) => {
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
               <Input placeholder='xxxxxxxxx' secureTextEntry type='password' returnKeyType='done' />
-              <Link
-                _text={{
-                  fontSize: 'sm',
-                  fontWeight: '500',
-                }}
-                alignSelf='flex-start'
-                mt='5'
-                color='gray'
-              >
-                Forgot it?
-              </Link>
             </FormControl>
+            <Button bg={BlueShades.primaryBlue}>Login</Button>
+            <VStack>
+              <Divider />
+            </VStack>
             <Button
-              colorScheme='gray'
-              onPress={() => {
-                navigation.navigate('BottomTab');
+              leftIcon={<AntDesign name='google' size={24} color='black' />}
+              bg={whiteShades.primaryWhite}
+              variant='unstyled'
+              _text={{
+                color: BlackShades.primaryBlack,
               }}
             >
-              Login
-            </Button>
-
-            <Button
-              // mt='2'
-              colorScheme='gray'
-            >
-              <Icon source='' alt=''></Icon>
               Continue with Google
             </Button>
-
             <HStack mt='6' justifyContent='center'>
               <Text
                 fontSize='sm'
@@ -88,24 +79,24 @@ const Login = ({ navigation }) => {
                   color: 'warmGray.200',
                 }}
               >
-                I'm a new user.{' '}
+                Don't have an account{' '}
               </Text>
               <Link
                 _text={{
-                  color: 'gray',
+                  color: OrangeShades.primaryOrange,
                   fontWeight: 'medium',
                 }}
                 onPress={() => {
                   navigation.navigate('Signup');
                 }}
               >
-                Sign Up
+                Sign Up Now
               </Link>
             </HStack>
           </VStack>
         </Box>
-      </ScrollView>
-    </>
+      </VStack>
+    </ScrollView>
   );
 };
 

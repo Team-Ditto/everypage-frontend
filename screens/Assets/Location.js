@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Box, VStack, Button, FormControl, Input, Link, IconButton, Text, View } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { VStack, Button, FormControl, Input, Link, IconButton, Text, View } from 'native-base';
 import * as Loc from 'expo-location';
 import Map from './Map';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { StyleSheet } from 'react-native';
+import FieldSet from 'react-native-fieldset';
+
 const Location = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -47,6 +49,20 @@ const Location = ({ navigation }) => {
         <Text>Set Your Library Location.</Text>
         <Text>Set it now or updtae in your profile</Text>
       </VStack>
+      <VStack>
+            <FieldSet
+              label='Fieldset label'
+              labelPosition='left'
+              labelColor='black'
+              labelBackgroundColor='#fff'
+              labelStyle={{
+                height: 25,
+                padding: 5,
+              }}
+            >
+              <Text>Field Set Body</Text>
+            </FieldSet>
+          </VStack>
       <FormControl>
         <FormControl.Label>Your Zip Code</FormControl.Label>
         <Input placeholder='xxx xxx' keyboardType='default' returnKeyType='next' />

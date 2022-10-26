@@ -1,7 +1,7 @@
 import { Checkbox, IconButton, Radio } from 'native-base';
 import React, { Component, useState } from 'react';
 import RadioButtonRN from 'radio-buttons-react-native';
-import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView, RadioButton } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView, RadioButton, Button } from 'react-native';
 import { sort, genre, location, language, readingStatus } from '../../constants/FilterContent';
 
 const SearchSortFilter = item => {
@@ -14,6 +14,16 @@ const SearchSortFilter = item => {
   const [optionSelected, setOptionSelected] = useState(false);
 
   const onSelect = () => {};
+
+  // Put sort genre location language in one array.
+  //  const [radioButtons, setRadioButtons] = useState(radioButtonsData)
+  //  <RadioGroup
+  //   radioButtons={radioButtons}
+  //   onPress={onPressRadioButton}
+  // />
+
+  const data= [sort,genre,location,language,readingStatus];
+  const [radioButtons, setRadioButtons] = useState(data)
 
   return (
     <ScrollView>
@@ -35,7 +45,7 @@ const SearchSortFilter = item => {
               return (
                 <View style={styles.radioButtton}>
                   {/* <Text key={String(i)}>{item.name}</Text> */}
-                  
+
                   <Radio.Group>
                     <Radio value={item.id} onPress={() => setChecked(!checked)}>
                       {item.name}
@@ -174,11 +184,9 @@ const SearchSortFilter = item => {
             {location.map((item, i) => {
               return (
                 <View style={styles.radioButtton}>
-                  {/* <Text key={String(i)}>{item.name}</Text> */}
-                  <Radio.Group>
-                    <Radio value={item.id} onPress={() => setChecked(!checked)}>
-                      {item.name}
-                    </Radio>
+                  <Text key={String(i)}>{item.name}</Text>
+                  <Radio.Group name={item.name}>
+                    <Radio value={item.id} onPress={() => setChecked(!checked)}></Radio>
                   </Radio.Group>
                   {/* <Checkbox title={item.id} checkedIcon="dot-circle-o">
                         {item.name}
@@ -189,7 +197,6 @@ const SearchSortFilter = item => {
           </View>
         )}
       </View>
-
     </ScrollView>
   );
 };
@@ -214,7 +221,7 @@ const styles = StyleSheet.create({
   },
   radioButtton: {
     flexDirection: 'row',
-    justifyContent: 'start',
+    justifyContent: 'space-between',
     padding: 5,
     margin: 5,
   },

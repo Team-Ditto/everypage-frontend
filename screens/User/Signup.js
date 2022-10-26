@@ -1,23 +1,27 @@
-import { Box, HStack, VStack, FormControl, Input, Link, Button, Heading, StatusBar, Image } from 'native-base';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Box, HStack, VStack, FormControl, Input, Link, Button, Text, View } from 'native-base';
+import { StyleSheet, Image } from 'react-native';
+import Everypage_Logo from '../../assets/Everypage_Logo.png';
+import { BlueShades, OrangeShades } from '../../assets/style/color';
 
 const Signup = ({ navigation }) => {
   return (
     //container start
-    <Box safeAreaTop px={3} bg='red.100' flex={1}>
-      <HStack px={1} py={3} justifyContent='center' mt='10'>
-        <Text>Signup</Text>
-      </HStack>
+    <Box px={3} flex={1}>
+      <Image
+        style={{ width: '100%', height: 200, resizeMode: 'contain' }}
+        source={Everypage_Logo}
+        alt={'Everypage Logo'}
+      />
       <View>
-        <Text>Create an account. It's free!</Text>
+        <Text fontSize='xl'>Create an account. It's Free</Text>
       </View>
       <VStack space={3} mt='5'>
         <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
+          <FormControl.Label>Name *</FormControl.Label>
           <Input isRequired placeholder='xxxxxx' keyboardType='text' returnKeyType='next' />
         </FormControl>
         <FormControl>
-          <FormControl.Label>Email ID</FormControl.Label>
+          <FormControl.Label>Email ID *</FormControl.Label>
           <Input
             isRequired
             placeholder='xxxxxx@gmail.com'
@@ -27,13 +31,13 @@ const Signup = ({ navigation }) => {
           />
         </FormControl>
         <FormControl>
-          <FormControl.Label>Password</FormControl.Label>
+          <FormControl.Label>Password *</FormControl.Label>
           <Input isRequired placeholder='xxxxxxxxx' secureTextEntry type='password' returnKeyType='done' />
         </FormControl>
         <Text>Atleast 8 characters</Text>
         <Button
-          mt='2'
-          colorScheme='gray'
+          mt='6'
+          bg={BlueShades.primaryBlue}
           onPress={() => {
             navigation.navigate('Location');
           }}
@@ -52,8 +56,8 @@ const Signup = ({ navigation }) => {
           </Text>
           <Link
             _text={{
-              color: 'gray',
-              fontWeight: 'medium',
+              color: OrangeShades.primaryOrange,
+              fontWeight: 'bold',
             }}
             onPress={() => {
               navigation.navigate('Login');
