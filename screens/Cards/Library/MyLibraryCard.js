@@ -33,7 +33,14 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
               alt={title}
             />
             {showWishListIcon ? (
-              <Box mt={2} mr={2} bg='muted.50' position='absolute' borderRadius='full' right='0'>
+              <Box
+                mt={2}
+                mr={2}
+                bg={isWishlisted ? 'black' : 'white'}
+                position='absolute'
+                borderRadius='full'
+                right='0'
+              >
                 <IconButton
                   variant='ghost'
                   icon={
@@ -49,9 +56,9 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
                       as={
                         <TouchableOpacity>
                           {isWishlisted ? (
-                            <Ionicons name='bookmark-outline' size={30} color='black' />
+                            <Ionicons name='bookmark' size={30} color='white' />
                           ) : (
-                            <Ionicons name='bookmark' size={30} color='black' />
+                            <Ionicons name='bookmark-outline' size={30} color='black' />
                           )}
                         </TouchableOpacity>
                       }
