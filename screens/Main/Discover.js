@@ -37,7 +37,15 @@ export default function Discover({ navigation }) {
         {genreData.map((genre, idx) => {
           return (
             <Box mx={1} key={idx} h={60}>
-              <Button px={5} variant={'solid'} color={'muted.800'} borderRadius='sm'>
+              <Button
+                px={5}
+                variant={'solid'}
+                color={'muted.800'}
+                borderRadius='sm'
+                onPress={() => {
+                  navigation.navigate('SingleGenre', { genre: genre });
+                }}
+              >
                 {genre}
               </Button>
             </Box>
@@ -52,7 +60,7 @@ export default function Discover({ navigation }) {
       </Text>
 
       <ScrollView>
-        <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+        <Box py={3} px={2} mb={20} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
           {similarBookData.map((data, id) => {
             return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
           })}
