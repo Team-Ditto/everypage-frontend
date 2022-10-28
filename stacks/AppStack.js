@@ -12,6 +12,9 @@ import SingleBook from '../screens/Cards/Book/SingleBook';
 import AddBook from '../screens/Main/Book/AddBook';
 import Genres from '../screens/Main/Genres';
 import SingleGenre from '../screens/Main/SingleGenre';
+import SingleView from '../screens/Cards/Book/SingleView';
+import WishlistButton from '../screens/Assets/WishlistButton';
+import { Button } from 'native-base';
 
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
@@ -37,6 +40,18 @@ const AppStack = () => {
             name='SingleGenre'
             component={SingleGenre}
             options={({ route }) => ({ title: route.params.genre })}
+          />
+          <Stack.Screen
+            name='SingleView'
+            component={SingleView}
+            options={({ route }) => ({
+              bookData: route.params.bookData,
+              headerTitle: 'Discover',
+              headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
+              headerStyle: {
+                backgroundImage: JSON.stringify(route.params.bookData.imageSrc),
+              },
+            })}
           />
         </>
         {/* ) : (
