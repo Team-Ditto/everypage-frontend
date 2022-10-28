@@ -12,11 +12,15 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate('SingleView', {
-          bookData: data,
-          isWishlisted: isWishlisted,
-          setIsWishlisted: setIsWishlisted,
-        });
+        showWishListIcon
+          ? navigation.navigate('SingleView', {
+              bookData: data,
+              isWishlisted: isWishlisted,
+              setIsWishlisted: setIsWishlisted,
+            })
+          : navigation.navigate('SingleBook', {
+              libCardData: data,
+            });
       }}
       alignItems='center'
       w='47%'
