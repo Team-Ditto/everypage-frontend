@@ -1,20 +1,21 @@
-import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import { Box, AspectRatio, Image, VStack, Text, Pressable } from 'native-base';
 import { useState } from 'react';
+import WishlistButton from '../../Assets/WishlistButton';
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
   const { title, author, imageSrc } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const HandleWishlistPress = () => {
+  const handleWishlistPress = () => {
     setIsWishlisted(!isWishlisted);
   };
 
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate('SingleBook', {
-          libCardData: data,
+        navigation.navigate('SingleView', {
+          bookData: data,
+          isWishlisted: isWishlisted,
+          setIsWishlisted: setIsWishlisted,
         });
       }}
       alignItems='center'
@@ -41,30 +42,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
                 borderRadius='full'
                 right='0'
               >
-                <IconButton
-                  variant='ghost'
-                  icon={
-                    <Icon
-                      color='muted.900'
-                      size='xl'
-                      onPress={HandleWishlistPress}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                      as={
-                        <TouchableOpacity>
-                          {isWishlisted ? (
-                            <Ionicons name='bookmark' size={30} color='white' />
-                          ) : (
-                            <Ionicons name='bookmark-outline' size={30} color='black' />
-                          )}
-                        </TouchableOpacity>
-                      }
-                    />
-                  }
-                />
+                <WishlistButton isWishlisted={isWishlisted} handleWishlistPress={handleWishlistPress} />
               </Box>
             ) : (
               ''
