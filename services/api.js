@@ -11,6 +11,7 @@ console.log(token);
 export default axiosRequest = axios.create({
   baseURL: LOCAL_BASE_URL,
   timeout: REQUEST_TIMEOUT,
+  headers: { Authorization: `Bearer ${token}` },
   // commented for now! will enable later
   //   paramsSerializer: params => (params ? qs.stringify(params, { arrayFormat: 'repeat' }) : {}),
 });
