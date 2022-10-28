@@ -8,16 +8,16 @@ const Genres = ({ navigation }) => {
     <>
       <ScrollView>
         <VStack padding={2}>
-          {genreData.map(genre => {
+          {genreData.map(g => {
             return (
               <>
                 <Pressable
                   onPress={() => {
-                    navigation.navigate('SearchResults');
+                    navigation.navigate('SingleGenre', { genre: g });
                   }}
                 >
                   <HStack justifyContent='space-between' padding={4}>
-                    <Text fontSize='lg'>{genre}</Text>
+                    <Text fontSize='lg'>{g}</Text>
                     <Icon as={MaterialIcons} name='keyboard-arrow-right' size='lg' />
                   </HStack>
                   <Divider />

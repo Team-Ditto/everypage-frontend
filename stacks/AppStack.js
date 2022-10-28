@@ -11,7 +11,7 @@ import Scanner from '../screens/Assets/Scanner';
 import SingleBook from '../screens/Cards/Book/SingleBook';
 import AddBook from '../screens/Main/Book/AddBook';
 import Genres from '../screens/Main/Genres';
-import SearchResults from '../screens/Main/SearchResults';
+import SingleGenre from '../screens/Main/SingleGenre';
 
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
@@ -33,7 +33,11 @@ const AppStack = () => {
           <Stack.Screen name='SingleBook' component={SingleBook} />
           <Stack.Screen name='AddBook' component={AddBook} />
           <Stack.Screen name='Genres' component={Genres} />
-          <Stack.Screen name='SearchResults' component={SearchResults} />
+          <Stack.Screen
+            name='SingleGenre'
+            component={SingleGenre}
+            options={({ route }) => ({ title: route.params.genre })}
+          />
         </>
         {/* ) : (
           <>

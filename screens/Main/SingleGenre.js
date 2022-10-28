@@ -4,7 +4,7 @@ import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { LibraryData } from '../../constants/LibraryData';
 import { useState } from 'react';
 
-const SearchResults = ({ navigation }) => {
+const SingleGenre = ({ navigation, route }) => {
   const [searchResults, setSearchResults] = useState(LibraryData);
   return (
     <>
@@ -25,4 +25,4 @@ const SearchResults = ({ navigation }) => {
   );
 };
 
-export default SearchResults;
+export default SingleGenre;
