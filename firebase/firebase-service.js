@@ -54,10 +54,6 @@ export const signUpWithEmailAndPassword = async (email, password, displayName, f
   }
 };
 
-export const getAllBooksForTheUser = async uid => {
-  return await getBookAsPerUser();
-};
-
 /**
  * creates new user with the credentials
  * @param {String} email the email
