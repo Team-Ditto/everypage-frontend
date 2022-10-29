@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   HStack,
@@ -11,26 +11,32 @@ import {
   StatusBar,
   Icon,
   ScrollView,
+  Heading,
   Image,
-  View,
   Divider,
+  View,
 } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { loginWithEmailAndPassword } from '../../firebase/firebase-service';
 import { AntDesign } from '@expo/vector-icons';
 import Everypage_Logo from '../../assets/Everypage_Logo.png';
 import { BlackShades, BlueShades, OrangeShades, whiteShades } from '../../assets/style/color';
-// import { Header } from 'react-native/Libraries/NewAppScreen';
 
 const Login = ({ navigation }) => {
+  const [err, setErr] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const handleLogin = async () => {
+    await loginWithEmailAndPassword(email, password);
+  };
   return (
     <ScrollView>
-      <StatusBar backgroundColor='white' barStyle='dark-content' />
       <VStack>
         <Image
           style={{ width: '100%', height: 200, resizeMode: 'contain' }}
           source={Everypage_Logo}
           alt={'Everypage Logo'}
         />
+
         <Box py='3' px='5'>
           <View
             _dark={{
@@ -51,13 +57,25 @@ const Login = ({ navigation }) => {
                 keyboardType='email-address'
                 returnKeyType='next'
                 autoCompleteType='email'
+                value={email}
+                onChangeText={value => setEmail(value)}
               />
             </FormControl>
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
-              <Input placeholder='xxxxxxxxx' secureTextEntry type='password' returnKeyType='done' />
+              <Input
+                placeholder='xxxxxxxxx'
+                secureTextEntry
+                type='password'
+                returnKeyType='done'
+                value={password}
+                onChangeText={value => setPassword(value)}
+              />
             </FormControl>
-            <Button bg={BlueShades.primaryBlue}>Login</Button>
+
+            <Button bg={BlueShades.primaryBlue} onPress={handleLogin}>
+              Login
+            </Button>
             <VStack>
               <Divider />
             </VStack>
@@ -99,7 +117,5 @@ const Login = ({ navigation }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Login;
