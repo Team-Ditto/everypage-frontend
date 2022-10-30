@@ -11,3 +11,15 @@ export const createNewUser = async user => {
     console.log(error);
   }
 };
+
+/**
+ * gets the current logged in user/myself from MONGODB
+ */
+export const getMyUserProfile = async () => {
+  try {
+    const user = axiosRequest.get('users/me');
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
