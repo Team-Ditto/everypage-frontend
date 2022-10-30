@@ -3,6 +3,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { auth } from '../firebase';
+import { getMyUserProfile } from '../services/users-service';
 
 export const AuthContext = createContext();
 
@@ -12,9 +13,6 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
-        setCurrentUser(user);
-        console.log('********** Currently Logged In User ***********');
-        console.log(user);
         setUserToken(user);
       } else {
         setCurrentUser(null);
@@ -23,14 +21,19 @@ export const AuthContextProvider = ({ children }) => {
     });
 
     const setUserToken = async user => {
-      let token = '';
-
       if (user) {
-        token = await user.getIdToken(true);
+        const token = await user.getIdToken(true);
+        await AsyncStorage.setItem('access_token', token);
+        await getMyProfile();
+      } else {
+        await AsyncStorage.setItem('access_token', '');
       }
-
-      await AsyncStorage.setItem('user_token', token);
     };
+
+    async function getMyProfile() {
+      const user = await getMyUserProfile();
+      setCurrentUser({ ...user.data });
+    }
 
     return () => {
       unsubscribe();
