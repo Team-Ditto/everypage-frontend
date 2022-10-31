@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
   const { title, author, images } = data;
-  console.log('IMAGE', data.images);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const HandleWishlistPress = () => {

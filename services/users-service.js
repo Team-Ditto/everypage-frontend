@@ -16,10 +16,19 @@ export const createNewUser = async user => {
 
 export async function getBookAsPerUser() {
   try {
-    let books = await axiosRequest.get(`books/mine`);
-    console.log('BOOKS FOR USER: ', books.data);
-    return books;
+    return await axiosRequest.get(`books/mine`);
   } catch (err) {
     console.log(err);
   }
 }
+/**
+ * gets the current logged in user/myself from MONGODB
+ */
+export const getMyUserProfile = async () => {
+  try {
+    const user = axiosRequest.get('users/me');
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};

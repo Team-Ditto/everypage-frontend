@@ -1,4 +1,4 @@
-import { VStack, Text, Box, Button } from 'native-base';
+import { VStack, Text, Box, Button, Spinner } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
@@ -19,19 +19,16 @@ import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
 import { async } from '@firebase/util';
 
 const Home = ({ navigation, user }) => {
-  const [libData, setLibData] = useState(LibraryData);
+  const [libData, setLibData] = useState([]);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
 
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
-
-  const { currentUser } = useContext(AuthContext);
-  console.log('Current user', currentUser.uid);
-
   useEffect(() => {
     async function fetchData() {
-      // You can await here
-      const books = await getBooksOfLoginUser();
-      console.log(books);
-      // ...
+      getBooksOfLoginUser().then(books => {
+        setLibData(books.data);
+        setSpinnerVisible(false);
+      });
     }
     fetchData();
   }, []);
@@ -65,7 +62,7 @@ const Home = ({ navigation, user }) => {
       <ScrollView>
         <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
           {libData === 'undefined' || null ? (
-            <Text>Loading....</Text>
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
           ) : (
             libData.map((data, id) => {
               return <MyLibraryCard key={id} data={data} navigation={navigation} />;

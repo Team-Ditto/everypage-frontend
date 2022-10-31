@@ -115,5 +115,5 @@ export const uploadFile = async (file, folder, fileName) => {
 };
 
 export const getBooksOfLoginUser = async () => {
-  await getBookAsPerUser();
+  return await getBookAsPerUser();
 };
