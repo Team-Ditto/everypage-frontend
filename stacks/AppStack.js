@@ -19,7 +19,7 @@ const AppStack = () => {
     <Provider store={reduxStore}>
       <NavigationContainer>
         <Stack.Navigator initialRoute='BottomTab'>
-          <Stack.Screen
+          {/* <Stack.Screen
             name='Login'
             component={Login}
             options={{
@@ -40,10 +40,10 @@ const AppStack = () => {
               cardStyle: { backgroundColor: BlueShades.primaryBlue },
               headerTintColor: whiteShades.primaryWhite,
             }}
-          />
-          <Stack.Screen name='Scanner' component={Scanner} />
+          /> */}
+          {/* <Stack.Screen name='Scanner' component={Scanner} />
           <Stack.Screen name='SingleBook' component={SingleBook} />
-          <Stack.Screen name='AddBook' component={AddBook} />
+          <Stack.Screen name='AddBook' component={AddBook} /> */}
           <Stack.Screen
             name='BottomTab'
             component={TabStack}

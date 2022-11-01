@@ -1,10 +1,15 @@
-import { Input, Box, Icon, IconButton, HStack } from 'native-base';
+import { Input, Box, Icon, IconButton, HStack, View, Text, VStack } from 'native-base';
+import { ScrollView } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import RecentSearch from './RecentSearch';
+import { data } from '../../constants/LibraryData';
 
-const Search = ({ navigation }) => {
+function SearchResult() {
   return (
     <Box display='flex' width='100%' mt={2}>
+      <View>
+        <Text>Search Result</Text>
+      </View>
       <HStack display='flex' justifyContent='center' alignItems='center'>
         <Input
           ml={2}
@@ -23,7 +28,7 @@ const Search = ({ navigation }) => {
             />
           }
           placeholder='Search'
-          // onClick={()=>{<RecentSearch />}}
+          
         />
 
         <IconButton
@@ -34,8 +39,23 @@ const Search = ({ navigation }) => {
           icon={<Icon size='md' as={<Ionicons name='filter-outline' size={24} color='black' />} color='white' />}
         />
       </HStack>
+      <Text mx={2} my={2}>
+        All ()
+      </Text>
+      <ScrollView>
+        <Box
+          py={3}
+          px={2}
+          w="100%"
+          flexDirection="row"
+          flexWrap="wrap"
+          justifyContent="space-between"
+        >
+          {/* Diaplay the book data */}
+        </Box>
+      </ScrollView>
     </Box>
   );
-};
+}
 
-export default Search;
+export default SearchResult;
