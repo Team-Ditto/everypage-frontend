@@ -10,8 +10,8 @@ export default function Profile() {
   return (
     <View>
       {/* <Text>Profile</Text> */}
-      <RecentSearch />
-      {/* <SearchResult /> */}
+      {/* <RecentSearch /> */}
+      <SearchResult />
     </View>
   );
 }

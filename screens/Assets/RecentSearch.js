@@ -4,7 +4,11 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import { useRef, useState } from 'react';
 
 const RecentSearch = ({ navigation }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState([]);
+
+  // const updateText = ({ target }) => {
+  //   setText(target.value);
+  // };
 
   return (
     <Box display='flex' width='100%' mt={2}>
@@ -17,6 +21,7 @@ const RecentSearch = ({ navigation }) => {
           placeholder='Search'
           value={text}
           onChangeText={newText => setText(newText)}
+          // onChange={updateText}
         />
 
         <TouchableOpacity onPress={() => this.setState({ value })}>
@@ -24,6 +29,9 @@ const RecentSearch = ({ navigation }) => {
         </TouchableOpacity>
       </HStack>
       <VStack>
+        {/* {text.map(input => {
+          return <li>{input.text}</li>;
+        })} */}
         <Text>{text}</Text>
       </VStack>
     </Box>
