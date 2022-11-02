@@ -14,6 +14,10 @@ import Location from '../screens/Assets/Location';
 import { BlackShades, BlueShades, whiteShades } from '../assets/style/color';
 import { Button } from 'native-base';
 import ReaderInfo from '../screens/User/ReaderInfo';
+import Genres from '../screens/Main/Genres';
+import SingleGenre from '../screens/Main/SingleGenre';
+import SingleView from '../screens/Cards/Book/SingleView';
+import WishlistButton from '../screens/Assets/WishlistButton';
 
 import { AuthContext } from '../contexts/AuthContext';
 const AppStack = () => {
@@ -57,6 +61,24 @@ const AppStack = () => {
                 cardStyle: { backgroundColor: BlueShades.primaryBlue },
                 headerTintColor: whiteShades.primaryWhite,
               }}
+            />
+            <Stack.Screen name='Genres' component={Genres} />
+            <Stack.Screen
+              name='SingleGenre'
+              component={SingleGenre}
+              options={({ route }) => ({ title: route.params.genre })}
+            />
+            <Stack.Screen
+              name='SingleView'
+              component={SingleView}
+              options={({ route }) => ({
+                bookData: route.params.bookData,
+                headerTitle: 'Discover',
+                headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
+                headerStyle: {
+                  backgroundImage: JSON.stringify(route.params.bookData.imageSrc),
+                },
+              })}
             />
           </>
         ) : (
