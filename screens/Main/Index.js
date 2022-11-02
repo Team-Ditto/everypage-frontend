@@ -17,10 +17,13 @@ import { getBookAsPerUser } from '../../services/users-service';
 import axios from 'axios';
 import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
 import { async } from '@firebase/util';
+import { BOOK_STATUS } from '../../constants/index';
 
 const Home = ({ navigation, user }) => {
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const [bookStatus, setBookStatus] = useState('All');
+
 
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
   useEffect(() => {
@@ -38,17 +41,16 @@ const Home = ({ navigation, user }) => {
       {/* Search component */}
       <Search navigation={navigation} />
       {/* button slider */}
-      <Text m={2}>Genre</Text>
       <ScrollView
         style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       >
-        {genreData.map((genre, idx) => {
+        {BOOK_STATUS.map((status, idx) => {
           return (
-            <Box mx={1} key={idx} h={60}>
-              <Button px={5} variant={'solid'} color={'muted.800'} borderRadius='sm'>
-                {genre}
+            <Box mx={1} key={idx} h='55px' width='120px'>
+              <Button px={5} borderRadius='md' onPress={e => setBookStatus(status)}>
+                {status}
               </Button>
             </Box>
           );
@@ -57,7 +59,7 @@ const Home = ({ navigation, user }) => {
 
       {/* My Library Data Collection */}
       <Text mx={2} my={2}>
-        All ({libData.length})
+        {bookStatus} ({libData.length})
       </Text>
       <ScrollView>
         <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
