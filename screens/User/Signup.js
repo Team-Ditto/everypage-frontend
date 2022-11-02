@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Box, HStack, VStack, FormControl, Input, Link, Button } from 'native-base';
-import * as ImagePicker from 'expo-image-picker';
-
+import { StyleSheet } from 'react-native';
+import { Box, HStack, VStack, FormControl, Input, Link, Button, Text, View, Image } from 'native-base';
 import { signUpWithEmailAndPassword } from '../../firebase/firebase-service';
+import Everypage_Logo from '../../assets/Everypage_Logo.png';
+import { BlueShades, OrangeShades } from '../../assets/style/color';
+import * as ImagePicker from 'expo-image-picker';
 
 const Signup = ({ navigation }) => {
   // TODO:please do something with this error
@@ -32,8 +33,7 @@ const Signup = ({ navigation }) => {
     try {
       if (email && password && displayName) {
         await signUpWithEmailAndPassword(email, password, displayName, singleFile);
-
-        navigation.navigate('BottomTab');
+        navigation.navigate('Location');
       }
     } catch (err) {
       console.log(JSON.stringify(err));
@@ -43,12 +43,14 @@ const Signup = ({ navigation }) => {
 
   return (
     //container start
-    <Box safeAreaTop px={3} bg='red.100' flex={1}>
-      <HStack px={1} py={3} justifyContent='center' mt='10'>
-        <Text>Signup</Text>
-      </HStack>
+    <Box px={3} flex={1}>
+      <Image
+        style={{ width: '100%', height: 200, resizeMode: 'contain' }}
+        source={Everypage_Logo}
+        alt={'Everypage Logo'}
+      />{' '}
       <View>
-        <Text>Create an account. It's free!</Text>
+        <Text fontSize='xl'>Create an account. It's Free</Text>
       </View>
       <VStack space={3} mt='5'>
         <FormControl>
@@ -88,9 +90,11 @@ const Signup = ({ navigation }) => {
         </FormControl>
         <Text>Atleast 8 characters</Text>
 
-        <Button onPress={pickImage}>Pick Image</Button>
-
-        <Button mt='2' colorScheme='gray' onPress={handleSubmit}>
+        {/* SV: removed as not needed in UI but code still here for reference */}
+        {/* <Button onPress={pickImage} bg={BlueShades.primaryBlue}>
+          Pick Image
+        </Button> */}
+        <Button mt='6' bg={BlueShades.primaryBlue} onPress={handleSubmit}>
           Next
         </Button>
         <HStack mt='6' justifyContent='center'>
@@ -105,8 +109,8 @@ const Signup = ({ navigation }) => {
           </Text>
           <Link
             _text={{
-              color: 'gray',
-              fontWeight: 'medium',
+              color: OrangeShades.primaryOrange,
+              fontWeight: 'bold',
             }}
             onPress={() => {
               navigation.navigate('Login');

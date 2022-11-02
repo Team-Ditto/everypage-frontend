@@ -2,7 +2,7 @@ import { Box, AspectRatio, Image, VStack, Text, Pressable } from 'native-base';
 import { useState } from 'react';
 import WishlistButton from '../../Assets/WishlistButton';
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
-  const { title, author, imageSrc } = data;
+  const { title, author, images } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const handleWishlistPress = () => {
@@ -33,7 +33,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
               w='100%'
               h='100%'
               source={{
-                uri: imageSrc,
+                uri: images[0],
               }}
               alt={title}
             />

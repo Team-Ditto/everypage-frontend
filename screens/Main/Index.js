@@ -41,9 +41,13 @@ const Home = ({ navigation }) => {
       </Text>
       <ScrollView>
         <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-          {libData.map((data, id) => {
-            return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-          })}
+          {libData === 'undefined' || null ? (
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+          ) : (
+            libData.map((data, id) => {
+              return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+            })
+          )}
         </Box>
       </ScrollView>
       <FloatingButtons navigation={navigation} />

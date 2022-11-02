@@ -1,41 +1,73 @@
 export const LibraryData = [
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },
   {
+<<<<<<< HEAD
     imageSrc: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
+=======
+    images: ['https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg'],
+>>>>>>> dev
     title: "Harry Potter and the Socerer's Stone",
     author: 'J. K. Rowling',
   },

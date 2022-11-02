@@ -3,8 +3,9 @@ import { doc, setDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { auth, db, storage } from './';
-import { createNewUser } from '../services/users-service';
+import { createNewUser, getBookAsPerUser } from '../services/users-service';
 import { DEFAULT_PROFILE_PHOTO_URL, USER_PROFILE_UPLOAD_DIRECTORY } from '../constants';
+import { async } from '@firebase/util';
 
 /**
  * creates new user with the credentials
@@ -111,4 +112,8 @@ export const uploadFile = async (file, folder, fileName) => {
     console.log(err);
     throw err;
   }
+};
+
+export const getBooksOfLoginUser = async () => {
+  return await getBookAsPerUser();
 };

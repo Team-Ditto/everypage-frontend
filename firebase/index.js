@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getApps, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth/react-native';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 
@@ -14,12 +15,20 @@ const firebaseConfig = {
   measurementId: 'G-HNZB65K5QL',
 };
 
+let app;
+let auth;
+
 // Initialize Firebase
 // Editing this file with fast refresh will reinitialize the app on every refresh, let's not do that
 if (!getApps().length) {
-  initializeApp(firebaseConfig);
+  app = initializeApp(firebaseConfig);
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage),
+  });
 }
 
-export const auth = getAuth();
-export const storage = getStorage();
-export const db = getFirestore();
+auth = getAuth();
+const storage = getStorage();
+const db = getFirestore();
+
+export { auth, storage, db };

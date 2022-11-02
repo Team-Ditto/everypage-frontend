@@ -1,18 +1,10 @@
-import React, { useState } from "react";
-import {
-  HStack,
-  Image,
-  Select,
-  Text,
-  VStack,
-  Switch,
-  CheckIcon,
-} from "native-base";
-import { StyleSheet } from "react-native";
+import React, { useState } from 'react';
+import { HStack, Image, Select, Text, VStack, Switch, CheckIcon } from 'native-base';
+import { StyleSheet } from 'react-native';
 const SingleBook = ({ route, navigation }) => {
   const [isShareable, setIsShareable] = useState(false);
   const [libCardData, setlibCardData] = useState(route.params.libCardData);
-  let [service, setService] = useState("");
+  let [service, setService] = useState('');
   return (
     <>
       <VStack style={Styles.mainContainer}>
@@ -20,35 +12,35 @@ const SingleBook = ({ route, navigation }) => {
           <Image
             style={Styles.ImageContainerStyle}
             source={{
-              uri: libCardData.imageSrc,
+              uri: libCardData.images[0],
             }}
-            alt="Alternate Text"
-            size="xl"
+            alt='Alternate Text'
+            size='xl'
           />
           <VStack style={Styles.bookTitleAuthContainer}>
             <Text style={Styles.bookTitle}>{libCardData.title}</Text>
             <Text style={Styles.bookAuthor}>{libCardData.author} </Text>
             {isShareable ? (
               <Select
-                accessibilityLabel="Choose..."
-                placeholder="Choose..."
-                size="sm"
-                w="120"
+                accessibilityLabel='Choose...'
+                placeholder='Choose...'
+                size='sm'
+                w='120'
                 selectedValue={service}
                 _selectedItem={{
-                  bg: "teal.600",
-                  endIcon: <CheckIcon size="5" />,
+                  bg: 'teal.600',
+                  endIcon: <CheckIcon size='5' />,
                 }}
                 mt={1}
                 ml={15}
-                onValueChange={(itemValue) => setService(itemValue)}
+                onValueChange={itemValue => setService(itemValue)}
               >
-                <Select.Item label="Available" value="available" />
-                <Select.Item label="In use" value="in-use" />
-                <Select.Item label="Hold" value="hold" />
+                <Select.Item label='Available' value='available' />
+                <Select.Item label='In use' value='in-use' />
+                <Select.Item label='Hold' value='hold' />
               </Select>
             ) : (
-              ""
+              ''
             )}
           </VStack>
         </HStack>
@@ -90,17 +82,15 @@ const SingleBook = ({ route, navigation }) => {
             <HStack style={Styles.shareStack}>
               <Text style={Styles.subHeading}>Share</Text>
               <Switch
-                size="sm"
+                size='sm'
                 mt={3}
                 value={isShareable}
-                onValueChange={(value) => {
+                onValueChange={value => {
                   setIsShareable(value);
                 }}
               />
             </HStack>
-            <Text color="muted.500">
-              Book is Available for others user to request
-            </Text>
+            <Text color='muted.500'>Book is Available for others user to request</Text>
           </VStack>
           <VStack>
             <Text style={Styles.subHeading}>Notes</Text>
@@ -115,29 +105,29 @@ const SingleBook = ({ route, navigation }) => {
 const Styles = StyleSheet.create({
   mainContainer: {
     padding: 15,
-    display: "flex",
+    display: 'flex',
   },
   ImageContainerStyle: {
-    width: "40%",
+    width: '40%',
   },
   bookTitleAuthContainer: {
-    width: "60%",
+    width: '60%',
   },
   bookTitle: {
     paddingTop: 2,
     paddingLeft: 15,
     marginRight: 15,
     fontSize: 24,
-    fontWeight: "bold",
-    flexWrap: "wrap",
+    fontWeight: 'bold',
+    flexWrap: 'wrap',
   },
   bookAuthor: {
-    color: "grey",
+    color: 'grey',
     fontSize: 14,
     paddingLeft: 15,
   },
   subHeading: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingBottom: 15,
     paddingTop: 15,
     fontSize: 18,
@@ -147,15 +137,15 @@ const Styles = StyleSheet.create({
   },
   shareStack: {
     paddingTop: 5,
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   subTitle: {
-    color: "grey",
+    color: 'grey',
     width: 150,
   },
   titleColor: {
-    color: "grey",
+    color: 'grey',
   },
 });
 

@@ -17,7 +17,7 @@ const SingleView = ({ navigation, route }) => {
             w='100%'
             h='100%'
             source={{
-              uri: bookData.imageSrc,
+              uri: bookData.images[0],
             }}
             alt='book cover'
           />
