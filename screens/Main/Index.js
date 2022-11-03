@@ -3,34 +3,34 @@ import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
 
-import { LibraryData } from '../../constants/LibraryData';
 import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../../contexts/AuthContext';
-import {
-  getAllBooksForTheUser,
-  getBooksOfLoginUser,
-  signUpWithEmailAndPassword,
-} from '../../firebase/firebase-service';
-import { getBookAsPerUser } from '../../services/users-service';
-import axios from 'axios';
-import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
-import { async } from '@firebase/util';
-import { BlueShades, OrangeShades } from '../../assets/style/color';
+import { getBooksOfLoginUser } from '../../firebase/firebase-service';
+import { OrangeShades } from '../../assets/style/color';
 import Fliter from '../Assets/FilterSettings/Fliter';
 
 const Home = ({ navigation }) => {
-  const [libData, setLibData] = useState(LibraryData);
+  const [libData, setLibData] = useState([]);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
   const [isFilterVisible, setFilterVisible] = useState(false);
   const [isSpinnerVisible, setSpinnerVisible] = useState(false);
-  const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
+
   useEffect(() => {
     async function fetchData() {
       getBooksOfLoginUser().then(books => {
         setLibData(books.data.results);
+        setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      getBooksOfLoginUser().then(books => {
+        setLibData(books.data);
         setSpinnerVisible(false);
       });
     }
