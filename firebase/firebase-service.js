@@ -6,6 +6,7 @@ import { auth, db, storage } from './';
 import { createNewUser, getBookAsPerUser } from '../services/users-service';
 import { DEFAULT_PROFILE_PHOTO_URL, USER_PROFILE_UPLOAD_DIRECTORY } from '../constants';
 import { async } from '@firebase/util';
+import { addBook } from '../services/books-service';
 
 /**
  * creates new user with the credentials
@@ -20,6 +21,7 @@ export const signUpWithEmailAndPassword = async (email, password, displayName, f
     let photoURL;
     const response = await createUserWithEmailAndPassword(auth, email, password);
 
+    // @TODO: Can we export it to common place. Resuable code
     if (file) {
       photoURL = await uploadFile(file, USER_PROFILE_UPLOAD_DIRECTORY, displayName);
     } else {
