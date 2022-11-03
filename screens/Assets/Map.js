@@ -1,12 +1,29 @@
-import React from 'react';
+import { async } from '@firebase/util';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function Map({ longitude = '', latitude = '' }) {
+export default function Map({ longitude = 0, latitude = 0 }) {
+  const [region, setRegion] = useState({
+    latitude: longitude,
+    longitude: longitude,
+    latitudeDelta: 0.09,
+    longitudeDelta: 0.09,
+  });
+  useEffect(() => {
+    setRegion({
+      latitude: latitude,
+      longitude: longitude,
+      latitudeDelta: 0.09,
+      longitudeDelta: 0.09,
+    });
+  }, [latitude, longitude]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <MapView
+          region={region}
           style={styles.mapStyle}
           initialRegion={{
             latitude: latitude,
@@ -22,8 +39,8 @@ export default function Map({ longitude = '', latitude = '' }) {
             draggable
             coordinate={{ latitude: latitude, longitude: longitude }}
             onDragEnd={e => alert(JSON.stringify(e.nativeEvent.coordinate))}
-            title={'Test Marker'}
-            description={'This is a description of the marker'}
+            // title={'Test Marker'}
+            // description={'This is a description of the marker'}
           />
         </MapView>
       </View>

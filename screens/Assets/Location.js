@@ -13,6 +13,11 @@ const Location = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const [zipCode, setZipCode] = useState('');
+
+  const handleZipCodeChange = text => {
+    setZipCode(text);
+  };
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -56,13 +61,31 @@ const Location = ({ navigation }) => {
       </VStack>
       <View style={fieldSet}>
         <Text style={legend}>Your zip code</Text>
-        <Input variant='unstyled' placeholder='xxx-xxx'></Input>
+        <Input
+          variant='unstyled'
+          placeholder='XXX-XXX'
+          value={zipCode}
+          returnKeyType='done'
+          onChangeText={handleZipCodeChange}
+          onSubmitEditing={() => {
+            let lat = '';
+            let long = '';
+            let address = zipCode;
+
+            Loc.geocodeAsync(address)
+              .then(res => {
+                console.log(res);
+                lat = res[0]['latitude'];
+                long = res[0]['longitude'];
+                setLocation({ latitude: lat, longitude: long });
+              })
+              .catch(err => {
+                console.log(err);
+                alert("Couldn't find the location");
+              });
+          }}
+        ></Input>
       </View>
-      {/* <FormControl>
-        <FormControl.Label>Your Zip Code</FormControl.Label>
-        <Input placeholder='xxx xxx' keyboardType='default' returnKeyType='next' />
-        <FormControl.ErrorMessage>Zip code is required</FormControl.ErrorMessage>
-      </FormControl> */}
       <View
         style={{
           display: 'flex',
