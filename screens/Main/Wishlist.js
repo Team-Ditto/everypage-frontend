@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { VStack, Text, Center, Box, HStack, Button } from 'native-base';
 
@@ -6,15 +6,32 @@ import Search from '../Assets/Search';
 import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 
-import { LibraryData } from '../../constants/LibraryData';
+import { WishlistData } from '../../constants/WishlistData';
+import { getWishlistsByStatus } from '../../services/wishlists-service';
 
 export default function Wishlist({ navigation }) {
-  const [libData, setLibData] = useState(LibraryData);
+  const [wishlistData, setWishlistData] = useState(WishlistData);
   const [isForLater, setIsForLater] = useState(true);
+  const [status, setStatus] = useState('For Later');
 
-  function handleInput(v) {
-    setIsForLater(v);
+  function handleInput(value) {
+    setIsForLater(value);
   }
+
+  useEffect(() => {
+    if (isForLater) {
+      setStatus('For Later');
+    } else {
+      setStatus('Requested');
+    }
+    async function fetchData() {
+      getWishlistsByStatus(status).then(wishlist => {
+        setWishlistData(wishlist.data);
+        // setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
 
   return (
     <VStack>
@@ -61,7 +78,7 @@ export default function Wishlist({ navigation }) {
         )}
       </Box>
       <VStack>
-        <Box>{isForLater ? <ForLater libData={libData} /> : <Requested libData={libData} />}</Box>
+        <Box>{isForLater ? <ForLater wishlistData={wishlistData} /> : <Requested wishlistData={wishlistData} />}</Box>
       </VStack>
     </VStack>
   );

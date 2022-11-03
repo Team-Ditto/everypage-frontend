@@ -1,6 +1,7 @@
 import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon, HStack, Link } from 'native-base';
+
 const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
-  const { title, author, images, owner, ownerPicture, status } = data;
+  const { owner, book, status } = data;
 
   let curStyle = {};
 
@@ -18,7 +19,9 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
   ];
 
   switch (status) {
-    case 'Available':
+    //WORK IN PROGRESS
+    //Have to add a status of available or not on the object
+    case 'For Later':
       curStyle = statusStyle[0];
       break;
 
@@ -37,15 +40,15 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
           borderRadius='10px'
           w='40%'
           source={{
-            uri: images[0],
+            uri: book.images[0],
           }}
-          alt={title}
+          alt={book.title}
         />
         <Box w='55%' ml='3%'>
           <Text fontWeight='semibold' fontSize='md'>
-            {title}
+            {book.title}
           </Text>
-          <Text fontSize='md'>{author}</Text>
+          <Text fontSize='md'>{book.author}</Text>
           <Box
             bgColor={curStyle.backgroundColor}
             borderRadius='4px'
@@ -64,13 +67,13 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
               w='30px'
               h='30px'
               borderRadius='50%'
-              source={{
+              /*  source={{
                 uri: ownerPicture,
-              }}
-              alt={owner}
+              }} */
+              alt={book.owner}
             />
             <Link href='https://nativebase.io' ml='5px'>
-              {owner}
+              {book.owner}
             </Link>
           </HStack>
         </Box>
