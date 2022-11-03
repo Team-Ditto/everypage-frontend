@@ -10,8 +10,6 @@ export default function Profile() {
   return (
     <View>
       <Text>Profile</Text>
-      {/* <Location /> */}
-      {/* <SearchSortFilter />  */}
       <Button mt='2' colorScheme='gray' onPress={handleLogout}>
         Logout
       </Button>
