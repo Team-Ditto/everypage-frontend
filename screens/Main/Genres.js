@@ -12,6 +12,7 @@ const Genres = ({ navigation }) => {
             return (
               <>
                 <Pressable
+                  key={g}
                   onPress={() => {
                     navigation.navigate('SingleGenre', { genre: g });
                   }}
