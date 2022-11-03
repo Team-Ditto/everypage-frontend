@@ -1,16 +1,26 @@
-import { VStack, Text, Box, Button } from 'native-base';
+import { VStack, Text, Box, Button, Spinner } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
-import { useState } from 'react';
-
-import { LibraryData } from '../../constants/LibraryData';
-import { BOOK_STATUS } from '../../constants/index';
+import { useEffect, useState } from 'react';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
+import { getBooksOfLoginUser } from '../../firebase/firebase-service';
+import { BOOK_STATUS } from '../../constants/index';
 
 const Home = ({ navigation }) => {
-  const [libData, setLibData] = useState(LibraryData);
+  const [libData, setLibData] = useState([]);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
+
+  useEffect(() => {
+    async function fetchData() {
+      getBooksOfLoginUser().then(books => {
+        setLibData(books.data);
+        setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
 
   const BookStatusChangeHandle = () => {};
 

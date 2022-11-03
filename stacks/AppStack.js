@@ -1,9 +1,6 @@
 import { useContext } from 'react';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import IndexScreen from '../screens/IndexScreen';
-import { Provider } from 'react-redux';
-import configureStore from '../redux/store';
 import Login from '../screens/User/Login';
 import Signup from '../screens/User/Signup';
 import Scanner from '../screens/Assets/Scanner';
@@ -11,12 +8,11 @@ import SingleBook from '../screens/Cards/Book/SingleBook';
 import TabStack from './TabStack';
 import AddBook from '../screens/Main/Book/AddBook';
 import Location from '../screens/Assets/Location';
-import { BlackShades, BlueShades, whiteShades } from '../assets/style/color';
-import { Button } from 'native-base';
+import { BlueShades, whiteShades } from '../assets/style/color';
 import ReaderInfo from '../screens/User/ReaderInfo';
 import Genres from '../screens/Main/Genres';
 import SingleGenre from '../screens/Main/SingleGenre';
-import SingleView from '../screens/Cards/Book/SingleView';
+import SingleView from '../screens/Cards/Discover/SingleView';
 import WishlistButton from '../screens/Assets/WishlistButton';
 
 import { AuthContext } from '../contexts/AuthContext';
@@ -76,7 +72,7 @@ const AppStack = () => {
                 headerTitle: 'Discover',
                 headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
                 headerStyle: {
-                  backgroundImage: JSON.stringify(route.params.bookData.image[0]),
+                  backgroundImage: JSON.stringify(route.params.bookData.images[0]),
                 },
               })}
             />
@@ -106,8 +102,7 @@ const AppStack = () => {
               }}
             />
           </>
-        )}{' '}
-        */}
+        )}
       </Stack.Navigator>
     </NavigationContainer>
     // </Provider>
