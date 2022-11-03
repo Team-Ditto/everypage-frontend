@@ -10,9 +10,9 @@ const SearchResult = ({ navigation }) => {
 
   return (
     <Box display='flex' width='100%' mt={2}>
-      <View>
+      {/* <View>
         <Text>Search Result</Text>
-      </View>
+      </View> */}
       <Text mx={2} my={2}>
         All ({libData.length})
       </Text>
