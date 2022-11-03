@@ -1,40 +1,42 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   HStack,
+  Text,
   VStack,
   FormControl,
   Input,
   Link,
   Button,
-  Heading,
   StatusBar,
   Icon,
   ScrollView,
+  Heading,
+  Image,
+  Divider,
+  View,
 } from 'native-base';
-import { StyleSheet, Text, View } from 'react-native';
-
 import { loginWithEmailAndPassword } from '../../firebase/firebase-service';
+import { AntDesign } from '@expo/vector-icons';
+import Everypage_Logo from '../../assets/Everypage_Logo.png';
+import { BlackShades, BlueShades, OrangeShades, whiteShades } from '../../assets/style/color';
 
 const Login = ({ navigation }) => {
   const [err, setErr] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleLogin = async () => {
     await loginWithEmailAndPassword(email, password);
   };
   return (
-    <>
-      <StatusBar backgroundColor='gray' barStyle='dark-content' />
+    <ScrollView>
+      <VStack>
+        <Image
+          style={{ width: '100%', height: 200, resizeMode: 'contain' }}
+          source={Everypage_Logo}
+          alt={'Everypage Logo'}
+        />
 
-      <Box px={5} bg='gray.400'>
-        <Heading mt='40' size='xl' fontWeight='extrabold'>
-          Everypage
-        </Heading>
-      </Box>
-
-      <ScrollView>
         <Box py='3' px='5'>
           <View
             _dark={{
@@ -47,7 +49,7 @@ const Login = ({ navigation }) => {
             <Text>To organize and track your books and discover, borrow and lend books around you.</Text>
           </View>
 
-          <VStack space={10} mt='10' backgroundColor=''>
+          <VStack space={5} mt='5'>
             <FormControl>
               <FormControl.Label>Email ID</FormControl.Label>
               <Input
@@ -69,30 +71,24 @@ const Login = ({ navigation }) => {
                 value={password}
                 onChangeText={value => setPassword(value)}
               />
-              <Link
-                _text={{
-                  fontSize: 'sm',
-                  fontWeight: '500',
-                }}
-                alignSelf='flex-start'
-                mt='5'
-                color='gray'
-              >
-                Forgot it?
-              </Link>
             </FormControl>
-            <Button colorScheme='gray' onPress={handleLogin}>
+
+            <Button bg={BlueShades.primaryBlue} onPress={handleLogin}>
               Login
             </Button>
-
+            <VStack>
+              <Divider />
+            </VStack>
             <Button
-              // mt='2'
-              colorScheme='gray'
+              leftIcon={<AntDesign name='google' size={24} color='black' />}
+              bg={whiteShades.primaryWhite}
+              variant='unstyled'
+              _text={{
+                color: BlackShades.primaryBlack,
+              }}
             >
-              <Icon source='' alt=''></Icon>
               Continue with Google
             </Button>
-
             <HStack mt='6' justifyContent='center'>
               <Text
                 fontSize='sm'
@@ -101,27 +97,25 @@ const Login = ({ navigation }) => {
                   color: 'warmGray.200',
                 }}
               >
-                I'm a new user.{' '}
+                Don't have an account{' '}
               </Text>
               <Link
                 _text={{
-                  color: 'gray',
+                  color: OrangeShades.primaryOrange,
                   fontWeight: 'medium',
                 }}
                 onPress={() => {
                   navigation.navigate('Signup');
                 }}
               >
-                Sign Up
+                Sign Up Now
               </Link>
             </HStack>
           </VStack>
         </Box>
-      </ScrollView>
-    </>
+      </VStack>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Login;
