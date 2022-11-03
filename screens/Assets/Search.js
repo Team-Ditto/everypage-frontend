@@ -1,6 +1,6 @@
 import { Input, Box, Icon, IconButton, HStack } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import RecentSearch from './RecentSearch';
+import SearchResult from './SearchResult';
 
 const Search = ({ navigation }) => {
   return (
@@ -23,7 +23,7 @@ const Search = ({ navigation }) => {
             />
           }
           placeholder='Search'
-          // onClick={()=>{<RecentSearch />}}
+          onClick={()=>{<SearchResult />}}
         />
 
         <IconButton

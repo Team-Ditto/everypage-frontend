@@ -1,61 +1,30 @@
 import { Input, Box, Icon, IconButton, HStack, View, Text, VStack } from 'native-base';
 import { ScrollView } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import RecentSearch from './RecentSearch';
-import { data } from '../../constants/LibraryData';
+import { useState } from 'react';
+import { LibraryData } from '../../constants/LibraryData';
+import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 
-function SearchResult() {
+const SearchResult = ({ navigation }) => {
+  const [libData, setLibData] = useState(LibraryData);
+
   return (
     <Box display='flex' width='100%' mt={2}>
       <View>
         <Text>Search Result</Text>
       </View>
-      <HStack display='flex' justifyContent='center' alignItems='center'>
-        <Input
-          ml={2}
-          width='85%'
-          variant='rounded'
-          InputLeftElement={<Icon as={<Ionicons name='search' />} size={5} ml='2' />}
-          InputRightElement={
-            <Icon
-              as={<Ionicons name='barcode' />}
-              size={8}
-              ml='2'
-              mr='2'
-              onPress={() => {
-                navigation.navigate('Scanner');
-              }}
-            />
-          }
-          placeholder='Search'
-          
-        />
-
-        <IconButton
-          ml={2}
-          mr={2}
-          height='34px'
-          variant='solid'
-          icon={<Icon size='md' as={<Ionicons name='filter-outline' size={24} color='black' />} color='white' />}
-        />
-      </HStack>
       <Text mx={2} my={2}>
-        All ()
+        All ({libData.length})
       </Text>
       <ScrollView>
-        <Box
-          py={3}
-          px={2}
-          w="100%"
-          flexDirection="row"
-          flexWrap="wrap"
-          justifyContent="space-between"
-        >
-          {/* Diaplay the book data */}
+        <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+          {libData.map((data, id) => {
+            return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+          })}
         </Box>
       </ScrollView>
     </Box>
   );
-}
+};
 
 export default SearchResult;

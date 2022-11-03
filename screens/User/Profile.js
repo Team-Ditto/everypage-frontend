@@ -3,15 +3,13 @@ import React from 'react';
 import Location from '../Assets/Location';
 import SearchSortFilter from '../Assets/SearchSortFilter';
 import WelcomeScreen from '../Assets/WelcomeScreen';
-import RecentSearch from '../Assets/RecentSearch';
 import SearchResult from '../Assets/SearchResult';
 
 export default function Profile() {
   return (
     <View>
-      {/* <Text>Profile</Text> */}
-      {/* <RecentSearch /> */}
-      <SearchResult />
+      <Text>Profile</Text>
+      
     </View>
   );
 }
