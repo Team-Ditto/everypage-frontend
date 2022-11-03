@@ -6,11 +6,11 @@ import Search from '../Assets/Search';
 import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 
-import { WishlistData } from '../../constants/WishlistData';
+//import { WishlistData } from '../../constants/WishlistData';
 import { getWishlistsByStatus } from '../../services/wishlists-service';
 
 export default function Wishlist({ navigation }) {
-  const [wishlistData, setWishlistData] = useState(WishlistData);
+  //const [wishlistData, setWishlistData] = useState(WishlistData);
   const [isForLater, setIsForLater] = useState(true);
   const [status, setStatus] = useState('For Later');
 
@@ -18,7 +18,7 @@ export default function Wishlist({ navigation }) {
     setIsForLater(value);
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (isForLater) {
       setStatus('For Later');
     } else {
@@ -31,7 +31,7 @@ export default function Wishlist({ navigation }) {
       });
     }
     fetchData();
-  }, []);
+  }, [isForLater]); */
 
   return (
     <VStack>
@@ -78,7 +78,13 @@ export default function Wishlist({ navigation }) {
         )}
       </Box>
       <VStack>
-        <Box>{isForLater ? <ForLater wishlistData={wishlistData} /> : <Requested wishlistData={wishlistData} />}</Box>
+        <Box>
+          {isForLater ? (
+            <ForLater navigation={navigation} /* wishlistData={wishlistData} */ />
+          ) : (
+            <Requested /* wishlistData={wishlistData} */ />
+          )}
+        </Box>
       </VStack>
     </VStack>
   );

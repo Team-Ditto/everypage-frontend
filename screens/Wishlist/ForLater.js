@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Box, VStack, ScrollView } from 'native-base';
-import { LibraryData } from '../../constants/LibraryData';
 import WishlistCard from '../Cards/Wishlist/WishlistCard';
+import { WishlistData } from '../../constants/WishlistData';
+import { getWishlistsByStatus } from '../../services/wishlists-service';
 
-export default function ForLater({ wishlistData, navigation }) {
-  //  const [similarBookData, setSimilarBookData] = useState(LibraryData);
+export default function ForLater({ navigation }) {
+  const [wishlistData, setWishlistData] = useState(WishlistData);
+
+  useEffect(() => {
+    async function fetchData() {
+      getWishlistsByStatus('For Later').then(wishlist => {
+        setWishlistData(wishlist.data);
+        // setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
 
   return (
     <VStack>
