@@ -1,5 +1,7 @@
 import axiosRequest from './api';
 
+// see users-service.js for example
+
 export const addBook = async book => {
   try {
     // console.log('addBook', book);
@@ -11,4 +13,10 @@ export const addBook = async book => {
   }
 };
 
-// see users-service.js for example
+export async function getAllBooks() {
+  try {
+    return await axiosRequest.get(`books/all`);
+  } catch (err) {
+    console.log(err);
+  }
+}

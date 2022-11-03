@@ -10,11 +10,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-<<<<<<< HEAD
     "@expo/webpack-config": "^0.17.0",
-=======
-    "@expo/webpack-config": "^0.16.19",
->>>>>>> 5a0351e (add: Carousel for images + render b/end book data)
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/geolocation": "^3.0.2",
     "@react-navigation/bottom-tabs": "^6.4.0",
@@ -46,12 +42,8 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "~0.18.7",
     "react-redux": "^8.0.4",
-<<<<<<< HEAD
-    "redux": "^4.2.0"
-=======
     "redux": "^4.2.0",
     "uninstall": "^0.0.0"
->>>>>>> 5a0351e (add: Carousel for images + render b/end book data)
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

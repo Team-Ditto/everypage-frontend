@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
 import { Box, Text, Button, ScrollView, VStack, HStack, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LibraryData, genreData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
+import { getAllBooks } from '../../services/books-service';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
+
+  useEffect(() => {
+    async function fetchData() {
+      getAllBooks().then(books => {
+        setSimilarBookData(books.data);
+        // setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
 
   return (
     <VStack>
