@@ -1,44 +1,41 @@
-import {
-  Box,
-  AspectRatio,
-  Image,
-  VStack,
-  Text,
-  Pressable,
-  Button,
-  IconButton,
-  Icon,
-} from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
-import { useEffect, useState } from "react";
+import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
+import { useEffect, useState } from 'react';
+import WishlistButton from '../../Assets/WishlistButton';
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
-  const { title, author, imageSrc } = data;
+  const { title, author, images } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const HandleWishlistPress = () => {
+  const handleWishlistPress = () => {
     setIsWishlisted(!isWishlisted);
   };
 
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate("SingleBook", {
-          libCardData: data,
-        });
+        showWishListIcon
+          ? navigation.navigate('SingleView', {
+              bookData: data,
+              isWishlisted: isWishlisted,
+              setIsWishlisted: setIsWishlisted,
+            })
+          : navigation.navigate('SingleBook', {
+              libCardData: data,
+            });
       }}
-      alignItems="center"
-      w="47%"
+      alignItems='center'
+      w='47%'
       mx={1}
     >
       <VStack>
-        <AspectRatio w="100%" ratio={164 / 210}>
-          <VStack style={{ display: "flex", position: "relative" }}>
+        <AspectRatio w='100%' ratio={164 / 210}>
+          <VStack style={{ display: 'flex', position: 'relative' }}>
             <Image
-              w="100%"
-              h="100%"
+              w='100%'
+              h='100%'
               source={{
-                uri: imageSrc,
+                uri: images[0],
               }}
               alt={title}
             />
@@ -46,52 +43,21 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
               <Box
                 mt={2}
                 mr={2}
-                bg="muted.50"
-                position="absolute"
-                borderRadius="full"
-                right="0"
+                bg={isWishlisted ? 'black' : 'white'}
+                position='absolute'
+                borderRadius='full'
+                right='0'
               >
-                <IconButton
-                  variant="ghost"
-                  icon={
-                    <Icon
-                      color="muted.900"
-                      size="xl"
-                      onPress={HandleWishlistPress}
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                      as={
-                        <TouchableOpacity>
-                          {isWishlisted ? (
-                            <MaterialIcons
-                              name="favorite"
-                              size={30}
-                              color="black"
-                            />
-                          ) : (
-                            <MaterialIcons
-                              name="favorite-border"
-                              size={30}
-                              color="black"
-                            />
-                          )}
-                        </TouchableOpacity>
-                      }
-                    />
-                  }
-                />
+                <WishlistButton isWishlisted={isWishlisted} handleWishlistPress={handleWishlistPress} />
               </Box>
             ) : (
-              ""
+              ''
             )}
           </VStack>
         </AspectRatio>
         <Box pt={1} pb={3}>
           <VStack>
-            <Text fontWeight="semibold">{title}</Text>
+            <Text fontWeight='semibold'>{title}</Text>
             <Text>{author}</Text>
           </VStack>
         </Box>

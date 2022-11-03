@@ -28,6 +28,6 @@ export const whiteShades = {
   primaryWhite: '#FFFFFF',
 };
 
-export const successColor = {
+export const SuccessColor = {
   success: '#16A34A',
 };
