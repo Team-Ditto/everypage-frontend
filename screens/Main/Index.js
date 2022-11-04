@@ -1,40 +1,18 @@
-import { VStack, Text, Box, Button, Spinner } from 'native-base';
+import { VStack, Text, Box, Button } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { LibraryData } from '../../constants/LibraryData';
+import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../../contexts/AuthContext';
-import {
-  getAllBooksForTheUser,
-  getBooksOfLoginUser,
-  signUpWithEmailAndPassword,
-} from '../../firebase/firebase-service';
-import { getBookAsPerUser } from '../../services/users-service';
-import axios from 'axios';
-import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
-import { async } from '@firebase/util';
-import { BOOK_STATUS } from '../../constants/index';
 
-const Home = ({ navigation, user }) => {
-  const [libData, setLibData] = useState([]);
-  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+const Home = ({ navigation }) => {
+  const [libData, setLibData] = useState(LibraryData);
   const [bookStatus, setBookStatus] = useState('All');
 
-
-  const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
-  useEffect(() => {
-    async function fetchData() {
-      getBooksOfLoginUser().then(books => {
-        setLibData(books.data);
-        setSpinnerVisible(false);
-      });
-    }
-    fetchData();
-  }, []);
+  const BookStatusChangeHandle = () => {};
 
   return (
     <VStack>
