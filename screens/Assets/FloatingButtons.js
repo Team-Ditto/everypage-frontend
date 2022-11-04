@@ -55,21 +55,25 @@ const FloatingButtons = ({ navigation }) => {
                 height: 50,
               },
             ]}
-            onPress={() => {
-              navigation.navigate('Scanner');
-            }}
           >
-            <Icon
-              as={
-                <AntDesign
-                  name='barcode'
-                  style={{
-                    fontSize: '22px',
-                    color: whiteShades.primaryWhite,
-                  }}
-                />
-              }
-            />
+            <Button
+              variant={'unstyled'}
+              onPress={() => {
+                navigation.navigate('Scanner');
+              }}
+            >
+              <Icon
+                as={
+                  <AntDesign
+                    name='barcode'
+                    style={{
+                      fontSize: '22px',
+                      color: whiteShades.primaryWhite,
+                    }}
+                  />
+                }
+              />
+            </Button>
           </Animated.View>
           <Animated.View
             style={[
@@ -88,21 +92,25 @@ const FloatingButtons = ({ navigation }) => {
                 height: 50,
               },
             ]}
-            onPress={() => {
-              navigation.navigate('AddBook');
-            }}
           >
-            <Icon
-              as={
-                <AntDesign
-                  name='edit'
-                  style={{
-                    fontSize: '22px',
-                    color: whiteShades.primaryWhite,
-                  }}
-                />
-              }
-            />
+            <Button
+              onPress={() => {
+                navigation.navigate('AddBook');
+              }}
+              variant={'unstyled'}
+            >
+              <Icon
+                as={
+                  <AntDesign
+                    name='edit'
+                    style={{
+                      fontSize: '22px',
+                      color: whiteShades.primaryWhite,
+                    }}
+                  />
+                }
+              />
+            </Button>
           </Animated.View>
         </>
       )}
