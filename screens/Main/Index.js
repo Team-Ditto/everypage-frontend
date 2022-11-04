@@ -29,7 +29,7 @@ const Home = ({ navigation, user }) => {
   useEffect(() => {
     async function fetchData() {
       getBooksOfLoginUser().then(books => {
-        setLibData(books.data);
+        setLibData(books.data.results);
         setSpinnerVisible(false);
       });
     }
