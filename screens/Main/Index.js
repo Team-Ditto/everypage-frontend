@@ -18,12 +18,12 @@ import axios from 'axios';
 import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
 import { async } from '@firebase/util';
 import { BOOK_STATUS } from '../../constants/index';
+import { BlueShades, OrangeShades } from '../../assets/style/color';
 
 const Home = ({ navigation, user }) => {
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-
 
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
   useEffect(() => {
@@ -48,8 +48,19 @@ const Home = ({ navigation, user }) => {
       >
         {BOOK_STATUS.map((status, idx) => {
           return (
-            <Box mx={1} key={idx} h='55px' width='120px'>
-              <Button px={5} borderRadius='md' onPress={e => setBookStatus(status)}>
+            <Box mx={1} mt={2} key={idx} h={60} width={120}>
+              <Button
+                px={2}
+                variant='unstyled'
+                borderRadius={100}
+                bg={OrangeShades.quaternaryOrange}
+                _text={{ color: OrangeShades.primaryOrange }}
+                style={{
+                  borderWidth: 1,
+                  borderColor: OrangeShades.primaryOrange,
+                }}
+                onPress={e => setBookStatus(status)}
+              >
                 {status}
               </Button>
             </Box>
