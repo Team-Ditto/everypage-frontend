@@ -1,12 +1,13 @@
 import { Button, Icon } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { BlackShades, BlueShades, whiteShades } from '../../assets/style/color';
 
 const FloatingButtons = ({ navigation }) => {
   const [isPressed, setIsPressed] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   return (
     <>
@@ -16,6 +17,11 @@ const FloatingButtons = ({ navigation }) => {
           // navigation.navigate("AddBook");
           setIsPressed(prevState => !prevState);
           // console.log(isPressed);
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+          }).start();
         }}
       >
         <Icon
@@ -32,11 +38,19 @@ const FloatingButtons = ({ navigation }) => {
       </Button>
       {isPressed && (
         <>
-          <Button
+          <Animated.View
             style={[
               Styles.floatingBtnStyle,
               {
-                transform: [{ translateX: -90 }, { translateY: -10 }],
+                opacity: fadeAnim,
+                transform: [
+                  {
+                    translateX: fadeAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -90], // 0 : 150, 0.5 : 75, 1 : 0
+                    }),
+                  },
+                ],
                 width: 50,
                 height: 50,
               },
@@ -56,12 +70,20 @@ const FloatingButtons = ({ navigation }) => {
                 />
               }
             />
-          </Button>
-          <Button
+          </Animated.View>
+          <Animated.View
             style={[
               Styles.floatingBtnStyle,
               {
-                transform: [{ translateX: -10 }, { translateY: -90 }],
+                opacity: fadeAnim,
+                transform: [
+                  {
+                    translateY: fadeAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -90], // 0 : 150, 0.5 : 75, 1 : 0
+                    }),
+                  },
+                ],
                 width: 50,
                 height: 50,
               },
@@ -81,7 +103,7 @@ const FloatingButtons = ({ navigation }) => {
                 />
               }
             />
-          </Button>
+          </Animated.View>
         </>
       )}
     </>
