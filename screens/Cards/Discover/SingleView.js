@@ -1,9 +1,10 @@
 import { VStack, HStack, Box, Text, Heading, Badge, Avatar } from 'native-base';
 import Carousel from '../../Assets/Carousel';
+import BooksSameOwner from '../../Assets/BooksSameOwner';
 
 const SingleView = ({ navigation, route }) => {
   const bookData = route.params.bookData;
-  const { images, title, author, owner, genre, edition, language, isbn, condition } = bookData;
+  const { images, title, author, owner, genre, edition, language, isbn, condition, _id } = bookData;
 
   return (
     <>
@@ -68,6 +69,7 @@ const SingleView = ({ navigation, route }) => {
                 </HStack>
               </VStack>
             </Box>
+            <BooksSameOwner userId={owner._id} ownerName={owner.displayName} bookId={_id} navigation={navigation} />
           </VStack>
         </Box>
       </VStack>
