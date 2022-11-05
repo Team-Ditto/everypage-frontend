@@ -1,4 +1,4 @@
-import { View, Image, ScrollView, CircleIcon, Text, Box } from 'native-base';
+import { View, Image, ScrollView, CircleIcon, Text } from 'native-base';
 import { useState } from 'react';
 
 const imageArray = [
@@ -16,16 +16,31 @@ const Carousel = props => {
   };
   return (
     <>
-      <View justifyContent='center' alignItems='center' flexDirection='row' pt={10}>
-        <View h='235px' w='180px' justifyContent='center' alignItems='center'>
+      <Image
+        w='100%'
+        h='50%'
+        source={{
+          uri: props.images[state.active],
+        }}
+        style={{ zIndex: -3, position: 'absolute', backgroundColor: 'rgba(0,0,0,0.5)' }}
+      />
+      <View
+        w='100%'
+        justifyContent='center'
+        alignItems='center'
+        flexDirection='row'
+        pt={10}
+        style={{ backgroundColor: 'rgba(43, 43, 43, 0.9)' }}
+      >
+        <View h='235px' w='135px' justifyContent='center' alignItems='center'>
           <ScrollView
             horizontal
             pagingEnabled
             showHorizontalScrollIndicator={true}
-            w='140px'
+            w='100%'
             overflow='visible'
             onScroll={handleScroll}
-            scrollEventThrottle={16}
+            scrollEventThrottle={2}
           >
             {props.images.map((img, key) => (
               <Image
