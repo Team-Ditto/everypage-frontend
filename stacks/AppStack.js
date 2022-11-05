@@ -84,7 +84,7 @@ const AppStack = () => {
                 headerTitle: 'Discover',
                 headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
                 headerStyle: {
-                  backgroundImage: JSON.stringify(route.params.bookData.imageSrc),
+                  backgroundImage: JSON.stringify(route.params.bookData.image[0]),
                 },
               })}
             />
@@ -114,7 +114,8 @@ const AppStack = () => {
               }}
             />
           </>
-        )}
+        )}{' '}
+        */}
       </Stack.Navigator>
     </NavigationContainer>
     // </Provider>

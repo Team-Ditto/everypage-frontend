@@ -1,7 +1,5 @@
-import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
-import { useEffect, useState } from 'react';
+import { Box, AspectRatio, Image, VStack, Text, Pressable } from 'native-base';
+import { useState } from 'react';
 import WishlistButton from '../../Assets/WishlistButton';
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
   const { title, author, images } = data;

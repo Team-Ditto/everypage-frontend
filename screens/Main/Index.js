@@ -1,9 +1,10 @@
 import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { LibraryData } from '../../constants/LibraryData';
+import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,9 +22,8 @@ import { BOOK_STATUS } from '../../constants/index';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 import Fliter from '../Assets/FilterSettings/Fliter';
 
-const Home = ({ navigation, user }) => {
-  const [libData, setLibData] = useState([]);
-  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+const Home = ({ navigation }) => {
+  const [libData, setLibData] = useState(LibraryData);
   const [bookStatus, setBookStatus] = useState('All');
   const [isFilterVisible, setFilterVisible] = useState(false);
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
@@ -36,6 +36,8 @@ const Home = ({ navigation, user }) => {
     }
     fetchData();
   }, []);
+
+  const BookStatusChangeHandle = () => {};
 
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);
