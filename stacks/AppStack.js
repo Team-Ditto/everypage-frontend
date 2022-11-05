@@ -114,8 +114,7 @@ const AppStack = () => {
               }}
             />
           </>
-        )}{' '}
-        */}
+        )}
       </Stack.Navigator>
     </NavigationContainer>
     // </Provider>

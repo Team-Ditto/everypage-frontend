@@ -1,7 +1,7 @@
 import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { LibraryData } from '../../constants/LibraryData';
 import { BOOK_STATUS } from '../../constants/index';
@@ -18,7 +18,6 @@ import { getBookAsPerUser } from '../../services/users-service';
 import axios from 'axios';
 import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
 import { async } from '@firebase/util';
-import { BOOK_STATUS } from '../../constants/index';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 import Fliter from '../Assets/FilterSettings/Fliter';
 
@@ -26,6 +25,7 @@ const Home = ({ navigation }) => {
   const [libData, setLibData] = useState(LibraryData);
   const [bookStatus, setBookStatus] = useState('All');
   const [isFilterVisible, setFilterVisible] = useState(false);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(false);
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
   useEffect(() => {
     async function fetchData() {
