@@ -1,7 +1,7 @@
 import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon, HStack, Link } from 'native-base';
 
 const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
-  const { owner, book, status } = data;
+  const { book, status } = data;
 
   let curStyle = {};
 
@@ -76,13 +76,13 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
                 w='30px'
                 h='30px'
                 borderRadius='50%'
-                /*  source={{
-                uri: ownerPicture,
-              }} */
-                alt={book.owner}
+                source={{
+                  uri: book.owner.photoURL,
+                }}
+                alt={book.owner.displayName}
               />
               <Link href='https://nativebase.io' ml='5px'>
-                {book.owner}
+                {book.owner.displayName}
               </Link>
             </HStack>
           </Box>

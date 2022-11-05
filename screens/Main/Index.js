@@ -24,12 +24,11 @@ const Home = ({ navigation, user }) => {
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
 
-
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
   useEffect(() => {
     async function fetchData() {
       getBooksOfLoginUser().then(books => {
-        setLibData(books.data);
+        setLibData(books.data.results);
         setSpinnerVisible(false);
       });
     }
