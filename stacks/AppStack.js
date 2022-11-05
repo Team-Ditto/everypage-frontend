@@ -20,6 +20,7 @@ import SingleView from '../screens/Cards/Book/SingleView';
 import WishlistButton from '../screens/Assets/WishlistButton';
 
 import { AuthContext } from '../contexts/AuthContext';
+import SearchResult from '../screens/Assets/SearchResult';
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
   const { currentUser } = useContext(AuthContext);
@@ -40,6 +41,13 @@ const AppStack = () => {
             <Stack.Screen name='Scanner' component={Scanner} />
             <Stack.Screen name='SingleBook' component={SingleBook} />
             <Stack.Screen name='AddBook' component={AddBook} />
+            <Stack.Screen
+              name='SearchResult'
+              component={SearchResult}
+              options={({ route }) => ({
+                headerTitle: 'Search Result',
+              })}
+            />
             <Stack.Screen
               name='ReaderInfo'
               component={ReaderInfo}

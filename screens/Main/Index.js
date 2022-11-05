@@ -1,4 +1,4 @@
-import { VStack, Text, Box, Button } from 'native-base';
+import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
 import { useState } from 'react';
@@ -7,17 +7,54 @@ import { LibraryData } from '../../constants/LibraryData';
 import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../contexts/AuthContext';
+import {
+  getAllBooksForTheUser,
+  getBooksOfLoginUser,
+  signUpWithEmailAndPassword,
+} from '../../firebase/firebase-service';
+import { getBookAsPerUser } from '../../services/users-service';
+import axios from 'axios';
+import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
+import { async } from '@firebase/util';
+import { BOOK_STATUS } from '../../constants/index';
+import { BlueShades, OrangeShades } from '../../assets/style/color';
+import Fliter from '../Assets/FilterSettings/Fliter';
 
 const Home = ({ navigation }) => {
   const [libData, setLibData] = useState(LibraryData);
   const [bookStatus, setBookStatus] = useState('All');
+  const [isFilterVisible, setFilterVisible] = useState(false);
+  const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
+  useEffect(() => {
+    async function fetchData() {
+      getBooksOfLoginUser().then(books => {
+        setLibData(books.data.results);
+        setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
 
   const BookStatusChangeHandle = () => {};
 
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
+
+  const setFilterState = state => {
+    setFilterVisible(state);
+  };
   return (
     <VStack>
       {/* Search component */}
-      <Search navigation={navigation} />
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Fliter />
+        </HStack>
+      </Box>
       {/* button slider */}
       <ScrollView
         style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
@@ -26,8 +63,19 @@ const Home = ({ navigation }) => {
       >
         {BOOK_STATUS.map((status, idx) => {
           return (
-            <Box mx={1} key={idx} h='55px' width='120px'>
-              <Button px={5} borderRadius='md' onPress={e => setBookStatus(status)}>
+            <Box mx={1} mt={2} key={idx} h={60} width={120}>
+              <Button
+                px={2}
+                variant='unstyled'
+                borderRadius={100}
+                bg={OrangeShades.quaternaryOrange}
+                _text={{ color: OrangeShades.primaryOrange }}
+                style={{
+                  borderWidth: 1,
+                  borderColor: OrangeShades.primaryOrange,
+                }}
+                onPress={e => setBookStatus(status)}
+              >
                 {status}
               </Button>
             </Box>

@@ -9,7 +9,7 @@ import BookDetail from './BookDetails';
 import ReadingStatus from './ReadingStatus';
 
 const AddBook = ({ route, navigation }) => {
-  const routeBookData = undefined;
+  let routeBookData = undefined;
   if (route.params !== undefined && route.params.book !== undefined) {
     routeBookData = route.params.book; // eslint-disable-line react/prop-types
   }
@@ -81,7 +81,7 @@ const AddBook = ({ route, navigation }) => {
             }}
           />
         </FormControl>
-        <Button onPress={handleSaveBtn} my={2}>
+        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: whiteShades.primaryWhite }}>
           Save
         </Button>
       </ScrollView>
