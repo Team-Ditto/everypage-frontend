@@ -20,11 +20,11 @@ export default function ForLater({ navigation }) {
   return (
     <VStack>
       <Text fontSize='lg' fontWeight='800' ml='4%' mt='23px' mb='16px'>
-        For Later ({wishlistData.length})
+        For Later ({wishlistData?.length || 0})
       </Text>
       <ScrollView>
         <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center'>
-          {wishlistData.map((data, id) => {
+          {wishlistData?.map((data, id) => {
             return <WishlistCard key={id} data={data} navigation={navigation} />;
           })}
         </Box>

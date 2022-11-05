@@ -82,7 +82,7 @@ export default function Wishlist({ navigation }) {
           {isForLater ? (
             <ForLater navigation={navigation} /* wishlistData={wishlistData} */ />
           ) : (
-            <Requested /* wishlistData={wishlistData} */ />
+            <Requested navigation={navigation} /* wishlistData={wishlistData} */ />
           )}
         </Box>
       </VStack>
