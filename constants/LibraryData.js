@@ -76,11 +76,10 @@ export const genreData = [
   "Women's Fiction",
 ];
 
-<<<<<<< HEAD
 export const ReadStatus = ['To Read', 'Reading', 'Finished'];
 
 export const Location = ['Home', 'Work', 'Library', 'Other'];
-=======
+
 export const genreDiscover = [
   {
     genre: 'Action & Adventure',
@@ -115,4 +114,3 @@ export const genreDiscover = [
     icon: LiteraryFiction,
   },
 ];
->>>>>>> 7c0ad79 (add: genre icons for genre tab on Discover)

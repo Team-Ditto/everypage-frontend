@@ -8,29 +8,18 @@ import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
 import { OrangeShades } from '../../assets/style/color';
-import Fliter from '../Assets/FilterSettings/Fliter';
+import Filter from '../Assets/FilterSettings/Filter';
 
 const Home = ({ navigation }) => {
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
   const [isFilterVisible, setFilterVisible] = useState(false);
-  const [isSpinnerVisible, setSpinnerVisible] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       getBooksOfLoginUser().then(books => {
         setLibData(books.data.results);
-        setSpinnerVisible(false);
-      });
-    }
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      getBooksOfLoginUser().then(books => {
-        setLibData(books.data);
         setSpinnerVisible(false);
       });
     }
@@ -52,7 +41,7 @@ const Home = ({ navigation }) => {
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onFilterClicked={onFilterClicked} />
-          <Fliter />
+          <Filter />
         </HStack>
       </Box>
       {/* button slider */}

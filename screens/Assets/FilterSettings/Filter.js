@@ -7,7 +7,7 @@ import Sort from './Sort';
 import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
-export default function Fliter() {
+export default function Filter() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
