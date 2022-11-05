@@ -1,4 +1,4 @@
-import { VStack, Text, Box, Button, Spinner } from 'native-base';
+import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
@@ -19,12 +19,13 @@ import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
 import { async } from '@firebase/util';
 import { BOOK_STATUS } from '../../constants/index';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
+import Fliter from '../Assets/FilterSettings/Fliter';
 
 const Home = ({ navigation, user }) => {
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-
+  const [isFilterVisible, setFilterVisible] = useState(false);
   const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
   useEffect(() => {
     async function fetchData() {
@@ -36,10 +37,22 @@ const Home = ({ navigation, user }) => {
     fetchData();
   }, []);
 
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
+
+  const setFilterState = state => {
+    setFilterVisible(state);
+  };
   return (
     <VStack>
       {/* Search component */}
-      <Search navigation={navigation} />
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Fliter />
+        </HStack>
+      </Box>
       {/* button slider */}
       <ScrollView
         style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
