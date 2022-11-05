@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
-import { Box, Text, Button, ScrollView, VStack, HStack, Icon } from 'native-base';
+import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { LibraryData, genreData } from '../../constants/LibraryData';
+import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { getAllBooks } from '../../services/books-service';
+import { getUsersBook } from '../../services/books-service';
+import ActionAndAdventure from '../../assets/genre-icons/action-and-adventure.png';
+import Classics from '../../assets/genre-icons/classics.png';
+import Comics from '../../assets/genre-icons/comics.png';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
 
   useEffect(() => {
     async function fetchData() {
-      getAllBooks().then(books => {
-        setSimilarBookData(books.data);
+      const params = {
+        genre: '',
+        readingStatus: '',
+      };
+      getUsersBook().then(books => {
+        setSimilarBookData(books.data.results);
         // setSpinnerVisible(false);
       });
     }
@@ -44,21 +51,22 @@ export default function Discover({ navigation }) {
         style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        h='105px'
       >
-        {genreData.map((genre, idx) => {
+        {genreDiscover.map((data, idx) => {
           return (
             <Box mx={1} key={idx} h={60}>
-              <Button
-                px={5}
-                variant={'solid'}
-                color={'muted.800'}
-                borderRadius='sm'
+              <Pressable
+                justifyContent='space-between'
                 onPress={() => {
-                  navigation.navigate('SingleGenre', { genre: genre });
+                  navigation.navigate('SingleGenre', { genre: data.genre });
                 }}
               >
-                {genre}
-              </Button>
+                <Image source={data.icon} w='64px' h='64px' alt={data.genre} />
+                <Text w='70px' flexWrap='wrap' textAlign='center'>
+                  {data.genre}
+                </Text>
+              </Pressable>
             </Box>
           );
         })}
