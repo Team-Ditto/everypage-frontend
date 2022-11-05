@@ -62,3 +62,7 @@ export const genreData = [
   'Suspense & Thriller',
   'Travel',
 ];
+
+export const ReadStatus = ['To Read', 'Reading', 'Finished'];
+
+export const Location = ['Home', 'Work', 'Library', 'Other'];

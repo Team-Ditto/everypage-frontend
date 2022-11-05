@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
-import { Input, Box, Icon, IconButton, HStack } from 'native-base';
+import { Input, Box, Icon, IconButton, HStack, Button } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { OrangeShades } from '../../../assets/style/color';
+import { BlueShades, OrangeShades } from '../../../assets/style/color';
 import Sort from './Sort';
+import Genre from './Genre';
+import ReadingStatus from './ReadingStatus';
+import LocationSetting from './LocationSetting';
 export default function Fliter() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -20,9 +23,27 @@ export default function Fliter() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Sort />
-            <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+            <Genre />
+            <ReadingStatus />
+            <LocationSetting />
+            <HStack space={3} style={{ position: 'absolute', bottom: 20 }}>
+              <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+                <Text
+                  style={{
+                    color: BlueShades.primaryBlue,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  Close
+                </Text>
+              </Pressable>
+              <Pressable style={[styles.button, styles.buttonApply]} onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Apply</Text>
+              </Pressable>
+            </HStack>
           </View>
         </View>
       </Modal>
@@ -53,6 +74,7 @@ const styles = StyleSheet.create({
     paddingTop: 55,
     alignItems: 'center',
     shadowColor: '#000',
+    position: 'relative',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -62,15 +84,20 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
+    width: 90,
   },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
+  buttonApply: {
+    backgroundColor: BlueShades.primaryBlue,
+    color: '#fff',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: BlueShades.primaryBlue,
+    color: BlueShades.primaryBlue,
   },
   textStyle: {
     color: 'white',

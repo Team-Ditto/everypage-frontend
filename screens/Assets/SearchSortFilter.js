@@ -47,8 +47,8 @@ const SearchSortFilter = item => {
                   {/* <Text key={String(i)}>{item.name}</Text> */}
 
                   <Radio.Group>
-                    <Radio value={item.id} onPress={() => setChecked(!checked)}>
-                      {item.name}
+                    <Radio value={item} onPress={() => setChecked(!checked)}>
+                      {item}
                     </Radio>
                   </Radio.Group>
                   {/* <Checkbox title={item.id} checkedIcon="dot-circle-o">

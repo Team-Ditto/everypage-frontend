@@ -38,11 +38,8 @@ export default function Accordion({ title, content }) {
           <Radio.Group defaultValue='To Read' name='myRadioGroup' accessibilityLabel='Pick your favorite number'>
             {content.map((item, index) => (
               <View key={index} style={{ display: 'flex', flexDirection: 'column' }}>
-                <Radio
-                  value={item.name}
-                  style={{ display: 'flex', flexDirection: 'row-reverse', alignSelf: 'flex-start' }}
-                >
-                  {item.name}
+                <Radio value={item} style={{ display: 'flex', flexDirection: 'row-reverse', alignSelf: 'flex-start' }}>
+                  {item}
                 </Radio>
                 <Divider my={3} w={200} bg='lightgrey' />
               </View>
