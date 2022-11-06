@@ -1,27 +1,15 @@
-// import { Carousel } from 'antd';
-import { Image, VStack, HStack, Box, Text, Heading, Badge, Avatar } from 'native-base';
-import { height } from 'dom-helpers';
+import { VStack, HStack, Box, Text, Heading, Badge, Avatar } from 'native-base';
+import Carousel from '../../Assets/Carousel';
+import BooksSameOwner from '../../Assets/BooksSameOwner';
 
 const SingleView = ({ navigation, route }) => {
   const bookData = route.params.bookData;
+  const { images, title, author, owner, genre, edition, language, isbn, condition, _id } = bookData;
+
   return (
     <>
       <VStack>
-        <Box h='350px'>
-          {/* <Carousel>
-        {bookData.imageSrc.map((img)=>(
-          <Image src={img} />
-        ))}
-      </Carousel> */}
-          <Image
-            w='100%'
-            h='100%'
-            source={{
-              uri: bookData.images[0],
-            }}
-            alt='book cover'
-          />
-        </Box>
+        <Carousel images={images} />
         <Box
           borderRadius='10px'
           position='relative'
@@ -34,27 +22,26 @@ const SingleView = ({ navigation, route }) => {
           <VStack>
             <HStack>
               <VStack w='80%'>
-                <Heading>{bookData.title}</Heading>
-                <Text>{bookData.author}</Text>
+                <Heading>{title}</Heading>
+                <Text>{author}</Text>
               </VStack>
               <Box w='20%'>
                 <Badge colorScheme='success'>Available</Badge>
               </Box>
             </HStack>
-            <Text my={5}>
-              Owned by{'   '}
+            <HStack mb={5} mt={3} alignItems='center'>
+              <Text>Owned by</Text>
               <Avatar
                 size='sm'
                 w='30px'
-                bg='green.900'
+                mr={2}
+                ml={4}
                 source={{
-                  uri: 'https://bit.ly/broken-link',
+                  uri: owner.photoURL,
                 }}
-              >
-                RW
-              </Avatar>{' '}
-              Ron Weasley
-            </Text>
+              />
+              <Text>{owner.displayName}</Text>
+            </HStack>
             <Box borderRadius='10px' backgroundColor='purple.200' p={5}>
               <Text fontWeight='bold' fontSize='md'>
                 Details
@@ -62,26 +49,27 @@ const SingleView = ({ navigation, route }) => {
               <VStack px={3} pt={1}>
                 <HStack justifyContent='space-between'>
                   <Text>Genre</Text>
-                  <Text>xoxo</Text>
+                  <Text>{genre}</Text>
                 </HStack>
                 <HStack justifyContent='space-between'>
                   <Text>Edition</Text>
-                  <Text>xoxoxo</Text>
+                  <Text>{edition}</Text>
                 </HStack>
                 <HStack justifyContent='space-between'>
                   <Text>Language</Text>
-                  <Text>oxo</Text>
+                  <Text>{language}</Text>
                 </HStack>
                 <HStack justifyContent='space-between'>
                   <Text>ISBN</Text>
-                  <Text>xoxoXOXOXOxo</Text>
+                  <Text>{isbn}</Text>
                 </HStack>
                 <HStack justifyContent='space-between'>
                   <Text>Condition</Text>
-                  <Text>xoxoxo</Text>
+                  <Text>{condition}</Text>
                 </HStack>
               </VStack>
             </Box>
+            <BooksSameOwner userId={owner._id} ownerName={owner.displayName} bookId={_id} navigation={navigation} />
           </VStack>
         </Box>
       </VStack>
