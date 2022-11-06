@@ -24,7 +24,7 @@ export const BlackShades = {
   quaternaryBlack: '#A3A3A3',
 };
 
-export const whiteShades = {
+export const WhiteShades = {
   primaryWhite: '#FFFFFF',
 };
 

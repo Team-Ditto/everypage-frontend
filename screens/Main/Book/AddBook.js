@@ -1,7 +1,7 @@
 import { FormControl, Stack, Input, TextArea, Button, Box, VStack } from 'native-base';
 import { useContext, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { BlueShades, whiteShades } from '../../../assets/style/color';
+import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { addBookForUser } from '../../../firebase/firebase-service';
 import { addBook } from '../../../services/books-service';
@@ -81,7 +81,7 @@ const AddBook = ({ route, navigation }) => {
             }}
           />
         </FormControl>
-        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: whiteShades.primaryWhite }}>
+        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: WhiteShades.primaryWhite }}>
           Save
         </Button>
       </ScrollView>

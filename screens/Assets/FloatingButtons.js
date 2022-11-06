@@ -3,7 +3,7 @@ import { Animated, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
-import { BlackShades, BlueShades, whiteShades } from '../../assets/style/color';
+import { BlackShades, BlueShades, WhiteShades } from '../../assets/style/color';
 
 const FloatingButtons = ({ navigation }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -25,12 +25,12 @@ const FloatingButtons = ({ navigation }) => {
         }}
       >
         <Icon
-          color={whiteShades.primaryWhite}
+          color={WhiteShades.primaryWhite}
           as={
             !isPressed ? (
-              <AntDesign name='plus' style={{ fontSize: '33px', color: whiteShades.primaryWhite }} />
+              <AntDesign name='plus' style={{ fontSize: '33px', color: WhiteShades.primaryWhite }} />
             ) : (
-              <Ionicons name='close' style={{ fontSize: '33px', color: whiteShades.primaryWhite }} />
+              <Ionicons name='close' style={{ fontSize: '33px', color: WhiteShades.primaryWhite }} />
             )
           }
           size='sm'
@@ -68,7 +68,7 @@ const FloatingButtons = ({ navigation }) => {
                     name='barcode'
                     style={{
                       fontSize: '22px',
-                      color: whiteShades.primaryWhite,
+                      color: WhiteShades.primaryWhite,
                     }}
                   />
                 }
@@ -105,7 +105,7 @@ const FloatingButtons = ({ navigation }) => {
                     name='edit'
                     style={{
                       fontSize: '22px',
-                      color: whiteShades.primaryWhite,
+                      color: WhiteShades.primaryWhite,
                     }}
                   />
                 }
