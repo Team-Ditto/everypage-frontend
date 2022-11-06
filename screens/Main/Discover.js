@@ -8,9 +8,11 @@ import { getUsersBook } from '../../services/books-service';
 import ActionAndAdventure from '../../assets/genre-icons/action-and-adventure.png';
 import Classics from '../../assets/genre-icons/classics.png';
 import Comics from '../../assets/genre-icons/comics.png';
+import Filter from '../Assets/FilterSettings/Filter';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
+  const [isFilterVisible, setFilterVisible] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,12 +27,18 @@ export default function Discover({ navigation }) {
     }
     fetchData();
   }, []);
-
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
   return (
     <VStack>
       {/* Search component */}
-      <Search navigation={navigation} />
-
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Filter isFromDiscover={true} />
+        </HStack>
+      </Box>
       {/* Genre Generation */}
       <HStack style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Text m={2} fontSize='md'>
