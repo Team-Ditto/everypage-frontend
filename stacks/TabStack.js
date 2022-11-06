@@ -6,6 +6,7 @@ import Discover from '../screens/Main/Discover';
 import Wishlist from '../screens/Main/Wishlist';
 import Profile from '../screens/User/Profile';
 import Community from '../screens/Main/Community';
+import Notifications from '../screens/Main/Notifications';
 import { MaterialIcons, AntDesign, Fontisto, FontAwesome } from '@expo/vector-icons';
 import Map from '../screens/Assets/Map';
 export default function TabStack() {
@@ -49,6 +50,13 @@ export default function TabStack() {
       <TabNavigator.Screen
         name='Profile'
         component={Profile}
+        options={({ route }) => ({
+          tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
+        })}
+      />
+      <TabNavigator.Screen
+        name='Notifications'
+        component={Notifications}
         options={({ route }) => ({
           tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
         })}
