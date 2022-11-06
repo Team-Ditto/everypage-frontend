@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { VStack, Text, Center, Box, HStack, Button } from 'native-base';
+import { OrangeShades, whiteShades } from '../../assets/style/color';
 
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
@@ -19,45 +20,34 @@ const Notifications = ({ navigation }) => {
     <VStack>
       <Search navigation={navigation} />
       <Box
-        backgroundColor='#FDF5EA'
+        backgroundColor={OrangeShades.quaternaryOrange}
         mx='4%'
         mt='18px'
         borderRadius='10px'
-        borderColor='#DC924D'
+        borderColor={OrangeShades.primaryOrange}
         borderStyle='solid'
         borderWidth='1px'
       >
-        {isForLater ? (
-          <HStack display='flex' flexDirection='row'>
-            <Button backgroundColor='#DC924D' flexGrow={true} borderRadius='10px' onPress={() => handleInput(true)}>
-              Notifications
-            </Button>
-            <Button
-              backgroundColor='#FDF5EA'
-              _text={{ color: '#DC924D' }}
-              flexGrow={true}
-              borderRadius='10px'
-              onPress={() => handleInput(false)}
-            >
-              Messages
-            </Button>
-          </HStack>
-        ) : (
-          <HStack display='flex' flexDirection='row'>
-            <Button
-              backgroundColor='#FDF5EA'
-              _text={{ color: '#DC924D' }}
-              flexGrow={true}
-              borderRadius='10px'
-              onPress={() => handleInput(true)}
-            >
-              For Later
-            </Button>
-            <Button backgroundColor='#DC924D' flexGrow={true} borderRadius='10px' onPress={() => handleInput(false)}>
-              Requested
-            </Button>
-          </HStack>
-        )}
+        <HStack display='flex' flexDirection='row'>
+          <Button
+            style={isForLater ? styles.activeTab : styles.inactiveTab}
+            _text={isForLater ? styles.activeTab : styles.inactiveTab}
+            flexGrow={true}
+            borderRadius='10px'
+            onPress={() => handleInput(true)}
+          >
+            Notifications
+          </Button>
+          <Button
+            style={isForLater ? styles.inactiveTab : styles.activeTab}
+            _text={isForLater ? styles.inactiveTab : styles.activeTab}
+            flexGrow={true}
+            borderRadius='10px'
+            onPress={() => handleInput(false)}
+          >
+            Messages
+          </Button>
+        </HStack>
       </Box>
       <VStack>
         <Box>{isForLater ? <NotificationsMain navigation={navigation} /> : <Messages navigation={navigation} />}</Box>
@@ -66,15 +56,23 @@ const Notifications = ({ navigation }) => {
   );
 };
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  activeTab: {
+    backgroundColor: OrangeShades.primaryOrange,
+    color: OrangeShades.quaternaryOrange,
+  },
+  inactiveTab: {
+    backgroundColor: OrangeShades.quaternaryOrange,
+    color: OrangeShades.primaryOrange,
+  },
   buttonActive: {
-    backgroundColor: '#DC924D',
+    backgroundColor: OrangeShades.primaryOrange,
     flexGrow: true,
     borderRadius: '10px',
   },
   buttonInactive: {
-    backgroundColor: '#FDF5EA',
-    color: '#DC924D',
+    backgroundColor: OrangeShades.quaternaryOrange,
+    color: OrangeShades.primaryOrange,
     flexGrow: true,
     borderRadius: '10px',
   },
