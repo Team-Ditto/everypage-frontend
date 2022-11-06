@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { logout } from '../../firebase/firebase-service';
+import moment from 'moment';
 import {
   Button,
   ScrollView,
@@ -19,10 +20,19 @@ import {
 } from 'native-base';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { FontAwesome } from '@expo/vector-icons';
+import { getMyUserProfile } from '../../services/users-service';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    async function fetchData() {
+      let fetchedUser = await getMyUserProfile();
+      console.log(fetchedUser.data.photoURL);
+      setUser(fetchedUser.data);
+    }
+    fetchData();
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -33,25 +43,25 @@ export default function Profile({ navigation }) {
         Logout
       </Button> */}
       <Box style={styles.userData}>
-        <Image source={require('../../assets/person.jpg')} style={styles.personImage} />
+        <Image source={{ uri: user.photoURL }} alt={user.displayName} style={styles.personImage} />
         <VStack>
-          <Text fontWeight='semibold'>Mitatatatatta</Text>
+          <Text fontWeight='semibold'>{user.displayName}</Text>
           {/* Fetch user name */}
           <Text>Casual Reader</Text>
           {/* Fetech reader type data */}
           <Text fontStyle='italic' fontSize='sm'>
-            joined 24 Oct 2022
+            joined {moment(user.createdAt).format('DD MMMM YYYY')}
           </Text>
         </VStack>
-        <Image source={require('../../assets/pen.png')} style={styles.penIcon} />
+        <Image source={require('../../assets/pen.png')} alt='Edit Icon Image' style={styles.penIcon} />
       </Box>
       <VStack mx={30} my={5}>
         <Text py={1} fontSize='md' fontWeight='semibold'>
           History
         </Text>
-        <Text py={1}>Books Borrowed (12)</Text>
+        <Text py={1}>Books Borrowed 12</Text>
         {/* All the total number of books borrowed */}
-        <Text>Books Returned (12)</Text>
+        <Text>Books Returned 12</Text>
       </VStack>
       <HStack justifyContent='space-between' mx={30}>
         <Text fontWeight='bold'>Shared Books(25)</Text>
