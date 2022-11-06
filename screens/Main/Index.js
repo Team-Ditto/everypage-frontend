@@ -32,9 +32,6 @@ const Home = ({ navigation }) => {
     setFilterVisible(!isFilterVisible);
   };
 
-  const setFilterState = state => {
-    setFilterVisible(state);
-  };
   return (
     <VStack>
       {/* Search component */}
