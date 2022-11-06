@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { VStack, Text, Center, Box, HStack, Button } from 'native-base';
-import { OrangeShades, whiteShades } from '../../assets/style/color';
+import { OrangeShades } from '../../assets/style/color';
 
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
@@ -9,11 +9,10 @@ import Messages from '../Notifications/Messages';
 
 const Notifications = ({ navigation }) => {
   //const [wishlistData, setWishlistData] = useState(WishlistData);
-  const [isNotifications, setisNotifications] = useState(true);
-  const [status, setStatus] = useState('For Later');
+  const [isNotifications, setIsNotifications] = useState(true);
 
   function handleInput(value) {
-    setisNotifications(value);
+    setIsNotifications(value);
   }
 
   return (
@@ -67,17 +66,6 @@ const styles = StyleSheet.create({
     color: OrangeShades.primaryOrange,
     flexGrow: true,
     borderRadius: '9px',
-  },
-  buttonActive: {
-    backgroundColor: OrangeShades.primaryOrange,
-    flexGrow: true,
-    borderRadius: '10px',
-  },
-  buttonInactive: {
-    backgroundColor: OrangeShades.quaternaryOrange,
-    color: OrangeShades.primaryOrange,
-    flexGrow: true,
-    borderRadius: '10px',
   },
 });
 
