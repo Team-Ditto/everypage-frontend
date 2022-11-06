@@ -9,40 +9,28 @@ import Messages from '../Notifications/Messages';
 
 const Notifications = ({ navigation }) => {
   //const [wishlistData, setWishlistData] = useState(WishlistData);
-  const [isForLater, setIsForLater] = useState(true);
+  const [isNotifications, setisNotifications] = useState(true);
   const [status, setStatus] = useState('For Later');
 
   function handleInput(value) {
-    setIsForLater(value);
+    setisNotifications(value);
   }
 
   return (
     <VStack>
       <Search navigation={navigation} />
-      <Box
-        backgroundColor={OrangeShades.quaternaryOrange}
-        mx='4%'
-        mt='18px'
-        borderRadius='10px'
-        borderColor={OrangeShades.primaryOrange}
-        borderStyle='solid'
-        borderWidth='1px'
-      >
+      <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
           <Button
-            style={isForLater ? styles.activeTab : styles.inactiveTab}
-            _text={isForLater ? styles.activeTab : styles.inactiveTab}
-            flexGrow={true}
-            borderRadius='10px'
+            style={isNotifications ? styles.activeTab : styles.inactiveTab}
+            _text={isNotifications ? styles.activeTab : styles.inactiveTab}
             onPress={() => handleInput(true)}
           >
             Notifications
           </Button>
           <Button
-            style={isForLater ? styles.inactiveTab : styles.activeTab}
-            _text={isForLater ? styles.inactiveTab : styles.activeTab}
-            flexGrow={true}
-            borderRadius='10px'
+            style={isNotifications ? styles.inactiveTab : styles.activeTab}
+            _text={isNotifications ? styles.inactiveTab : styles.activeTab}
             onPress={() => handleInput(false)}
           >
             Messages
@@ -50,20 +38,35 @@ const Notifications = ({ navigation }) => {
         </HStack>
       </Box>
       <VStack>
-        <Box>{isForLater ? <NotificationsMain navigation={navigation} /> : <Messages navigation={navigation} />}</Box>
+        <Box>
+          {isNotifications ? <NotificationsMain navigation={navigation} /> : <Messages navigation={navigation} />}
+        </Box>
       </VStack>
     </VStack>
   );
 };
 
 const styles = StyleSheet.create({
+  tabsBox: {
+    backgroundColor: OrangeShades.quaternaryOrange,
+    marginHorizontal: '4%',
+    marginTop: 18,
+    borderRadius: '10px',
+    borderColor: OrangeShades.primaryOrange,
+    borderStyle: 'solid',
+    borderWidth: '1px',
+  },
   activeTab: {
     backgroundColor: OrangeShades.primaryOrange,
     color: OrangeShades.quaternaryOrange,
+    flexGrow: true,
+    borderRadius: '9px',
   },
   inactiveTab: {
     backgroundColor: OrangeShades.quaternaryOrange,
     color: OrangeShades.primaryOrange,
+    flexGrow: true,
+    borderRadius: '9px',
   },
   buttonActive: {
     backgroundColor: OrangeShades.primaryOrange,
