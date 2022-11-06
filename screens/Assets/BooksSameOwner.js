@@ -4,10 +4,8 @@ import { ScrollView, View, Text, HStack, Button, ChevronRightIcon } from 'native
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { LibraryData } from '../../constants/LibraryData';
 
-const BooksSameOwner = (props, navigation) => {
+const BooksSameOwner = ({ userId, ownerName, bookId, navigation }) => {
   const [bookData, setBooksData] = useState(LibraryData);
-
-  const { userId, ownerName, bookId } = props;
 
   useEffect(() => {
     async function fetchData() {
@@ -23,7 +21,9 @@ const BooksSameOwner = (props, navigation) => {
     <>
       <HStack justifyContent='space-between' alignItems='center'>
         <Text>More books from {ownerName}</Text>
-        <Button rightIcon={<ChevronRightIcon />}>view all</Button>
+        <Button rightIcon={<ChevronRightIcon />} variant='unstyled'>
+          view all
+        </Button>
       </HStack>
       <ScrollView horizontal w='100%'>
         <View h='160px' w='250px' flexDirection='row'>

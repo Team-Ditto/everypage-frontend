@@ -35,7 +35,7 @@ export default function Accordion({ title, content }) {
       </TouchableOpacity>
       {showContent && (
         <View style={styles.body}>
-          <Radio.Group defaultValue='To Read' name='myRadioGroup' accessibilityLabel='Pick your favorite number'>
+          <Radio.Group defaultValue={content[0]} name='myRadioGroup' accessibilityLabel='Pick your favorite number'>
             {content.map((item, index) => (
               <View key={index} style={{ display: 'flex', flexDirection: 'column' }}>
                 <Radio value={item} style={{ display: 'flex', flexDirection: 'row-reverse', alignSelf: 'flex-start' }}>

@@ -22,6 +22,7 @@ const Carousel = props => {
         source={{
           uri: props.images[state.active],
         }}
+        alt='Book Image'
         style={{ zIndex: -3, position: 'absolute', backgroundColor: 'rgba(0,0,0,0.5)' }}
       />
       <View
