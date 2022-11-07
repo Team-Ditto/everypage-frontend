@@ -1,5 +1,6 @@
 import { View, Image, ScrollView, CircleIcon, Text } from 'native-base';
 import { useState } from 'react';
+import { BlueShades, OrangeShades } from '../../assets/style/color';
 
 const imageArray = [
   'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
@@ -59,7 +60,10 @@ const Carousel = props => {
           <View flexDirection='row' position='absolute' bottom={7}>
             {props.images.map((i, k) => (
               <Text key={k} mx={1}>
-                <CircleIcon color={k == state.active ? '#1a1b1c' : '#babbbc'} />
+                <CircleIcon
+                  color={k == state.active ? OrangeShades.primaryOrange : BlueShades.tertiaryBlue}
+                  size={2.5}
+                />
               </Text>
             ))}
           </View>
