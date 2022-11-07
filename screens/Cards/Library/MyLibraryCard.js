@@ -32,6 +32,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false }) => {
             <Image
               w='100%'
               h='100%'
+              borderRadius={10}
               source={{
                 uri: images[0],
               }}

@@ -1,19 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
-import { Box, Text, Button, ScrollView, VStack, HStack, Icon, createIcon } from 'native-base';
+import { Box, Text, Button, ScrollView, VStack, HStack, Icon,createIcon, Pressable, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { LibraryData, genreData } from '../../constants/LibraryData';
+import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { Circle } from 'react-native-svg';
+import { getUsersBook } from '../../services/books-service';
+import Filter from '../Assets/FilterSettings/Filter';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
+  const [isFilterVisible, setFilterVisible] = useState(false);
 
+  useEffect(() => {
+    async function fetchData() {
+      const params = {
+        genre: '',
+        readingStatus: '',
+      };
+      getUsersBook().then(books => {
+        setSimilarBookData(books.data.results);
+        // setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
   return (
     <VStack>
       {/* Search component */}
-      <Search navigation={navigation} />
-
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Filter isFromDiscover={true} />
+        </HStack>
+      </Box>
       {/* Genre Generation */}
       <HStack style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Text m={2} fontSize='md'>
@@ -34,21 +57,22 @@ export default function Discover({ navigation }) {
         style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        h='105px'
       >
-        {genreData.map((genre, idx) => {
+        {genreDiscover.map((data, idx) => {
           return (
             <Box mx={1} key={idx} h={60}>
-              <Button
-                px={5}
-                variant={'solid'}
-                color={'muted.800'}
-                borderRadius='sm'
+              <Pressable
+                justifyContent='space-between'
                 onPress={() => {
-                  navigation.navigate('SingleGenre', { genre: genre });
+                  navigation.navigate('SingleGenre', { genre: data.genre });
                 }}
               >
-                {genre}
-              </Button>
+                <Image source={data.icon} w='64px' h='64px' alt={data.genre} />
+                <Text w='70px' flexWrap='wrap' textAlign='center'>
+                  {data.genre}
+                </Text>
+              </Pressable>
             </Box>
           );
         })}
