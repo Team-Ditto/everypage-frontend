@@ -17,7 +17,8 @@ import WishlistButton from '../screens/Assets/WishlistButton';
 
 import { AuthContext } from '../contexts/AuthContext';
 import SearchResult from '../screens/Assets/SearchResult';
-import { ArrowBackIcon } from 'native-base';
+import Notifications from '../screens/Main/Notifications';
+
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
   const { currentUser } = useContext(AuthContext);
@@ -83,6 +84,13 @@ const AppStack = () => {
                 headerStyle: {
                   backgroundImage: JSON.stringify(route.params.bookData.images[0]),
                 },
+              })}
+            />
+            <Stack.Screen
+              name='Notifications'
+              component={Notifications}
+              options={({ route }) => ({
+                tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
               })}
             />
           </>

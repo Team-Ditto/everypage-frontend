@@ -4,11 +4,14 @@ import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, 
 import { MaterialIcons } from '@expo/vector-icons';
 import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
+import { Circle } from 'react-native-svg';
 import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
+  const [isFilterVisible, setFilterVisible] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,18 +25,20 @@ export default function Discover({ navigation }) {
       });
     }
     fetchData();
+    GetNotificationHeader(navigation);
   }, []);
-
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
   return (
     <VStack>
       {/* Search component */}
       <Box display='flex' width='100%' mt='18px' mb='10px'>
         <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} />
-          <Filter />
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Filter isFromDiscover={true} />
         </HStack>
       </Box>
-
       {/* Genre Generation */}
       <HStack px={2} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Text m={0} style={{ fontWeight: 'semi-bold', fontSize: 16 }}>

@@ -1,6 +1,7 @@
 import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon, HStack, Link } from 'native-base';
+
 const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
-  const { title, author, images, owner, ownerPicture, status } = data;
+  const { book, status } = data;
 
   let curStyle = {};
 
@@ -18,11 +19,13 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
   ];
 
   switch (status) {
-    case 'Available':
+    //WORK IN PROGRESS
+    //Have to add a status of available or not on the object
+    case 'For Later':
       curStyle = statusStyle[0];
       break;
 
-    case 'In-use':
+    case 'Recommended':
       curStyle = statusStyle[1];
       break;
 
@@ -32,49 +35,59 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
 
   return (
     <VStack bgColor='#FFFFFF' borderRadius='10' mx='4%' p='15px' mb='20px'>
-      <HStack>
-        <Image
-          borderRadius='10px'
-          w='40%'
-          source={{
-            uri: images[0],
-          }}
-          alt={title}
-        />
-        <Box w='55%' ml='3%'>
-          <Text fontWeight='semibold' fontSize='md'>
-            {title}
-          </Text>
-          <Text fontSize='md'>{author}</Text>
-          <Box
-            bgColor={curStyle.backgroundColor}
-            borderRadius='4px'
-            borderColor={curStyle.textColor}
-            borderStyle='solid'
-            borderWidth='1px'
-            p='4px'
-            marginY='7px'
-            marginRight='auto'
-          >
-            <Text color={curStyle.textColor}>{curStyle.status}</Text>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('SingleView', {
+            bookData: book,
+          });
+        }}
+        alignItems='center'
+        mx={1}
+      >
+        <HStack>
+          <Image
+            borderRadius='10px'
+            w='40%'
+            source={{
+              uri: book.images[0],
+            }}
+            alt={book.title}
+          />
+          <Box w='55%' ml='3%'>
+            <Text fontWeight='semibold' fontSize='md'>
+              {book.title}
+            </Text>
+            <Text fontSize='md'>{book.author}</Text>
+            <Box
+              bgColor={curStyle.backgroundColor}
+              borderRadius='4px'
+              borderColor={curStyle.textColor}
+              borderStyle='solid'
+              borderWidth='1px'
+              p='4px'
+              marginY='7px'
+              marginRight='auto'
+            >
+              <Text color={curStyle.textColor}>{curStyle.status}</Text>
+            </Box>
+            <Text fontSize='sm'>Owned by</Text>
+            <HStack display='flex' flexDirection='row' gap='10px' alignItems='center'>
+              <Image
+                w='30px'
+                h='30px'
+                borderRadius='50%'
+                source={{
+                  uri: book.owner.photoURL,
+                }}
+                alt={book.owner.displayName}
+              />
+              <Link href='https://nativebase.io' ml='5px'>
+                {book.owner.displayName}
+              </Link>
+            </HStack>
           </Box>
-          <Text fontSize='sm'>Owned by</Text>
-          <HStack display='flex' flexDirection='row' gap='10px' alignItems='center'>
-            <Image
-              w='30px'
-              h='30px'
-              borderRadius='50%'
-              source={{
-                uri: ownerPicture,
-              }}
-              alt={owner}
-            />
-            <Link href='https://nativebase.io' ml='5px'>
-              {owner}
-            </Link>
-          </HStack>
-        </Box>
-      </HStack>
+        </HStack>
+      </Pressable>
       <Button mt='15px'>Request to Borrow</Button>
     </VStack>
   );

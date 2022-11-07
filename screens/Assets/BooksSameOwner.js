@@ -4,10 +4,8 @@ import { ScrollView, View, Text, HStack, Button, Link, ChevronRightIcon } from '
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { LibraryData } from '../../constants/LibraryData';
 
-const BooksSameOwner = (props, navigation) => {
+const BooksSameOwner = ({ userId, ownerName, bookId, navigation }) => {
   const [bookData, setBooksData] = useState(LibraryData);
-
-  const { userId, ownerName, bookId } = props;
 
   useEffect(() => {
     async function fetchData() {

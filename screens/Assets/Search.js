@@ -1,12 +1,11 @@
-import { Input, Box, Icon, IconButton, HStack, Image } from 'native-base';
+import { Input, Icon, Image } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import SearchResult from './SearchResult';
 import { useState } from 'react';
-import { BlueShades, OrangeShades } from '../../assets/style/color';
+import { BlueShades } from '../../assets/style/color';
 import BarScanner from '../../assets/searchbar-icons/bar-scanner.png';
 
-const Search = ({ navigation, searchField, onFilterClicked }) => {
-  const [searchText, setSearchText] = useState(searchField !== '' ? searchField : '');
+const Search = ({ navigation, onSearchSubitted }) => {
+  const [searchText, setSearchText] = useState('');
   return (
     <Input
       ml={2}
@@ -31,14 +30,16 @@ const Search = ({ navigation, searchField, onFilterClicked }) => {
           onPress={() => {
             navigation.navigate('Scanner');
           }}
-        />
+        >
+          {/* <Image source={require('../../assets/Bar_Scanner.png')} alt='Bar Code Scanner Images' /> */}
+        </Icon>
       }
       fontSize={16}
       color={BlueShades.primaryBlue}
       placeholder='Search'
       returnKeyType='done'
-      onSubmitEditing={() => {
-        navigation.navigate('SearchResult', { searchText });
+      onSubmitEditing={text => {
+        onSearchSubitted(text.nativeEvent.text);
       }}
     />
   );

@@ -22,8 +22,8 @@ const SearchSortFilter = item => {
   //   onPress={onPressRadioButton}
   // />
 
-  const data= [sort,genre,location,language,readingStatus];
-  const [radioButtons, setRadioButtons] = useState(data)
+  const data = [sort, genre, location, language, readingStatus];
+  const [radioButtons, setRadioButtons] = useState(data);
 
   return (
     <ScrollView>
@@ -35,6 +35,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showSort ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -71,6 +72,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showGenre ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -106,6 +108,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showLanguage ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -140,6 +143,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showReading ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -175,6 +179,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showLocation ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>

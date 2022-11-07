@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
-import { Input, Box, Icon, IconButton, HStack, Button } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
-import { BlueShades, OrangeShades } from '../../../assets/style/color';
+import { Icon, IconButton, HStack } from 'native-base';
+import { BlueShades } from '../../../assets/style/color';
 import Sort from './Sort';
 import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
 import FilterIcon from '../../../assets/searchbar-icons/filter.png';
+import DiscoverLocationSettings from './DiscoverLocationSettings';
 
-export default function Filter() {
+export default function Filter({ isFromDiscover = false }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
@@ -27,7 +27,7 @@ export default function Filter() {
             <Sort />
             <Genre />
             <ReadingStatus />
-            <LocationSetting />
+            {isFromDiscover == true ? <DiscoverLocationSettings /> : <LocationSetting />}
             <HStack space={3} style={{ position: 'absolute', bottom: 20 }}>
               <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
                 <Text

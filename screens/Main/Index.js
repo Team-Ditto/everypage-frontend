@@ -1,7 +1,7 @@
 import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
@@ -9,38 +9,53 @@ import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
 import { OrangeShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
+import { getBooksByKeyword } from '../../services/books-service';
+import { AuthContext } from '../../contexts/AuthContext';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 
 const Home = ({ navigation }) => {
+  const { currentUser } = useContext(AuthContext);
+  const [screenTitle, setScreenTitle] = useState(` ${currentUser.displayName}'s Library`);
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-  const [isFilterVisible, setFilterVisible] = useState(false);
-
   useEffect(() => {
-    async function fetchData() {
-      getBooksOfLoginUser().then(books => {
-        setLibData(books.data.results);
-        setSpinnerVisible(false);
-      });
-    }
+    SetTopScreenTitle();
     fetchData();
+    GetNotificationHeader(navigation);
   }, []);
+
+  function SetTopScreenTitle() {
+    navigation.setOptions({
+      title: screenTitle,
+    });
+  }
+
+  async function fetchData() {
+    getBooksOfLoginUser().then(books => {
+      setLibData(books.data.results);
+      setSpinnerVisible(false);
+    });
+  }
 
   const BookStatusChangeHandle = () => {};
 
-  const onFilterClicked = () => {
-    setFilterVisible(!isFilterVisible);
+  const onSearchSubitted = async searchText => {
+    const searchedBooks = await getBooksByKeyword(searchText);
+    setBookStatus(`Results for "${searchText}"`);
+    setLibData(searchedBooks.data.results);
+
+    navigation.setOptions({
+      title: `Search Results`,
+    });
   };
 
-  const setFilterState = state => {
-    setFilterVisible(state);
-  };
   return (
     <VStack>
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
           <Filter />
         </HStack>
       </Box>
@@ -73,7 +88,7 @@ const Home = ({ navigation }) => {
       </ScrollView>
 
       {/* My Library Data Collection */}
-      <Text mx={2} my={2}>
+      <Text mx={2} my={2} fontWeight='bold'>
         {bookStatus} ({libData.length})
       </Text>
       <ScrollView>

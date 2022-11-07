@@ -2,11 +2,6 @@ import { View, Image, ScrollView, CircleIcon, Text } from 'native-base';
 import { useState } from 'react';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 
-const imageArray = [
-  'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
-  'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
-  'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
-];
 const Carousel = props => {
   const [state, setState] = useState({ active: 0 });
   const handleScroll = event => {
@@ -23,6 +18,7 @@ const Carousel = props => {
         source={{
           uri: props.images[state.active],
         }}
+        alt='Book Image'
         style={{ zIndex: -3, position: 'absolute', backgroundColor: 'rgba(0,0,0,0.5)' }}
       />
       <View

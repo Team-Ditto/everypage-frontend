@@ -80,6 +80,7 @@ export const ReadStatus = ['To Read', 'Reading', 'Finished'];
 
 export const Location = ['Home', 'Work', 'Library', 'Other'];
 
+export const Distance = ['100m', '200m', '300m', '400m', '500m', '600m', '700m', '800m', '900m', '1km'];
 export const genreDiscover = [
   {
     genre: 'Action & Adventure',
