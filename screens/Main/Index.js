@@ -11,6 +11,7 @@ import { OrangeShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
 import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -21,6 +22,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
+    GetNotificationHeader(navigation);
   }, []);
 
   function SetTopScreenTitle() {

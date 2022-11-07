@@ -10,10 +10,10 @@ const Messages = ({ navigation }) => {
     <VStack>
       {messages?.map((data, id) => {
         return (
-          <>
-            <MessageCard key={id} data={data} navigation={navigation} />
+          <View key={id}>
+            <MessageCard data={data} navigation={navigation} />
             <Divider />
-          </>
+          </View>
         );
       })}
     </VStack>
