@@ -6,6 +6,7 @@ import { OrangeShades } from '../../assets/style/color';
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
 import Messages from '../Notifications/Messages';
+import Filter from '../Assets/FilterSettings/Filter';
 
 const Notifications = ({ navigation }) => {
   //const [wishlistData, setWishlistData] = useState(WishlistData);
@@ -14,10 +15,21 @@ const Notifications = ({ navigation }) => {
   function handleInput(value) {
     setIsNotifications(value);
   }
-
+  const onSearchSubitted = async searchText => {
+    const searchedBooks = await getBooksByKeyword(searchText);
+    setBookStatus(`Results for "${searchText}"`);
+    navigation.setOptions({
+      title: `Search Results`,
+    });
+  };
   return (
     <VStack>
-      <Search navigation={navigation} /* style={styles.search} */ />
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
+          <Filter />
+        </HStack>
+      </Box>
       <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
           <Button

@@ -54,13 +54,6 @@ export default function TabStack() {
           tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
         })}
       />
-      <TabNavigator.Screen
-        name='Notifications'
-        component={Notifications}
-        options={({ route }) => ({
-          tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
-        })}
-      />
     </TabNavigator.Navigator>
   );
 }

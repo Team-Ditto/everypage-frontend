@@ -21,6 +21,7 @@ import {
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { getMyUserProfile } from '../../services/users-service';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -32,6 +33,7 @@ export default function Profile({ navigation }) {
       setUser(fetchedUser.data);
     }
     fetchData();
+    GetNotificationHeader(navigation);
   }, []);
 
   const handleLogout = async () => {

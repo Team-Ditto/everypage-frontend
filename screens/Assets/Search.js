@@ -1,4 +1,4 @@
-import { Input, Box, Icon, IconButton, HStack } from 'native-base';
+import { Input, Box, Icon, IconButton, HStack, Button, Image } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
@@ -9,23 +9,24 @@ const Search = ({ navigation, onSearchSubitted }) => {
     <Input
       ml={2}
       width='85%'
+      focusOutlineColor={BlueShades.primaryBlue}
       variant='rounded'
       value={searchText}
       onChangeText={text => setSearchText(text)}
-      InputLeftElement={<Icon as={<Ionicons name='search' />} size={5} ml='2' />}
+      InputLeftElement={
+        <Icon as={<Ionicons name='search' />} style={{ color: BlueShades.primaryBlue }} size={5} ml='2' />
+      }
+      backgroundColor='white'
+      borderColor={BlueShades.primaryBlue}
       InputRightElement={
-        <Icon
-          as={<Ionicons name='barcode' />}
-          size={8}
-          style={{
-            color: BlueShades.primaryBlue,
-          }}
-          ml='2'
-          mr='2'
+        <Button
+          variant='unstyled'
           onPress={() => {
             navigation.navigate('Scanner');
           }}
-        />
+        >
+          <Image source={require('../../assets/Bar_Scanner.png')} alt='Bar Code Scanner Images' />
+        </Button>
       }
       placeholder='Search'
       returnKeyType='done'
