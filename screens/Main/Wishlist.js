@@ -8,18 +8,27 @@ import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 
 import { getWishlistsByStatus } from '../../services/wishlists-service';
-
+import { LibraryData } from '../../constants/LibraryData';
+import Filter from '../Assets/FilterSettings/Filter';
 export default function Wishlist({ navigation }) {
   const [isForLater, setIsForLater] = useState(true);
   const [status, setStatus] = useState('For Later');
+  const [isFilterVisible, setFilterVisible] = useState(false);
 
   function handleInput(value) {
     setIsForLater(value);
   }
-
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
   return (
     <VStack>
-      <Search navigation={navigation} />
+<Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Filter />
+        </HStack>
+      </Box>
       <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
           <Button
