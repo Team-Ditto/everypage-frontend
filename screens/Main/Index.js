@@ -1,7 +1,7 @@
 import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
@@ -10,20 +10,31 @@ import { getBooksOfLoginUser } from '../../firebase/firebase-service';
 import { OrangeShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
 import { getBooksByKeyword } from '../../services/books-service';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Home = ({ navigation }) => {
+  const { currentUser } = useContext(AuthContext);
+  const [screenTitle, setScreenTitle] = useState(` ${currentUser.displayName}'s Library`);
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
   useEffect(() => {
-    async function fetchData() {
-      getBooksOfLoginUser().then(books => {
-        setLibData(books.data.results);
-        setSpinnerVisible(false);
-      });
-    }
+    SetTopScreenTitle();
     fetchData();
   }, []);
+
+  function SetTopScreenTitle() {
+    navigation.setOptions({
+      title: screenTitle,
+    });
+  }
+
+  async function fetchData() {
+    getBooksOfLoginUser().then(books => {
+      setLibData(books.data.results);
+      setSpinnerVisible(false);
+    });
+  }
 
   const BookStatusChangeHandle = () => {};
 
@@ -31,7 +42,10 @@ const Home = ({ navigation }) => {
     const searchedBooks = await getBooksByKeyword(searchText);
     setBookStatus(`Results for "${searchText}"`);
     setLibData(searchedBooks.data.results);
-    console.log(searchedBooks.data.results);
+
+    navigation.setOptions({
+      title: `Search Results`,
+    });
   };
 
   return (
