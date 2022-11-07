@@ -16,7 +16,7 @@ const SingleGenre = ({ navigation, route }) => {
         readingStatus: '',
       };
       console.log(route.params.genre);
-      getUsersBook(route.params.genre, 'To Read').then(books => {
+      getUsersBook(route.params.genre, '').then(books => {
         setSearchResults(books.data.results);
         // setSpinnerVisible(false);
       });
