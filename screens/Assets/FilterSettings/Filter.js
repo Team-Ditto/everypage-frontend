@@ -8,7 +8,7 @@ import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
 import DiscoverLocationSettings from './DiscoverLocationSettings';
-export default function Filter(isFromDiscover = false) {
+export default function Filter({ isFromDiscover = false }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
@@ -26,7 +26,7 @@ export default function Filter(isFromDiscover = false) {
             <Sort />
             <Genre />
             <ReadingStatus />
-            {isFromDiscover ? <DiscoverLocationSettings /> : <LocationSetting />}
+            {isFromDiscover == true ? <DiscoverLocationSettings /> : <LocationSetting />}
             <HStack space={3} style={{ position: 'absolute', bottom: 20 }}>
               <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
                 <Text

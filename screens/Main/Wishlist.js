@@ -7,18 +7,27 @@ import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 
 import { LibraryData } from '../../constants/LibraryData';
+import Filter from '../Assets/FilterSettings/Filter';
 
 export default function Wishlist({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
   const [isForLater, setIsForLater] = useState(true);
+  const [isFilterVisible, setFilterVisible] = useState(false);
 
   function handleInput(v) {
     setIsForLater(v);
   }
-
+  const onFilterClicked = () => {
+    setFilterVisible(!isFilterVisible);
+  };
   return (
     <VStack>
-      <Search navigation={navigation} />
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Filter />
+        </HStack>
+      </Box>
       <Box
         backgroundColor='#FDF5EA'
         mx='4%'
