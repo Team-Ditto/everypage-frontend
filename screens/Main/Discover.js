@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
-import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image } from 'native-base';
+import { Box, Text, Button, ScrollView, VStack, HStack, Icon,createIcon, Pressable, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
+import { Circle } from 'react-native-svg';
 import { getUsersBook } from '../../services/books-service';
-import ActionAndAdventure from '../../assets/genre-icons/action-and-adventure.png';
-import Classics from '../../assets/genre-icons/classics.png';
-import Comics from '../../assets/genre-icons/comics.png';
 import Filter from '../Assets/FilterSettings/Filter';
 
 export default function Discover({ navigation }) {
