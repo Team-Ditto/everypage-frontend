@@ -1,6 +1,6 @@
 import { FormControl, Stack, Input, HStack, Button, Divider, Select, CheckIcon, Box, Image } from 'native-base';
 import { useContext, useState } from 'react';
-import { BlueShades, whiteShades } from '../../../assets/style/color';
+import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
 import { USER_PROFILE_UPLOAD_DIRECTORY } from '../../../constants';
@@ -69,7 +69,7 @@ const BookDetail = ({ bookObj, setBookObj }) => {
                     <Button
                       style={styles.floatingBtnStyle}
                       bg={BlueShades.primaryBlue}
-                      _text={{ color: whiteShades.primaryWhite }}
+                      _text={{ color: WhiteShades.primaryWhite }}
                       size='xs'
                       onPress={e => {
                         e.preventDefault();
@@ -87,7 +87,7 @@ const BookDetail = ({ bookObj, setBookObj }) => {
                   width={60}
                   bg={BlueShades.primaryBlue}
                   _text={{
-                    color: whiteShades.primaryWhite,
+                    color: WhiteShades.primaryWhite,
                   }}
                   onPress={HandleImageEventClick}
                 >

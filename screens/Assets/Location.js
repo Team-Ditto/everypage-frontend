@@ -5,7 +5,7 @@ import Map from './Map';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { StyleSheet } from 'react-native';
 import FieldSet from 'react-native-fieldset';
-import { BlueShades, whiteShades } from '../../assets/style/color';
+import { BlueShades, WhiteShades } from '../../assets/style/color';
 import { FontAwesome } from '@expo/vector-icons';
 import { fieldSet, legend } from '../../assets/style/fieldsetStyle';
 
@@ -27,7 +27,7 @@ const Location = ({ navigation }) => {
           }}
           variant='unstyled'
           _text={{
-            color: whiteShades.primaryWhite,
+            color: WhiteShades.primaryWhite,
           }}
         >
           Skip
@@ -54,7 +54,7 @@ const Location = ({ navigation }) => {
     text = location;
   }
   return (
-    <View bg={whiteShades.primaryWhite} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+    <View bg={WhiteShades.primaryWhite} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <VStack my={10} mx={5} style={{ display: 'flex', flexDirection: 'column' }}>
         <Text fontSize={24}>Set your library Location.</Text>
         <Text>Set it now or updtae in your profile</Text>
