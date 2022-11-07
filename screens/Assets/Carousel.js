@@ -1,11 +1,6 @@
 import { View, Image, ScrollView, CircleIcon, Text } from 'native-base';
 import { useState } from 'react';
 
-const imageArray = [
-  'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
-  'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
-  'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1474154022i/3.jpg',
-];
 const Carousel = props => {
   const [state, setState] = useState({ active: 0 });
   const handleScroll = event => {

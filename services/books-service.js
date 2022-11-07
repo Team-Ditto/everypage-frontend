@@ -40,10 +40,10 @@ export async function getBooksByUserId(userId) {
   }
 }
 
-export async function getBooksByKeyword(keyword) {
+export async function getMyBooksShelfLocation() {
   try {
-    const books = axiosRequest.get(`/books/all?${keyword}`);
-    return books;
+    const locations = await axiosRequest.get('books/mine/locations');
+    return locations;
   } catch (error) {
     console.log(error);
   }

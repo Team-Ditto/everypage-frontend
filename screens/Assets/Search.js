@@ -1,6 +1,5 @@
 import { Input, Box, Icon, IconButton, HStack } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import SearchResult from './SearchResult';
 import { useState } from 'react';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 
