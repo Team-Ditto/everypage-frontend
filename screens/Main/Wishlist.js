@@ -10,6 +10,7 @@ import Requested from '../Wishlist/Requested';
 import { getWishlistsByStatus } from '../../services/wishlists-service';
 import { LibraryData } from '../../constants/LibraryData';
 import Filter from '../Assets/FilterSettings/Filter';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 export default function Wishlist({ navigation }) {
   const [isForLater, setIsForLater] = useState(true);
   const [status, setStatus] = useState('For Later');
@@ -21,9 +22,14 @@ export default function Wishlist({ navigation }) {
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);
   };
+
+  useEffect(() => {
+    GetNotificationHeader(navigation);
+  }, []);
+
   return (
     <VStack>
-<Box display='flex' width='100%' mt={2}>
+      <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onFilterClicked={onFilterClicked} />
           <Filter />

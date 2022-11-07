@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
-import { Box, Text, Button, ScrollView, VStack, HStack, Icon,createIcon, Pressable, Image } from 'native-base';
+import { Box, Text, Button, ScrollView, VStack, HStack, Icon, createIcon, Pressable, Image } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { Circle } from 'react-native-svg';
 import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
@@ -24,6 +25,7 @@ export default function Discover({ navigation }) {
       });
     }
     fetchData();
+    GetNotificationHeader(navigation);
   }, []);
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);
