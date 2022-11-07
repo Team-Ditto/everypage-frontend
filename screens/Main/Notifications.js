@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { VStack, Text, Center, Box, HStack, Button } from 'native-base';
+import { VStack, Text, Center, Box, HStack, Button, Row } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 
 import Search from '../Assets/Search';
@@ -17,7 +17,7 @@ const Notifications = ({ navigation }) => {
 
   return (
     <VStack>
-      <Search navigation={navigation} />
+      <Search navigation={navigation} /* style={styles.search} */ />
       <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
           <Button
@@ -37,7 +37,7 @@ const Notifications = ({ navigation }) => {
         </HStack>
       </Box>
       <VStack>
-        <Box>
+        <Box style={styles.main}>
           {isNotifications ? <NotificationsMain navigation={navigation} /> : <Messages navigation={navigation} />}
         </Box>
       </VStack>
@@ -46,6 +46,13 @@ const Notifications = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  /*   search: {
+    display: 'flex',
+    paddingTop: 10,
+    alignSelf: 'center',
+    justifySelf: 'center',
+    backgroundColor: 'blue',
+  }, */
   tabsBox: {
     backgroundColor: OrangeShades.quaternaryOrange,
     marginHorizontal: '4%',
@@ -66,6 +73,14 @@ const styles = StyleSheet.create({
     color: OrangeShades.primaryOrange,
     flexGrow: true,
     borderRadius: '9px',
+  },
+  main: {
+    marginTop: 17,
+    display: 'flex',
+    alignSelf: 'center',
+    justifySelf: 'center',
+    width: '92%',
+    height: '100%',
   },
 });
 

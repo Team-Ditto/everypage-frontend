@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Divider, Text, VStack } from 'native-base';
+import { Divider, VStack } from 'native-base';
 import NotificationCard from '../Cards/Notifications/NotificationCard';
 import { NotificationData } from '../../constants/NotificationData';
 
