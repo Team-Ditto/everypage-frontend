@@ -4,8 +4,8 @@ import SearchResult from './SearchResult';
 import { useState } from 'react';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 
-const Search = ({ navigation, searchField, onFilterClicked }) => {
-  const [searchText, setSearchText] = useState(searchField !== '' ? searchField : '');
+const Search = ({ navigation, onSearchSubitted }) => {
+  const [searchText, setSearchText] = useState('');
   return (
     <Input
       ml={2}
@@ -30,8 +30,8 @@ const Search = ({ navigation, searchField, onFilterClicked }) => {
       }
       placeholder='Search'
       returnKeyType='done'
-      onSubmitEditing={() => {
-        navigation.navigate('SearchResult', { searchText });
+      onSubmitEditing={text => {
+        onSearchSubitted(text.nativeEvent.text);
       }}
     />
   );

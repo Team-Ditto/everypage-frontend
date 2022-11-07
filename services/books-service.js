@@ -39,3 +39,12 @@ export async function getBooksByUserId(userId) {
     console.log(error);
   }
 }
+
+export async function getBooksByKeyword(keyword) {
+  try {
+    const books = axiosRequest.get(`/books/all?${keyword}`);
+    return books;
+  } catch (error) {
+    console.log(error);
+  }
+}

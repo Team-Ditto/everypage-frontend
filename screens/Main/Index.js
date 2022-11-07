@@ -9,13 +9,12 @@ import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
 import { OrangeShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
+import { getBooksByKeyword } from '../../services/books-service';
 
 const Home = ({ navigation }) => {
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-  const [isFilterVisible, setFilterVisible] = useState(false);
-
   useEffect(() => {
     async function fetchData() {
       getBooksOfLoginUser().then(books => {
@@ -28,8 +27,11 @@ const Home = ({ navigation }) => {
 
   const BookStatusChangeHandle = () => {};
 
-  const onFilterClicked = () => {
-    setFilterVisible(!isFilterVisible);
+  const onSearchSubitted = async searchText => {
+    const searchedBooks = await getBooksByKeyword(searchText);
+    setBookStatus(`Results for "${searchText}"`);
+    setLibData(searchedBooks.data.results);
+    console.log(searchedBooks.data.results);
   };
 
   return (
@@ -37,7 +39,7 @@ const Home = ({ navigation }) => {
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
           <Filter />
         </HStack>
       </Box>
@@ -70,7 +72,7 @@ const Home = ({ navigation }) => {
       </ScrollView>
 
       {/* My Library Data Collection */}
-      <Text mx={2} my={2}>
+      <Text mx={2} my={2} fontWeight='bold'>
         {bookStatus} ({libData.length})
       </Text>
       <ScrollView>
