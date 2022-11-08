@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Search from '../Assets/Search';
 import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, View, Divider } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,10 +8,12 @@ import { Circle } from 'react-native-svg';
 import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
   const [isFilterVisible, setFilterVisible] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -95,6 +97,14 @@ export default function Discover({ navigation }) {
         </Text>
         <Box py={3} px={2} mb={20} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
           {similarBookData.map((data, id) => {
+            let i = 0;
+            while (i < currentUser.wishlists.length) {
+              if (currentUser.wishlists[i].book === data._id) {
+                // data = { ...data, wishlistStatus: true };
+                console.log("Hi I'm here");
+              }
+              i++;
+            }
             return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
           })}
         </Box>
