@@ -7,60 +7,60 @@ import { BlueShades, SuccessColor, InUseColor, OnHoldColor } from '../../../asse
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
 import { responsePathAsArray } from 'graphql';
 
-const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true }) => {
+const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true, wishlistStatus }) => {
   const { title, author, images, borrowingStatus } = data;
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(wishlistStatus);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
-  console.log(currentUser);
+  // console.log('########', data);
 
-  const addWishlistToUser = wishlist => {
-    const index = currentUser.wishlists.findIndex(item => item._id === wishlist._id);
-    console.log(index);
-    if (index === -1) {
-      currentUser.wishlists.push(wishlist);
+  // const addWishlistToUser = wishlist => {
+  //   const index = currentUser.wishlists.findIndex(item => item._id === wishlist._id);
+  //   console.log(index);
+  //   if (index === -1) {
+  //     currentUser.wishlists.push(wishlist);
 
-      const updatedUser = {
-        ...currentUser,
-        wishlists: [...currentUser.wishlists],
-      };
+  //     const updatedUser = {
+  //       ...currentUser,
+  //       wishlists: [...currentUser.wishlists],
+  //     };
 
-      setCurrentUser(updatedUser);
-      createNewWishlist(data._id);
-    }
-  };
+  //     setCurrentUser(updatedUser);
+  //     // createNewWishlist(data._id);
+  //   }
+  // };
 
-  const removeWishlistFromUser = wishlist => {
-    const updatedUser = {
-      ...currentUser,
-      wishlists: currentUser.wishlists.filter(item => item._id !== wishlist._id),
-    };
+  // const removeWishlistFromUser = wishlist => {
+  //   const updatedUser = {
+  //     ...currentUser,
+  //     wishlists: currentUser.wishlists.filter(item => item._id !== wishlist._id),
+  //   };
 
-    setCurrentUser(updatedUser);
-    deleteWishlistByBookId(data._id);
-  };
+  //   setCurrentUser(updatedUser);
+  //   // deleteWishlistByBookId(data._id);
+  // };
 
   const handleWishlistPress = () => {
     // you call the api
     //in response you will get the created/deleted wishlist
 
     const createdWishlist = {
-      owner: currentUser._id,
       book: data._id,
-      status: 'Requested',
-      _id: 'response.wishlists.uid',
-      createdAt: '2022-11-04T17:46:10.038Z',
-      updatedAt: '2022-11-04T17:46:10.038Z',
+      status: 'For Later',
     };
 
     if (isWishlisted) {
       setIsWishlisted(false);
-      removeWishlistFromUser(createdWishlist);
+      deleteWishlistByBookId(data._id);
+
+      // removeWishlistFromUser(createdWishlist);
     } else {
       setIsWishlisted(true);
-      addWishlistToUser(createdWishlist);
+      createNewWishlist(createdWishlist);
+      // addWishlistToUser(createdWishlist);
     }
   };
+  // console.log('****** ', currentUser.wishlists, ' *******');
 
   const handleBorrowingStatus = b => {
     switch (b) {
