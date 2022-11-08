@@ -9,7 +9,7 @@ const Search = ({ navigation, onSearchSubitted }) => {
   return (
     <Input
       ml={2}
-      w='85%'
+      w='82.5%'
       h='42px'
       borderRadius='10px'
       borderColor={BlueShades.primaryBlue}
