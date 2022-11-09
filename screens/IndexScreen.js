@@ -11,7 +11,7 @@ import Home from './Main/Index';
 
 const IndexScreen = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
-  const { setNotifications } = useContext(NotificationContext);
+  const { setNotifications, setTotalUnreadNotifications } = useContext(NotificationContext);
 
   useEffect(() => {
     //over here right now I am doing as per wireframes
@@ -33,6 +33,7 @@ const IndexScreen = ({ navigation }) => {
 
         const unsubscribe = onSnapshot(q, doc => {
           const notifications = [];
+          let totalUnreadNotifications = 0;
 
           doc.forEach(doc => {
             const singleNotification = {
@@ -40,10 +41,13 @@ const IndexScreen = ({ navigation }) => {
               _id: doc.id,
             };
 
+            singleNotification.status === 'unread' && ++totalUnreadNotifications;
+
             notifications.push(singleNotification);
           });
 
           setNotifications(notifications);
+          setTotalUnreadNotifications(totalUnreadNotifications);
         });
 
         return () => {

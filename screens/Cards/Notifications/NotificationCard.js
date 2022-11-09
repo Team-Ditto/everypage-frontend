@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Heading, VStack, Text, Pressable } from 'native-base';
+import { VStack, Text, Pressable } from 'native-base';
 import { OrangeShades, BlackShades, BlueShades } from '../../../assets/style/color';
+import { markNotificationRead } from '../../../firebase/firebase-service';
 
 const NotificationCard = ({ notification, navigation }) => {
-  const { title, description, created, chatRedirect, book } = notification;
+  const { _id, title, description, created, chatRedirect, book, status } = notification;
 
-  const handleCardPress = () => {
+  const handleCardPress = async () => {
+    await markNotificationRead(_id);
+
     if (!chatRedirect) {
-      navigation.navigate('SingleView', {
-        bookData: book,
-      });
+      // PLEASE UNCOMMENT THE BELOW LINE AFTER THE GETBOOKSBYID IS IMPLEMENTED FOR SINGLE BOOKS
+      
+      // navigation.navigate('SingleView', {
+      //   bookData: book,
+      // });
     } else {
       // TODO redirect to chat
     }
@@ -21,7 +26,7 @@ const NotificationCard = ({ notification, navigation }) => {
   return (
     <VStack>
       <Pressable onPress={handleCardPress} mx={1}>
-        <Heading style={styles.heading}>{title}</Heading>
+        <Text style={[styles.heading, status === 'unread' ? styles.headingBold : '']}>{title}</Text>
         <Text style={styles.content}>{description}</Text>
         <Text style={styles.date}>{getFormattedDate(created)}</Text>
       </Pressable>
@@ -31,8 +36,12 @@ const NotificationCard = ({ notification, navigation }) => {
 
 const styles = StyleSheet.create({
   heading: {
+    fontSize: 22,
     color: BlueShades.secondaryBlue,
-    marginTop: 5,
+    marginTop: 10,
+  },
+  headingBold: {
+    fontWeight: '700',
   },
   content: {
     color: BlackShades.secondaryBlack,
