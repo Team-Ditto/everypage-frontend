@@ -3,47 +3,18 @@ import { StyleSheet } from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import WishlistButton from '../../Assets/WishlistButton';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { BlueShades, SuccessColor, InUseColor, OnHoldColor } from '../../../assets/style/color';
+import { SuccessColor, InUseColor, OnHoldColor } from '../../../assets/style/color';
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
 import { responsePathAsArray } from 'graphql';
 
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true, wishlistStatus }) => {
   const { title, author, images, borrowingStatus } = data;
-  const [isWishlisted, setIsWishlisted] = useState(wishlistStatus);
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-
-  // console.log('########', data);
-
-  // const addWishlistToUser = wishlist => {
-  //   const index = currentUser.wishlists.findIndex(item => item._id === wishlist._id);
-  //   console.log(index);
-  //   if (index === -1) {
-  //     currentUser.wishlists.push(wishlist);
-
-  //     const updatedUser = {
-  //       ...currentUser,
-  //       wishlists: [...currentUser.wishlists],
-  //     };
-
-  //     setCurrentUser(updatedUser);
-  //     // createNewWishlist(data._id);
-  //   }
-  // };
-
-  // const removeWishlistFromUser = wishlist => {
-  //   const updatedUser = {
-  //     ...currentUser,
-  //     wishlists: currentUser.wishlists.filter(item => item._id !== wishlist._id),
-  //   };
-
-  //   setCurrentUser(updatedUser);
-  //   // deleteWishlistByBookId(data._id);
-  // };
 
   const handleWishlistPress = () => {
     // you call the api
     //in response you will get the created/deleted wishlist
-
     const createdWishlist = {
       book: data._id,
       status: 'For Later',
@@ -52,15 +23,11 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
     if (isWishlisted) {
       setIsWishlisted(false);
       deleteWishlistByBookId(data._id);
-
-      // removeWishlistFromUser(createdWishlist);
     } else {
       setIsWishlisted(true);
       createNewWishlist(createdWishlist);
-      // addWishlistToUser(createdWishlist);
     }
   };
-  // console.log('****** ', currentUser.wishlists, ' *******');
 
   const handleBorrowingStatus = b => {
     switch (b) {
@@ -75,6 +42,14 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
         break;
     }
   };
+
+  // let i = 0;
+  // while (i < currentUser.wishlists.length) {
+  //   if (currentUser.wishlists[i].book === data._id) {
+  //     setIsWishlisted(true);
+  //   }
+  //   i++;
+  // }
 
   return (
     <Pressable
@@ -111,20 +86,18 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
               <HStack position='absolute' left='0' justifyContent='space-between' width='100%'>
                 <Box justifyContent='center' m={2}>
                   {displayBadge ? (
-                    <Badge p={0.5} style={handleBorrowingStatus(borrowingStatus)}>
-                      {borrowingStatus}
+                    <Badge p={0.5} px={1} style={handleBorrowingStatus(borrowingStatus)}>
+                      <Text style={handleBorrowingStatus(borrowingStatus)}>{borrowingStatus}</Text>
                     </Badge>
                   ) : (
                     <></>
                   )}
                 </Box>
-                <Box m={2} bg={isWishlisted ? BlueShades.primaryBlue : 'white'} borderRadius='full' shadow={3}>
-                  <WishlistButton
-                    isWishlisted={isWishlisted}
-                    handleWishlistPress={handleWishlistPress}
-                    onHeader={false}
-                  />
-                </Box>
+                <WishlistButton
+                  isWishlisted={isWishlisted}
+                  handleWishlistPress={handleWishlistPress}
+                  onHeader={false}
+                />
               </HStack>
             ) : (
               ''
@@ -148,19 +121,19 @@ const styles = StyleSheet.create({
   available: {
     backgroundColor: SuccessColor.successBG,
     borderColor: SuccessColor.successText,
-    _text: { color: SuccessColor.successText },
+    color: SuccessColor.successText,
     borderRadius: '4px',
   },
   inUse: {
     backgroundColor: InUseColor.inUseBG,
     borderColor: InUseColor.inUseText,
-    _text: { color: InUseColor.inUseText },
+    color: InUseColor.inUseText,
     borderRadius: '4px',
   },
   onHold: {
     backgroundColor: OnHoldColor.onHoldBG,
     borderColor: OnHoldColor.onHoldText,
-    _text: { color: OnHoldColor.onHoldText },
+    color: OnHoldColor.onHoldText,
     borderRadius: '4px',
   },
 });

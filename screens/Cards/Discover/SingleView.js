@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import Carousel from '../../Assets/Carousel';
 import BooksSameOwner from '../../Assets/BooksSameOwner';
 import { BlueShades, SuccessColor, InUseColor, OnHoldColor, OrangeShades } from '../../../assets/style/color';
+import { createNewWishlist } from '../../../services/wishlists-service';
 
 const SingleView = ({ navigation, route }) => {
   const bookData = route.params.bookData;
@@ -21,6 +22,15 @@ const SingleView = ({ navigation, route }) => {
         return styles.onHold;
         break;
     }
+  };
+
+  const handleRequestToBorrow = () => {
+    const createdWishlist = {
+      book: bookData._id,
+      status: 'Requested',
+    };
+    createNewWishlist(createdWishlist);
+    // .then(navigation.navigate('Wishlist'));
   };
 
   return (
@@ -46,8 +56,8 @@ const SingleView = ({ navigation, route }) => {
                   <Text fontSize='16px'>{author}</Text>
                 </VStack>
                 <Box mt={1}>
-                  <Badge p={0.5} style={handleBorrowingStatus(borrowingStatus)}>
-                    {borrowingStatus}
+                  <Badge p={0.5} px={1} style={handleBorrowingStatus(borrowingStatus)}>
+                    <Text style={handleBorrowingStatus(borrowingStatus)}>{borrowingStatus}</Text>
                   </Badge>
                 </Box>
               </HStack>
@@ -97,6 +107,7 @@ const SingleView = ({ navigation, route }) => {
           borderRadius='10px'
           shadow={2}
           shadowOffset={{ width: '-20px', height: '-20px' }}
+          onPress={handleRequestToBorrow}
         >
           Request to Borrow
         </Button>
@@ -109,19 +120,19 @@ const styles = StyleSheet.create({
   available: {
     backgroundColor: SuccessColor.successBG,
     borderColor: SuccessColor.successText,
-    _text: { color: SuccessColor.successText },
+    color: SuccessColor.successText,
     borderRadius: '4px',
   },
   inUse: {
     backgroundColor: InUseColor.inUseBG,
     borderColor: InUseColor.inUseText,
-    _text: { color: InUseColor.inUseText },
+    color: InUseColor.inUseText,
     borderRadius: '4px',
   },
   onHold: {
     backgroundColor: OnHoldColor.onHoldBG,
     borderColor: OnHoldColor.onHoldText,
-    _text: { color: OnHoldColor.onHoldText },
+    color: OnHoldColor.onHoldText,
     borderRadius: '4px',
   },
 });

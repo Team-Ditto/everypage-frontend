@@ -15,6 +15,8 @@ export default function Discover({ navigation }) {
   const [isFilterVisible, setFilterVisible] = useState(false);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
+  console.log('****** ', currentUser.wishlists, ' *******');
+
   useEffect(() => {
     async function fetchData() {
       const params = {
@@ -97,14 +99,6 @@ export default function Discover({ navigation }) {
         </Text>
         <Box py={3} px={2} mb={20} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
           {similarBookData.map((data, id) => {
-            let i = 0;
-            while (i < currentUser.wishlists.length) {
-              if (currentUser.wishlists[i].book === data._id) {
-                // data = { ...data, wishlistStatus: true };
-                console.log("Hi I'm here");
-              }
-              i++;
-            }
             return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
           })}
         </Box>
