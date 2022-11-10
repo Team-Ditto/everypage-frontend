@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BlueShades } from '../../assets/style/color';
 import BarScanner from '../../assets/searchbar-icons/bar-scanner.png';
 
-const Search = ({ navigation, onSearchSubitted }) => {
+const Search = ({ navigation, onSearchSubmitted }) => {
   const [searchText, setSearchText] = useState('');
   return (
     <Input
@@ -39,7 +39,7 @@ const Search = ({ navigation, onSearchSubitted }) => {
       placeholder='Search'
       returnKeyType='done'
       onSubmitEditing={text => {
-        onSearchSubitted(text.nativeEvent.text);
+        onSearchSubmitted(text.nativeEvent.text);
       }}
     />
   );
