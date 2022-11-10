@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createUserWithEmailAndPassword, updateProfile, signOut, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -26,11 +27,6 @@ export const signUpWithEmailAndPassword = async (email, password, displayName, f
       photoURL = DEFAULT_PROFILE_PHOTO_URL;
     }
 
-    await updateProfile(response.user, {
-      displayName,
-      photoURL,
-    });
-
     // create user on MongoDB
     await createNewUser({
       _id: response.user.uid,
@@ -39,12 +35,10 @@ export const signUpWithEmailAndPassword = async (email, password, displayName, f
       photoURL,
     });
 
-    // await setDoc(doc(db, 'users', response.user.uid), {
-    //   uid: response.user.uid,
-    //   displayName,
-    //   email,
-    //   photoURL,
-    // });
+    await updateProfile(response.user, {
+      displayName,
+      photoURL,
+    });
 
     //   create empty user chats on firestore (this will be used later for chats)
     await setDoc(doc(db, 'userChats', response.user.uid), {});
@@ -71,6 +65,7 @@ export const loginWithEmailAndPassword = async (email, password) => {
 export const logout = async () => {
   try {
     await signOut(auth);
+    await AsyncStorage.setItem('access_token', '');
   } catch (error) {
     console.log(err);
     throw err;

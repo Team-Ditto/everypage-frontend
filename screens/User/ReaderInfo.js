@@ -1,13 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { Text, StyleSheet } from 'react-native';
 import { Button, VStack } from 'native-base';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
+import { updateMyUserProfile } from '../../services/users-service';
+import { AuthContext } from '../../contexts/AuthContext';
+
 export default function ReaderInfo({ navigation }) {
+  const { setCurrentUser } = useContext(AuthContext);
+
   useEffect(() => {
     navigation.setOptions({
       title: 'Tell us more',
     });
   }, []);
+
+  const handleSaveReaderType = async () => {
+    // for now I am just using static data. But remember to set firstTimeLogin as false here along with readerType
+    const updatedUser = await updateMyUserProfile({ readerType: 'Slow', firstTimeLogin: false });
+    setCurrentUser(updatedUser.data);
+    // do not navigate from here, it should happen automatically
+  };
+
   return (
     <>
       <VStack mt={10} mb={5} mx={5}>
@@ -48,9 +61,7 @@ export default function ReaderInfo({ navigation }) {
           mt={10}
           borderRadius={10}
           bg={BlueShades.primaryBlue}
-          onPress={() => {
-            navigation.navigate('BottomTab');
-          }}
+          onPress={handleSaveReaderType}
         >
           Done
         </Button>
