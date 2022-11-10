@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
 
   const BookStatusChangeHandle = () => {};
 
-  const onSearchSubitted = async searchText => {
+  const onSearchSubmitted = async searchText => {
     const searchedBooks = await getBooksByKeyword(searchText);
     setBookStatus(`Results for "${searchText}"`);
     setLibData(searchedBooks.data.results);
@@ -55,7 +55,7 @@ const Home = ({ navigation }) => {
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
+          <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
           <Filter />
         </HStack>
       </Box>
