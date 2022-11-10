@@ -1,4 +1,4 @@
-import { VStack, Text, Box, Button, Spinner, HStack } from 'native-base';
+import { VStack, Text, Box, Button, Spinner, HStack, View } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
@@ -50,42 +50,48 @@ const Home = ({ navigation }) => {
     });
   };
 
+  const ApplyFilterSettings = filterSetting => {
+    console.log(filterSetting);
+  };
+
   return (
-    <VStack>
+    <VStack style={{ position: 'relative', height: '100%' }}>
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
-          <Filter />
+          <Filter ApplyFilterSettings={ApplyFilterSettings} />
         </HStack>
       </Box>
       {/* button slider */}
-      <ScrollView
-        style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-      >
-        {BOOK_STATUS.map((status, idx) => {
-          return (
-            <Box mx={1} mt={2} key={idx} h={60} width={120}>
-              <Button
-                px={2}
-                variant='unstyled'
-                borderRadius={100}
-                bg={OrangeShades.quaternaryOrange}
-                _text={{ color: OrangeShades.primaryOrange }}
-                style={{
-                  borderWidth: 1,
-                  borderColor: OrangeShades.primaryOrange,
-                }}
-                onPress={e => setBookStatus(status)}
-              >
-                {status}
-              </Button>
-            </Box>
-          );
-        })}
-      </ScrollView>
+      <View style={{ height: 70 }}>
+        <ScrollView
+          style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
+          {BOOK_STATUS.map((status, idx) => {
+            return (
+              <Box mx={1} mt={2} key={idx} h={60} width={120}>
+                <Button
+                  px={2}
+                  variant='unstyled'
+                  borderRadius={100}
+                  bg={OrangeShades.quaternaryOrange}
+                  _text={{ color: OrangeShades.primaryOrange }}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: OrangeShades.primaryOrange,
+                  }}
+                  onPress={e => setBookStatus(status)}
+                >
+                  {status}
+                </Button>
+              </Box>
+            );
+          })}
+        </ScrollView>
+      </View>
 
       {/* My Library Data Collection */}
       <Text mx={2} my={2} fontWeight='bold'>

@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 const SingleBook = ({ route, navigation }) => {
   const [isShareable, setIsShareable] = useState(false);
   const [libCardData, setlibCardData] = useState(route.params.libCardData);
+  // Change it to get the data from the API
+  // Not use the above params data.
   let [service, setService] = useState('');
   return (
     <>

@@ -30,13 +30,17 @@ export default function Discover({ navigation }) {
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);
   };
+
+  const ApplyFilterSettings = filterSetting => {
+    console.log(filterSetting);
+  };
   return (
     <VStack>
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onFilterClicked={onFilterClicked} />
-          <Filter isFromDiscover={true} />
+          <Filter ApplyFilterSettings={ApplyFilterSettings} isFromDiscover={true} />
         </HStack>
       </Box>
       {/* Genre Generation */}

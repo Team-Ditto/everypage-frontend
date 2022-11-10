@@ -32,7 +32,7 @@ const AddBook = ({ route, navigation }) => {
     try {
       let responseBook = await addBook(bookObj);
       alert('Book added.');
-      // navigation.navigate('BottomTab');
+      navigation.navigate('BottomTab');
     } catch (err) {
       console.log('Error: ', err);
     }

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Accordion from '../Accordion';
 import { getMyBooksShelfLocation } from '../../../services/books-service';
 
-export default function LocationSetting() {
+export default function LocationSetting({ filterSetting, handleFilterSetting }) {
   const [shelfLocations, setShelfLocations] = React.useState([]);
   useEffect(() => {
     async function fetchData() {
@@ -15,7 +15,12 @@ export default function LocationSetting() {
 
   return (
     <View style={{ width: '100%', paddingTop: 20, paddingHorizontal: 10 }}>
-      <Accordion title='Location' content={shelfLocations} />
+      <Accordion
+        title='Location'
+        content={shelfLocations}
+        filterSetting={filterSetting}
+        handleFilterSetting={handleFilterSetting}
+      />
     </View>
   );
 }

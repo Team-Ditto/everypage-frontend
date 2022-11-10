@@ -22,6 +22,7 @@ const Notifications = ({ navigation }) => {
       title: `Search Results`,
     });
   };
+
   return (
     <VStack>
       <Box display='flex' width='100%' mt={2}>

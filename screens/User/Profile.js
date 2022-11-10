@@ -22,6 +22,7 @@ import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { getMyUserProfile } from '../../services/users-service';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { BlueShades } from '../../assets/style/color';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -41,9 +42,9 @@ export default function Profile({ navigation }) {
   };
   return (
     <ScrollView>
-      {/* <Button mt='2' colorScheme='gray' onPress={handleLogout}>
+      <Button mt='2' colorScheme={BlueShades.primaryBlue} onPress={handleLogout}>
         Logout
-      </Button> */}
+      </Button>
       <Box style={styles.userData}>
         <Image source={{ uri: user.photoURL }} alt={user.displayName} style={styles.personImage} />
         <VStack>

@@ -9,7 +9,7 @@ import { uploadFile } from '../../../firebase/firebase-service';
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
   const [imageArr, setImageArr] = useState([]);
-
+  let photoURL = null;
   const { currentUser } = useContext(AuthContext);
   const HandleImageEventClick = async () => {
     if (imageArr.length < 3) {
@@ -24,14 +24,17 @@ const BookDetail = ({ bookObj, setBookObj }) => {
         // try {
         //   if (result) {
         //     photoURL = await uploadFile(result, USER_PROFILE_UPLOAD_DIRECTORY, currentUser.displayName);
+        // setImageArr([...imageArr, photoURL]);
         //   } else {
         //     photoURL = DEFAULT_PROFILE_PHOTO_URL;
         //   }
         // } catch (err) {
         //   console.log(err);
         // }
-        setImageArr([...imageArr, result.uri]);
-        setBookObj({ ...bookObj, images: [...imageArr, result.uri] });
+        // console.log('PhotoURL', photoURL);
+        // console.log('ImageArr', imageArr);
+        setImageArr([...imageArr, photoURL]);
+        setBookObj(prevState => ({ ...prevState, images: [...imageArr, result.uri] }));
       }
     } else {
       alert("You can't add more than 3 images");

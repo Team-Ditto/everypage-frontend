@@ -9,7 +9,7 @@ import { BlueShades, whiteShades } from '../../assets/style/color';
 import { FontAwesome } from '@expo/vector-icons';
 import { fieldSet, legend } from '../../assets/style/fieldsetStyle';
 
-const Location = ({ navigation }) => {
+export default function Location({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
@@ -129,5 +129,4 @@ const Location = ({ navigation }) => {
       </View>
     </View>
   );
-};
-export default Location;
+}
