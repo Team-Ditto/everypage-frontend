@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { logout } from '../../firebase/firebase-service';
-import moment from 'moment';
 import {
   Button,
   ScrollView,
@@ -52,7 +51,7 @@ export default function Profile({ navigation }) {
           <Text>Casual Reader</Text>
           {/* Fetech reader type data */}
           <Text fontStyle='italic' fontSize='sm'>
-            joined {moment(user.createdAt).format('DD MMMM YYYY')}
+            joined {new Date(user.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='Edit Icon Image' style={styles.penIcon} />
