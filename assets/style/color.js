@@ -24,10 +24,24 @@ export const BlackShades = {
   quaternaryBlack: '#A3A3A3',
 };
 
-export const whiteShades = {
+export const WhiteShades = {
   primaryWhite: '#FFFFFF',
 };
 
 export const SuccessColor = {
   success: '#16A34A',
+  successBG: '#DCFCE7',
+  successText: '#14532D',
+};
+
+export const InUseColor = {
+  inUse: '#DC2626',
+  inUseBG: '#FEE2E2',
+  inUseText: '#A01923',
+};
+
+export const OnHoldColor = {
+  onHold: '#525252',
+  onHoldBG: '#E6E6E6',
+  onHoldText: '#424242',
 };

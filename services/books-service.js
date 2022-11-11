@@ -1,5 +1,4 @@
 import axiosRequest from './api';
-import { async } from '@firebase/util';
 
 // see users-service.js for example
 

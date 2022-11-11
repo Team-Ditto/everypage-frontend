@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
-import { Input, Box, Icon, IconButton, HStack, Button } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
-import { BlueShades, OrangeShades } from '../../../assets/style/color';
+import React, { useState } from 'react';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
+import { Icon, IconButton, HStack } from 'native-base';
+import { BlueShades } from '../../../assets/style/color';
 import Sort from './Sort';
 import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
+import FilterIcon from '../../../assets/searchbar-icons/filter.png';
 import DiscoverLocationSettings from './DiscoverLocationSettings';
+
 export default function Filter({ isFromDiscover = false }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -51,11 +52,9 @@ export default function Filter({ isFromDiscover = false }) {
       <IconButton
         ml={2}
         mr={2}
-        height='34px'
         variant='unstyled'
         px={2}
-        bg={OrangeShades.primaryOrange}
-        icon={<Icon size='md' as={<Ionicons name='filter-outline' size={24} color='black' />} color='white' />}
+        icon={<Icon as={<Image source={FilterIcon} w='26px' h='26px' alt='filter icon' />} size={7} />}
         onPress={() => setModalVisible(true)}
       />
     </View>

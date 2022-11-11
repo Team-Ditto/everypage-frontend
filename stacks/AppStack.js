@@ -8,7 +8,7 @@ import SingleBook from '../screens/Cards/Book/SingleBook';
 import TabStack from './TabStack';
 import AddBook from '../screens/Main/Book/AddBook';
 import Location from '../screens/Assets/Location';
-import { BlueShades, whiteShades } from '../assets/style/color';
+import { BlueShades, WhiteShades } from '../assets/style/color';
 import ReaderInfo from '../screens/User/ReaderInfo';
 import Genres from '../screens/Main/Genres';
 import SingleGenre from '../screens/Main/SingleGenre';
@@ -18,6 +18,7 @@ import WishlistButton from '../screens/Assets/WishlistButton';
 import { AuthContext } from '../contexts/AuthContext';
 import SearchResult from '../screens/Assets/SearchResult';
 import Notifications from '../screens/Main/Notifications';
+
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
   const { currentUser } = useContext(AuthContext);
@@ -108,7 +109,7 @@ const AppStack = () => {
                   backgroundColor: BlueShades.primaryBlue,
                 },
                 cardStyle: { backgroundColor: BlueShades.primaryBlue },
-                headerTintColor: whiteShades.primaryWhite,
+                headerTintColor: WhiteShades.primaryWhite,
               }}
             />
             <Stack.Screen
@@ -119,7 +120,7 @@ const AppStack = () => {
                   backgroundColor: BlueShades.primaryBlue,
                 },
                 cardStyle: { backgroundColor: BlueShades.primaryBlue },
-                headerTintColor: whiteShades.primaryWhite,
+                headerTintColor: WhiteShades.primaryWhite,
               }}
             />
           </>
