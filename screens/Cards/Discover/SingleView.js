@@ -8,19 +8,17 @@ import { createNewWishlist } from '../../../services/wishlists-service';
 
 const SingleView = ({ navigation, route }) => {
   const bookData = route.params.bookData;
+  console.log('bookData', bookData);
   const { images, title, author, owner, genre, edition, language, isbn, condition, _id, borrowingStatus } = bookData;
 
   const handleBorrowingStatus = b => {
     switch (b) {
       case 'Available':
         return styles.available;
-        break;
       case 'In-Use':
         return styles.inUse;
-        break;
       case 'On-Hold':
         return styles.onHold;
-        break;
     }
   };
 
