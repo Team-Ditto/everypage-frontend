@@ -1,5 +1,4 @@
-import { async } from '@firebase/util';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 

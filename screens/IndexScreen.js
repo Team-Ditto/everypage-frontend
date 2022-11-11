@@ -1,7 +1,6 @@
-import { AntDesign } from '@expo/vector-icons';
-import { Fab, Icon, Text, VStack } from 'native-base';
+import { VStack } from 'native-base';
 import { useContext, useEffect } from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import Home from './Main/Index';
 

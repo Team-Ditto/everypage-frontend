@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Divider, VStack, Text } from 'native-base';
+import { useState } from 'react';
+import { Divider, VStack } from 'native-base';
 import MessageCard from '../Cards/Notifications/MessageCard';
 import { MessageData } from '../../constants/MessageData';
 

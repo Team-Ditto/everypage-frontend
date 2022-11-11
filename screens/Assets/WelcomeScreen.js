@@ -1,6 +1,5 @@
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
-import React from 'react';
-
+import { StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Image } from 'native-base';
 const WelcomeScreen = () => {
   return (
     <ScrollView>

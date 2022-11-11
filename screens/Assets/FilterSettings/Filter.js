@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
-import { Input, Box, Icon, IconButton, HStack, Button } from 'native-base';
+import { Icon, IconButton, HStack } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { BlueShades, OrangeShades } from '../../../assets/style/color';
 import Sort from './Sort';
@@ -11,7 +11,7 @@ import DiscoverLocationSettings from './DiscoverLocationSettings';
 import { getMyBooksShelfLocation } from '../../../services/books-service';
 export default function Filter({ ApplyFilterSettings, isFromDiscover = false }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [shelfLocations, setShelfLocations] = React.useState([]);
+  const [shelfLocations, setShelfLocations] = useState([]);
   const [filterSetting, setFilterSetting] = useState({
     sort: 'Newly Added',
     genre: 'Action & Adventure',

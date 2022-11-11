@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, Animated, LayoutAnimation } from 'react-native';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { toggleAnimation } from './Animation/toggleAnimation';
 import { View, Text, Radio, Divider } from 'native-base';

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
-import { Box, Text, Button, ScrollView, VStack, HStack, Icon, createIcon, Pressable, Image } from 'native-base';
+import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, View } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { Circle } from 'react-native-svg';
 import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
@@ -19,10 +19,11 @@ export default function Discover({ navigation }) {
         genre: '',
         readingStatus: '',
       };
-      getUsersBook().then(books => {
-        setSimilarBookData(books.data.results);
-        // setSpinnerVisible(false);
-      });
+
+      let booksData = await getUsersBook();
+      if (booksData !== undefined && booksData.data.results.length > 0) {
+        setSimilarBookData(booksData.data.results);
+      }
     }
     fetchData();
     GetNotificationHeader(navigation);
@@ -31,11 +32,15 @@ export default function Discover({ navigation }) {
     setFilterVisible(!isFilterVisible);
   };
 
-  const ApplyFilterSettings = filterSetting => {
+  const ApplyFilterSettings = async filterSetting => {
     console.log(filterSetting);
+    let filterData = await GetFilteredResults(filterSetting, true);
+    if (filterData !== undefined) {
+      setSimilarBookData(filterData.data.results);
+    }
   };
   return (
-    <VStack>
+    <VStack style={{ height: '100%' }}>
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
@@ -59,30 +64,32 @@ export default function Discover({ navigation }) {
         </Button>
       </HStack>
 
-      <ScrollView
-        style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        h='105px'
-      >
-        {genreDiscover.map((data, idx) => {
-          return (
-            <Box mx={1} key={idx} h={60}>
-              <Pressable
-                justifyContent='space-between'
-                onPress={() => {
-                  navigation.navigate('SingleGenre', { genre: data.genre });
-                }}
-              >
-                <Image source={data.icon} w='64px' h='64px' alt={data.genre} />
-                <Text w='70px' flexWrap='wrap' textAlign='center'>
-                  {data.genre}
-                </Text>
-              </Pressable>
-            </Box>
-          );
-        })}
-      </ScrollView>
+      <View style={{ height: 90 }}>
+        <ScrollView
+          style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          h='105px'
+        >
+          {genreDiscover.map((data, idx) => {
+            return (
+              <Box mx={1} key={idx} h={60}>
+                <Pressable
+                  justifyContent='space-between'
+                  onPress={() => {
+                    navigation.navigate('SingleGenre', { genre: data.genre });
+                  }}
+                >
+                  <Image source={data.icon} w='64px' h='64px' alt={data.genre} />
+                  <Text w='70px' flexWrap='wrap' textAlign='center'>
+                    {data.genre}
+                  </Text>
+                </Pressable>
+              </Box>
+            );
+          })}
+        </ScrollView>
+      </View>
 
       {/* View below the Genre Tab */}
 

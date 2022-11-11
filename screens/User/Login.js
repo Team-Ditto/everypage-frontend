@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   HStack,
@@ -8,10 +8,7 @@ import {
   Input,
   Link,
   Button,
-  StatusBar,
-  Icon,
   ScrollView,
-  Heading,
   Image,
   Divider,
   View,

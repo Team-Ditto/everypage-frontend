@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Divider, View, VStack } from 'native-base';
 import NotificationCard from '../Cards/Notifications/NotificationCard';
 import { NotificationData } from '../../constants/NotificationData';

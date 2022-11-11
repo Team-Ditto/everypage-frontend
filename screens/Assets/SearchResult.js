@@ -1,6 +1,5 @@
-import { Input, Box, Icon, IconButton, HStack, View, Text, VStack } from 'native-base';
+import { Box, Text } from 'native-base';
 import { ScrollView } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';

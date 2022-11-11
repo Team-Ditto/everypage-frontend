@@ -3,9 +3,8 @@ import { useContext, useState } from 'react';
 import { BlueShades, whiteShades } from '../../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
-import { USER_PROFILE_UPLOAD_DIRECTORY } from '../../../constants';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { uploadFile } from '../../../firebase/firebase-service';
+
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
   const [imageArr, setImageArr] = useState([]);

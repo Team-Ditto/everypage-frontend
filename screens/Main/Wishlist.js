@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { VStack, Text, Center, Box, HStack, Button } from 'native-base';
+import { VStack, Box, HStack, Button } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 
 import Search from '../Assets/Search';
 import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
-
-import { getWishlistsByStatus } from '../../services/wishlists-service';
-import { LibraryData } from '../../constants/LibraryData';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 export default function Wishlist({ navigation }) {

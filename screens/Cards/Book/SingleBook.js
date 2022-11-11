@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HStack, Image, Select, Text, VStack, Switch, CheckIcon } from 'native-base';
 import { StyleSheet } from 'react-native';
 const SingleBook = ({ route, navigation }) => {

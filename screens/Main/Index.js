@@ -2,7 +2,6 @@ import { VStack, Text, Box, Button, Spinner, HStack, View } from 'native-base';
 import Search from '../Assets/Search';
 import { ScrollView } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
-
 import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
@@ -12,6 +11,7 @@ import Filter from '../Assets/FilterSettings/Filter';
 import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -50,8 +50,11 @@ const Home = ({ navigation }) => {
     });
   };
 
-  const ApplyFilterSettings = filterSetting => {
-    console.log(filterSetting);
+  const ApplyFilterSettings = async filterSetting => {
+    let filterData = await GetFilteredResults(filterSetting);
+    if (filterData !== undefined) {
+      setLibData(filterData.data.results);
+    }
   };
 
   return (

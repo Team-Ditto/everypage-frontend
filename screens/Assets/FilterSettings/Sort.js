@@ -1,5 +1,4 @@
-import { Text, View } from 'native-base';
-import React from 'react';
+import { View } from 'native-base';
 import Accordion from '../Accordion';
 import { sort } from '../../../constants/FilterContent';
 

@@ -1,8 +1,6 @@
 import axiosRequest from './api';
-import { async } from '@firebase/util';
 
 // see users-service.js for example
-
 export const addBook = async book => {
   try {
     // console.log('addBook', book);
@@ -14,9 +12,15 @@ export const addBook = async book => {
   }
 };
 
-export async function getUsersBook(genre = null, readingStatus = null) {
+export async function getUsersBook(
+  queryParam,
+  genre = null,
+  readingStatus = null,
+  location = null,
+  isFromDiscover = false,
+) {
   try {
-    let queryParams = '?page=1&perPage=5&sortBy=createdAt&sortOrder=asc';
+    let queryParams = queryParam;
 
     if (genre) {
       queryParams += `&genre=${genre}`;
@@ -25,11 +29,44 @@ export async function getUsersBook(genre = null, readingStatus = null) {
     if (readingStatus) {
       queryParams += `&readingStatus=${readingStatus}`;
     }
-    return await axiosRequest.get(`books/users${queryParams}`);
+    if (location) {
+      queryParams += `&location=${location}`;
+    }
+
+    let url = '';
+    if (isFromDiscover) {
+      url = 'books/users';
+    } else {
+      url = 'books/mine';
+    }
+
+    return await axiosRequest.get(`${url}${queryParams}`);
   } catch (err) {
     console.log(err);
   }
 }
+
+// To ask ashim do I really need to use another function here since parameters are same just that get url is bit different
+// export async function getAllUserBooks(queryParam, genre = null, readingStatus = null, location = null) {
+//   try {
+//     let queryParams = queryParam;
+
+//     if (genre) {
+//       queryParams += `&genre=${genre}`;
+//     }
+
+//     if (readingStatus) {
+//       queryParams += `&readingStatus=${readingStatus}`;
+//     }
+//     if (location) {
+//       queryParams += `&location=${location}`;
+//     }
+
+//     return await axiosRequest.get(`books/mine${queryParams}`);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
 export async function getBooksByUserId(userId) {
   try {

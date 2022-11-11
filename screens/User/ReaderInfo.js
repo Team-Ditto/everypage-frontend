@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useEffect } from 'react';
+import { Text, StyleSheet } from 'react-native';
+import { useEffect } from 'react';
 import { Button, VStack } from 'native-base';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 export default function ReaderInfo({ navigation }) {

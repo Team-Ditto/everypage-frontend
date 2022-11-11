@@ -1,5 +1,4 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { View } from 'react-native';
 import Accordion from '../Accordion';
 import { ReadStatus } from '../../../constants/LibraryData';
 

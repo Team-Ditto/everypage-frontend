@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { VStack, Text, Center, Box, HStack, Button, Row } from 'native-base';
+import { VStack, Box, HStack, Button } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
-
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
 import Messages from '../Notifications/Messages';

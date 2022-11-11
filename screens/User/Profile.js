@@ -1,23 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { logout } from '../../firebase/firebase-service';
 import moment from 'moment';
-import {
-  Button,
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Box,
-  VStack,
-  St,
-  HStack,
-  Link,
-  Icon,
-  ChevronRightIcon,
-  FavouriteIcon,
-} from 'native-base';
+import { Button, ScrollView, Text, Image, Box, VStack, HStack, Link, ChevronRightIcon } from 'native-base';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { getMyUserProfile } from '../../services/users-service';

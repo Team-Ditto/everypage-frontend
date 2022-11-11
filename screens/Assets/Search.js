@@ -1,7 +1,7 @@
-import { Input, Box, Icon, IconButton, HStack, Button, Image } from 'native-base';
+import { Input, Icon, Button, Image } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { BlueShades, OrangeShades } from '../../assets/style/color';
+import { BlueShades } from '../../assets/style/color';
 
 const Search = ({ navigation, onSearchSubitted }) => {
   const [searchText, setSearchText] = useState('');

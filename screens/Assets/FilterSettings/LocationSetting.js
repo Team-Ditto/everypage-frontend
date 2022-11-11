@@ -1,10 +1,10 @@
-import { View, Text } from 'react-native';
-import React, { useEffect } from 'react';
+import { View } from 'react-native';
+import { useEffect, useState } from 'react';
 import Accordion from '../Accordion';
 import { getMyBooksShelfLocation } from '../../../services/books-service';
 
 export default function LocationSetting({ filterSetting, handleFilterSetting }) {
-  const [shelfLocations, setShelfLocations] = React.useState([]);
+  const [shelfLocations, setShelfLocations] = useState([]);
   useEffect(() => {
     async function fetchData() {
       const location = await getMyBooksShelfLocation();

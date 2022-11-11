@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Heading, VStack, Text } from 'native-base';
 import { OrangeShades, BlackShades, BlueShades } from '../../../assets/style/color';

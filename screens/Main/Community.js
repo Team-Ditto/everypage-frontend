@@ -1,10 +1,8 @@
-import { View, Text } from "react-native";
-import React from "react";
-
+import { VStack, Text } from 'native-base';
 export default function Community() {
   return (
-    <View>
+    <VStack>
       <Text>Community</Text>
-    </View>
+    </VStack>
   );
 }
