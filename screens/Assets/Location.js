@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { VStack, Button, Input, Text, View } from 'native-base';
-import { FontAwesome } from '@expo/vector-icons';
-import Spinner from 'react-native-loading-spinner-overlay';
 import * as Loc from 'expo-location';
 
 import Map from './Map';
