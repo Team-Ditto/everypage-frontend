@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View,Image } from 'react-native';
 import { Icon, IconButton, HStack } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { BlueShades, OrangeShades } from '../../../assets/style/color';
@@ -7,6 +7,7 @@ import Sort from './Sort';
 import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
+import FilterIcon from '../../../assets/searchbar-icons/filter.png';
 import DiscoverLocationSettings from './DiscoverLocationSettings';
 import { getMyBooksShelfLocation } from '../../../services/books-service';
 export default function Filter({ ApplyFilterSettings, isFromDiscover = false }) {
@@ -79,11 +80,9 @@ export default function Filter({ ApplyFilterSettings, isFromDiscover = false }) 
       <IconButton
         ml={2}
         mr={2}
-        height='34px'
         variant='unstyled'
         px={2}
-        bg={OrangeShades.primaryOrange}
-        icon={<Icon size='md' as={<Ionicons name='filter-outline' size={24} color='black' />} color='white' />}
+        icon={<Icon as={<Image source={FilterIcon} w='26px' h='26px' alt='filter icon' />} size={7} />}
         onPress={() => setModalVisible(true)}
       />
     </View>

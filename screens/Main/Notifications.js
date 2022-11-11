@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { VStack, Box, HStack, Button } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
@@ -6,10 +6,12 @@ import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
 import Messages from '../Notifications/Messages';
 import Filter from '../Assets/FilterSettings/Filter';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 const Notifications = ({ navigation }) => {
   //const [wishlistData, setWishlistData] = useState(WishlistData);
   const [isNotifications, setIsNotifications] = useState(true);
+  const { totalUnreadNotifications } = useContext(NotificationContext);
 
   function handleInput(value) {
     setIsNotifications(value);
@@ -38,6 +40,9 @@ const Notifications = ({ navigation }) => {
             onPress={() => handleInput(true)}
           >
             Notifications
+            <Text position='absolute' left='95' top='-1' fontSize='16' color='white'>
+              {totalUnreadNotifications}
+            </Text>
           </Button>
           <Button
             style={isNotifications ? styles.inactiveTab : styles.activeTab}

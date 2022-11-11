@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
 
   const BookStatusChangeHandle = () => {};
 
-  const onSearchSubitted = async searchText => {
+  const onSearchSubmitted = async searchText => {
     const searchedBooks = await getBooksByKeyword(searchText);
     setBookStatus(`Results for "${searchText}"`);
     setLibData(searchedBooks.data.results);
@@ -102,12 +102,12 @@ const Home = ({ navigation }) => {
       </Text>
       <ScrollView>
         <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-          {libData === 'undefined' || null ? (
-            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
-          ) : (
+          {libData ? (
             libData.map((data, id) => {
               return <MyLibraryCard key={id} data={data} navigation={navigation} />;
             })
+          ) : (
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
           )}
         </Box>
       </ScrollView>

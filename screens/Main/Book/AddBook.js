@@ -79,7 +79,7 @@ const AddBook = ({ route, navigation }) => {
             }}
           />
         </FormControl>
-        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: whiteShades.primaryWhite }}>
+        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: WhiteShades.primaryWhite }}>
           Save
         </Button>
       </ScrollView>

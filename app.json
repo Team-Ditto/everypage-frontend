@@ -1,7 +1,10 @@
 {
   "expo": {
-    "name": "everypage",
+    "name": "EveryPage",
     "slug": "everypage",
+    "privacy": "public",
+    "owner": "team-ditto",
+    "description": "EveryPage is a mobile app designed for book lovers who would like to keep track of their lent books as well as their library organized. With the advantage of their phones' cameras, users are able to scan the barcode of a book and add it to their collection. Add, keep track and share books with members from the same communities, make sure every page is read and accounted for.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,13 +21,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.team-ditto.everypage"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

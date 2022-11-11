@@ -115,3 +115,5 @@ export const genreDiscover = [
     icon: LiteraryFiction,
   },
 ];
+
+export const borrowingStatus = ['Available', 'On-Hold', 'In-Use'];

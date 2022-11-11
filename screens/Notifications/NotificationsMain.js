@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { Divider, View, VStack } from 'native-base';
+
 import NotificationCard from '../Cards/Notifications/NotificationCard';
-import { NotificationData } from '../../constants/NotificationData';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 const NotificationsMain = ({ navigation }) => {
-  const [notifications, setNotifications] = useState(NotificationData);
+  const { notifications } = useContext(NotificationContext);
 
   return (
     <VStack>
-      {notifications?.map((data, id) => {
+      {notifications?.map(notification => {
         return (
-          <View key={id}>
-            <NotificationCard data={data} navigation={navigation} />
+          <View key={notification._id}>
+            <NotificationCard notification={notification} navigation={navigation} />
             <Divider />
           </View>
         );

@@ -33,7 +33,6 @@ const Signup = ({ navigation }) => {
     try {
       if (email && password && displayName) {
         await signUpWithEmailAndPassword(email, password, displayName, singleFile);
-        navigation.navigate('Location');
       }
     } catch (err) {
       console.log(JSON.stringify(err));

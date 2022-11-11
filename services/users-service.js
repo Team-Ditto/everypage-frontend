@@ -6,7 +6,6 @@ import axiosRequest from './api';
  */
 export const createNewUser = async user => {
   try {
-    console.log(axiosRequest);
     await axiosRequest.post('users', user);
   } catch (error) {
     console.log(error);
@@ -20,12 +19,26 @@ export async function getBookAsPerUser() {
     console.log(err);
   }
 }
+
 /**
  * gets the current logged in user/myself from MONGODB
  */
 export const getMyUserProfile = async () => {
   try {
     const user = axiosRequest.get('users/me');
+    return user;
+  } catch (error) {
+    console.log('is it coming from here');
+    console.log(error);
+  }
+};
+
+/**
+ * gets the current logged in user/myself from MONGODB
+ */
+export const updateMyUserProfile = async data => {
+  try {
+    const user = axiosRequest.put('users/me', data);
     return user;
   } catch (error) {
     console.log(error);

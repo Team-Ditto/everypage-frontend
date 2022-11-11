@@ -1,153 +1,224 @@
 import { useState } from 'react';
-import { HStack, Image, Select, Text, VStack, Switch, CheckIcon } from 'native-base';
+import {
+  VStack,
+  HStack,
+  Box,
+  Text,
+  Heading,
+  Badge,
+  Avatar,
+  Button,
+  ScrollView,
+  Link,
+  Divider,
+  Pressable,
+  ChevronDownIcon,
+  Switch,
+} from 'native-base';
 import { StyleSheet } from 'react-native';
-const SingleBook = ({ route, navigation }) => {
-  const [isShareable, setIsShareable] = useState(false);
-  const [libCardData, setlibCardData] = useState(route.params.libCardData);
-  // Change it to get the data from the API
-  // Not use the above params data.
-  let [service, setService] = useState('');
+
+import Carousel from '../../Assets/Carousel';
+import BooksSameOwner from '../../Assets/BooksSameOwner';
+import {
+  BlueShades,
+  SuccessColor,
+  InUseColor,
+  OnHoldColor,
+  OrangeShades,
+  WhiteShades,
+} from '../../../assets/style/color';
+import { createNewWishlist } from '../../../services/wishlists-service';
+import SelectBookStatus from '../../Main/Book/SelectBookStatus';
+
+const SingleBook = ({ navigation, route }) => {
+  const bookData = route.params.libCardData;
+  const {
+    images,
+    title,
+    author,
+    owner,
+    genre,
+    edition,
+    language,
+    isbn,
+    condition,
+    _id,
+    borrowingStatus,
+    readingStatus,
+    location,
+    sharable,
+    note,
+  } = bookData;
+
+  const [showModal, setShowModal] = useState(false);
+  const [switchValue, setSwitchValue] = useState(sharable);
+  const [borrowingStatusButton, setBorrowingStatusButton] = useState(borrowingStatus);
+
+  const handleBorrowingStatus = b => {
+    switch (b) {
+      case 'Available':
+        return styles.available;
+        break;
+      case 'In-Use':
+        return styles.inUse;
+        break;
+      case 'On-Hold':
+        return styles.onHold;
+        break;
+    }
+  };
+
+  const handleBadgePressed = () => {
+    setShowModal(!showModal);
+  };
+
+  const handleBorrowingStatusSelected = status => {
+    setBorrowingStatusButton(status);
+  };
+
   return (
     <>
-      <VStack style={Styles.mainContainer}>
-        <HStack>
-          <Image
-            style={Styles.ImageContainerStyle}
-            source={{
-              uri: libCardData.images[0],
-            }}
-            alt='Alternate Text'
-            size='xl'
-          />
-          <VStack style={Styles.bookTitleAuthContainer}>
-            <Text style={Styles.bookTitle}>{libCardData.title}</Text>
-            <Text style={Styles.bookAuthor}>{libCardData.author} </Text>
-            {isShareable ? (
-              <Select
-                accessibilityLabel='Choose...'
-                placeholder='Choose...'
-                size='sm'
-                w='120'
-                selectedValue={service}
-                _selectedItem={{
-                  bg: 'teal.600',
-                  endIcon: <CheckIcon size='5' />,
-                }}
-                mt={1}
-                ml={15}
-                onValueChange={itemValue => setService(itemValue)}
-              >
-                <Select.Item label='Available' value='available' />
-                <Select.Item label='In use' value='in-use' />
-                <Select.Item label='Hold' value='hold' />
-              </Select>
-            ) : (
-              ''
-            )}
-          </VStack>
-        </HStack>
-        <VStack style={Styles.secondHalfContainer}>
-          <Text style={Styles.subHeading}>Details</Text>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Genre</Text>
-            <Text>Comics</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Edition</Text>
-            <Text>First</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Language</Text>
-            <Text>First</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>ISBN</Text>
-            <Text>First</Text>
-          </HStack>
-          <HStack style={Styles.subHstack}>
-            <Text style={Styles.subTitle}>Condition</Text>
-            <Text>First</Text>
-          </HStack>
-
-          <VStack>
-            <Text style={Styles.subHeading}>Reading Info</Text>
-            <HStack style={Styles.subHstack}>
-              <Text style={Styles.subTitle}>Reading Status</Text>
-              <Text>Reading</Text>
-            </HStack>
-            <HStack style={Styles.subHstack}>
-              <Text style={Styles.subTitle}>Location</Text>
-              <Text>Shelf 001</Text>
-            </HStack>
-          </VStack>
-          <VStack>
-            <HStack style={Styles.shareStack}>
-              <Text style={Styles.subHeading}>Share</Text>
-              <Switch
-                size='sm'
-                mt={3}
-                value={isShareable}
-                onValueChange={value => {
-                  setIsShareable(value);
-                }}
-              />
-            </HStack>
-            <Text color='muted.500'>Book is Available for others user to request</Text>
-          </VStack>
-          <VStack>
-            <Text style={Styles.subHeading}>Notes</Text>
-            <Text>This book I purchased online in Sep 2020</Text>
-          </VStack>
+      <ScrollView>
+        <VStack>
+          <Carousel position='sticky' top={0} images={images} />
+          <Box
+            borderRadius='10px'
+            position='relative'
+            bottom='20px'
+            backgroundColor='white'
+            p={5}
+            display='flex'
+            h='100%'
+          >
+            <VStack>
+              <HStack w='100%' justifyContent='space-between'>
+                <VStack w='75%'>
+                  <Heading fontSize='20px' textTransform='capitalize'>
+                    {title}
+                  </Heading>
+                  <Text fontSize='16px'>{author}</Text>
+                </VStack>
+                {switchValue ? (
+                  <Pressable mt={1} onPress={handleBadgePressed}>
+                    <Badge h={30} w={102} borderRadius='6px' style={handleBorrowingStatus(borrowingStatusButton)}>
+                      <HStack justifyContent='center' alignItems='center'>
+                        <Text w={60} textAlign='center' style={handleBorrowingStatus(borrowingStatusButton)}>
+                          {borrowingStatusButton}
+                        </Text>
+                        <Divider orientation='vertical' bg={WhiteShades.primaryWhite} mx={1.5} />
+                        <ChevronDownIcon style={handleBorrowingStatus(borrowingStatusButton)} />
+                      </HStack>
+                    </Badge>
+                  </Pressable>
+                ) : (
+                  <></>
+                )}
+              </HStack>
+              <HStack my={3} alignItems='center'>
+                <Text fontSize='16px'>Owned by </Text>
+                <Avatar
+                  size='sm'
+                  w='30px'
+                  mx={1}
+                  source={{
+                    uri: owner.photoURL,
+                  }}
+                />
+                <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{owner.displayName}</Link>
+              </HStack>
+              <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                <Text fontWeight='bold' fontSize='18px'>
+                  Details
+                </Text>
+                <HStack justifyContent='space-between'>
+                  <VStack>
+                    <Text fontSize='16px'>Genre</Text>
+                    <Text fontSize='16px'>Edition</Text>
+                    <Text fontSize='16px'>Language</Text>
+                    <Text fontSize='16px'>ISBN</Text>
+                    <Text fontSize='16px'>Condition</Text>
+                  </VStack>
+                  <VStack>
+                    <Text fontSize='16px'>{genre}</Text>
+                    <Text fontSize='16px'>{edition}</Text>
+                    <Text fontSize='16px'>{language}</Text>
+                    <Text fontSize='16px'>{isbn}</Text>
+                    <Text fontSize='16px'>{condition}</Text>
+                  </VStack>
+                </HStack>
+              </Box>
+              <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                <Text fontWeight='bold' fontSize='18px'>
+                  Reading Info
+                </Text>
+                <HStack justifyContent='space-between'>
+                  <VStack>
+                    <Text fontSize='16px'>Reading Status</Text>
+                    <Text fontSize='16px'>Location</Text>
+                  </VStack>
+                  <VStack alignItems='start'>
+                    <Text fontSize='16px'>{readingStatus}</Text>
+                    <Text fontSize='16px'>{location}</Text>
+                  </VStack>
+                </HStack>
+              </Box>
+              <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                <HStack justifyContent='space-between' alignItems='center'>
+                  <Text fontWeight='bold' fontSize='18px'>
+                    Share
+                  </Text>
+                  <Switch
+                    onTrackColor={BlueShades.primaryBlue}
+                    size='sm'
+                    value={switchValue}
+                    onValueChange={value => {
+                      setSwitchValue(value);
+                      // setBookObj(prevState => ({ ...prevState, shareable: value });
+                    }}
+                  />
+                </HStack>
+                <Text fontSize={16}>
+                  {switchValue
+                    ? `Book is available for other users to request.`
+                    : `No other users can request to borrow this book.`}
+                </Text>
+              </Box>
+              <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                <HStack justifyContent='space-between' alignItems='center'>
+                  <Text fontWeight='bold' fontSize='18px'>
+                    Notes
+                  </Text>
+                </HStack>
+                <Text fontSize={16}>{note ?? ` :: There is no notes :: `}</Text>
+              </Box>
+            </VStack>
+          </Box>
         </VStack>
-      </VStack>
+      </ScrollView>
+      <SelectBookStatus
+        showModal={showModal}
+        handleBorrowingStatusSelected={handleBorrowingStatusSelected}
+        handleBadgePressed={handleBadgePressed}
+      />
     </>
   );
 };
 
-const Styles = StyleSheet.create({
-  mainContainer: {
-    padding: 15,
-    display: 'flex',
+const styles = StyleSheet.create({
+  available: {
+    backgroundColor: SuccessColor.success,
+    borderColor: WhiteShades.primaryWhite,
+    color: WhiteShades.primaryWhite,
   },
-  ImageContainerStyle: {
-    width: '40%',
+  inUse: {
+    backgroundColor: InUseColor.inUse,
+    borderColor: WhiteShades.primaryWhite,
+    color: WhiteShades.primaryWhite,
   },
-  bookTitleAuthContainer: {
-    width: '60%',
-  },
-  bookTitle: {
-    paddingTop: 2,
-    paddingLeft: 15,
-    marginRight: 15,
-    fontSize: 24,
-    fontWeight: 'bold',
-    flexWrap: 'wrap',
-  },
-  bookAuthor: {
-    color: 'grey',
-    fontSize: 14,
-    paddingLeft: 15,
-  },
-  subHeading: {
-    fontWeight: 'bold',
-    paddingBottom: 15,
-    paddingTop: 15,
-    fontSize: 18,
-  },
-  subHstack: {
-    paddingTop: 5,
-  },
-  shareStack: {
-    paddingTop: 5,
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  subTitle: {
-    color: 'grey',
-    width: 150,
-  },
-  titleColor: {
-    color: 'grey',
+  onHold: {
+    backgroundColor: OnHoldColor.onHold,
+    borderColor: WhiteShades.primaryWhite,
+    color: WhiteShades.primaryWhite,
   },
 });
 
