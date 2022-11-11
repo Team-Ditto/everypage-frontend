@@ -38,7 +38,7 @@ const AppStack = () => {
                     backgroundColor: BlueShades.primaryBlue,
                   },
                   cardStyle: { backgroundColor: BlueShades.primaryBlue },
-                  headerTintColor: whiteShades.primaryWhite,
+                  headerTintColor: WhiteShades.primaryWhite,
                 }}
               />
               <Stack.Screen
@@ -49,7 +49,7 @@ const AppStack = () => {
                     backgroundColor: BlueShades.primaryBlue,
                   },
                   cardStyle: { backgroundColor: BlueShades.primaryBlue },
-                  headerTintColor: whiteShades.primaryWhite,
+                  headerTintColor: WhiteShades.primaryWhite,
                 }}
               />
             </>
