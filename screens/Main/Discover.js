@@ -69,7 +69,6 @@ export default function Discover({ navigation }) {
           view all
         </Button>
       </HStack>
-      //SV: TEST IF TEXT IS CUTTING
       <ScrollView
         style={{
           display: 'flex',

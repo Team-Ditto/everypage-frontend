@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { StyleSheet } from 'react-native';
-import { VStack, Box, HStack, Button } from 'native-base';
+import { VStack, Box, HStack, Button, Text } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
@@ -26,12 +26,12 @@ const Notifications = ({ navigation }) => {
 
   return (
     <VStack>
-      <Box display='flex' width='100%' mt={2}>
-        <HStack display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
-          <Filter />
-        </HStack>
-      </Box>
+      {/* Do we really need search here. */}
+      {/* <Box display='flex' width='100%' mt={2}> */}
+        {/* <HStack display='flex' justifyContent='center' alignItems='center'> */}
+          {/* <Search navigation={navigation} onSearchSubitted={onSearchSubitted} /> */}
+        {/* </HStack> */}
+      {/* </Box> */}
       <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
           <Button

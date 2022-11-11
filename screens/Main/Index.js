@@ -62,7 +62,7 @@ const Home = ({ navigation }) => {
       {/* Search component */}
       <Box display='flex' width='100%' mt={2}>
         <HStack display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onSearchSubitted={onSearchSubitted} />
+          <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
           <Filter ApplyFilterSettings={ApplyFilterSettings} />
         </HStack>
       </Box>

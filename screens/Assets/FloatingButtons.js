@@ -3,7 +3,7 @@ import { Animated, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
-import { BlueShades, whiteShades } from '../../assets/style/color';
+import { BlueShades, WhiteShades } from '../../assets/style/color';
 
 const FloatingButtons = ({ navigation }) => {
   const [isPressed, setIsPressed] = useState(false);
