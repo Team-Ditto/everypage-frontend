@@ -1,4 +1,4 @@
-import { useState, useEffect,useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Search from '../Assets/Search';
 import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, View, Divider } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -14,9 +14,6 @@ export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState(LibraryData);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-
-  console.log('****** ', currentUser.wishlists, ' *******');
-
   useEffect(() => {
     async function fetchData() {
       const params = {
@@ -24,7 +21,8 @@ export default function Discover({ navigation }) {
         readingStatus: '',
       };
 
-      let booksData = await getUsersBook();
+      let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc`;
+      let booksData = await getUsersBook(queryParams, '', '', '', true);
       if (booksData !== undefined && booksData.data.results.length > 0) {
         setSimilarBookData(booksData.data.results);
       }

@@ -13,8 +13,6 @@ const WishlistButton = (props, route, navigation) => {
     handleWishlistPress ? handleWishlistPress() : '';
   };
 
-  console.log('isWishlisted: ' + isWishlisted);
-
   return (
     <>
       <Box

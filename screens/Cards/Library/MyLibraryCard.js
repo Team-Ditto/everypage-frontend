@@ -80,7 +80,6 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
                 uri: images[0],
               }}
               alt={title}
-              borderRadius='10px'
             />
             {showWishListIcon ? (
               <HStack position='absolute' left='0' justifyContent='space-between' width='100%'>
