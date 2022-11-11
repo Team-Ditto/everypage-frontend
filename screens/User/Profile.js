@@ -1,58 +1,34 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
+import { Button, ScrollView, Text, Image, Box, VStack, HStack, Link, ChevronRightIcon } from 'native-base';
+
 import { logout } from '../../firebase/firebase-service';
-import moment from 'moment';
-import {
-  Button,
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Box,
-  VStack,
-  St,
-  HStack,
-  Link,
-  Icon,
-  ChevronRightIcon,
-  FavouriteIcon,
-} from 'native-base';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { getMyUserProfile } from '../../services/users-service';
+import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
-  const [user, setUser] = useState({});
+  const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
-    async function fetchData() {
-      let fetchedUser = await getMyUserProfile();
-      console.log(fetchedUser.data.photoURL);
-      setUser(fetchedUser.data);
-    }
-    fetchData();
     GetNotificationHeader(navigation);
   }, []);
 
   const handleLogout = async () => {
     await logout();
   };
+
   return (
     <ScrollView>
-      {/* <Button mt='2' colorScheme='gray' onPress={handleLogout}>
-        Logout
-      </Button> */}
       <Box style={styles.userData}>
-        <Image source={{ uri: user.photoURL }} alt={user.displayName} style={styles.personImage} />
+        <Image source={{ uri: currentUser.photoURL }} alt={currentUser.displayName} style={styles.personImage} />
         <VStack>
-          <Text fontWeight='semibold'>{user.displayName}</Text>
-          {/* Fetch user name */}
-          <Text>Casual Reader</Text>
-          {/* Fetech reader type data */}
+          <Text fontWeight='semibold'>{currentUser.displayName}</Text>
+          <Text>{currentUser.readerType}</Text>
           <Text fontStyle='italic' fontSize='sm'>
-            joined {moment(user.createdAt).format('DD MMMM YYYY')}
+            joined {new Date(currentUser.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='Edit Icon Image' style={styles.penIcon} />
@@ -99,6 +75,9 @@ export default function Profile({ navigation }) {
           </Box>
         </ScrollView>
       </VStack>
+      <Button mt='2' colorScheme='gray' onPress={handleLogout}>
+        Logout
+      </Button>
     </ScrollView>
   );
 }

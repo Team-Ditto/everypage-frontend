@@ -28,72 +28,77 @@ const AppStack = () => {
     <NavigationContainer>
       <Stack.Navigator initialRoute='Login'>
         {currentUser ? (
-          <>
-            <Stack.Screen
-              name='BottomTab'
-              component={TabStack}
-              options={({ route }) => ({
-                headerShown: false,
-              })}
-            />
-            <Stack.Screen name='Scanner' component={Scanner} />
-            <Stack.Screen name='SingleBook' component={SingleBook} />
-            <Stack.Screen name='AddBook' component={AddBook} />
-            <Stack.Screen
-              name='SearchResult'
-              component={SearchResult}
-              options={({ route }) => ({
-                headerTitle: 'Search Result',
-              })}
-            />
-            <Stack.Screen
-              name='ReaderInfo'
-              component={ReaderInfo}
-              options={{
-                headerStyle: {
-                  backgroundColor: BlueShades.primaryBlue,
-                },
-                cardStyle: { backgroundColor: BlueShades.primaryBlue },
-                headerTintColor: WhiteShades.primaryWhite,
-              }}
-            />
-            <Stack.Screen
-              name='Location'
-              component={Location}
-              options={{
-                headerStyle: {
-                  backgroundColor: BlueShades.primaryBlue,
-                },
-                cardStyle: { backgroundColor: BlueShades.primaryBlue },
-                headerTintColor: WhiteShades.primaryWhite,
-              }}
-            />
-            <Stack.Screen name='Genres' component={Genres} />
-            <Stack.Screen
-              name='SingleGenre'
-              component={SingleGenre}
-              options={({ route }) => ({ title: route.params.genre })}
-            />
-            <Stack.Screen
-              name='SingleView'
-              component={SingleView}
-              options={({ route }) => ({
-                bookData: route.params.bookData,
-                headerTitle: 'Discover',
-                headerRight: () => <WishlistButton onHeader={true} setIsWishlisted={route.params.setIsWishlisted} />,
-                headerStyle: {
-                  backgroundImage: JSON.stringify(route.params.bookData.images[0]),
-                },
-              })}
-            />
-            <Stack.Screen
-              name='Notifications'
-              component={Notifications}
-              options={({ route }) => ({
-                tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
-              })}
-            />
-          </>
+          currentUser.firstTimeLogin ? (
+            <>
+              <Stack.Screen
+                name='Location'
+                component={Location}
+                options={{
+                  headerStyle: {
+                    backgroundColor: BlueShades.primaryBlue,
+                  },
+                  cardStyle: { backgroundColor: BlueShades.primaryBlue },
+                  headerTintColor: whiteShades.primaryWhite,
+                }}
+              />
+              <Stack.Screen
+                name='ReaderInfo'
+                component={ReaderInfo}
+                options={{
+                  headerStyle: {
+                    backgroundColor: BlueShades.primaryBlue,
+                  },
+                  cardStyle: { backgroundColor: BlueShades.primaryBlue },
+                  headerTintColor: whiteShades.primaryWhite,
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name='BottomTab'
+                component={TabStack}
+                options={({ route }) => ({
+                  headerShown: false,
+                })}
+              />
+              <Stack.Screen name='Scanner' component={Scanner} />
+              <Stack.Screen name='SingleBook' component={SingleBook} />
+              <Stack.Screen name='AddBook' component={AddBook} />
+              <Stack.Screen
+                name='SearchResult'
+                component={SearchResult}
+                options={({ route }) => ({
+                  headerTitle: 'Search Result',
+                })}
+              />
+              <Stack.Screen name='Genres' component={Genres} />
+              <Stack.Screen
+                name='SingleGenre'
+                component={SingleGenre}
+                options={({ route }) => ({ title: route.params.genre })}
+              />
+              <Stack.Screen
+                name='SingleView'
+                component={SingleView}
+                options={({ route }) => ({
+                  bookData: route.params.bookData,
+                  headerTitle: 'Discover',
+                  headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
+                  headerStyle: {
+                    backgroundImage: JSON.stringify(route.params.bookData.images[0]),
+                  },
+                })}
+              />
+              <Stack.Screen
+                name='Notifications'
+                component={Notifications}
+                options={({ route }) => ({
+                  tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
+                })}
+              />
+            </>
+          )
         ) : (
           <>
             <Stack.Screen

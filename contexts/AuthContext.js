@@ -23,8 +23,12 @@ export const AuthContextProvider = ({ children }) => {
     const setUserToken = async user => {
       if (user) {
         const token = await user.getIdToken(true);
+
         await AsyncStorage.setItem('access_token', token);
-        await getMyProfile();
+
+        setTimeout(async () => {
+          await getMyProfile();
+        }, 1500);
       } else {
         await AsyncStorage.setItem('access_token', '');
       }
