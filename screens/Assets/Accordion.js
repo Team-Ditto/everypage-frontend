@@ -1,10 +1,10 @@
 import { StyleSheet, TouchableOpacity, Animated, LayoutAnimation } from 'react-native';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { toggleAnimation } from './Animation/toggleAnimation';
 import { View, Text, Radio, Divider } from 'native-base';
 
-export default function Accordion({ title, content }) {
+export default function Accordion({ title, content, filterSetting, handleFilterSetting }) {
   const [showContent, setShowContent] = useState(false);
   const animationController = useRef(new Animated.Value(0)).current;
 
@@ -35,7 +35,15 @@ export default function Accordion({ title, content }) {
       </TouchableOpacity>
       {showContent && (
         <View style={styles.body}>
-          <Radio.Group defaultValue={content[0]} name='myRadioGroup' accessibilityLabel='Pick your favorite number'>
+          <Radio.Group
+            defaultValue={content[0]}
+            name='filterSettingRadioGroup'
+            accessibilityLabel='Filter Settings'
+            value={filterSetting[title.toLowerCase()]}
+            onChange={value => {
+              handleFilterSetting(title.toLowerCase(), value);
+            }}
+          >
             {content.map((item, index) => (
               <View key={index} style={{ display: 'flex', flexDirection: 'column' }}>
                 <Radio value={item} style={{ display: 'flex', flexDirection: 'row-reverse', alignSelf: 'flex-start' }}>

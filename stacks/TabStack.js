@@ -1,5 +1,4 @@
 import { Image } from 'react-native';
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import IndexScreen from '../screens/IndexScreen';
 import Discover from '../screens/Main/Discover';

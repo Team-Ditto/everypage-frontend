@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { VStack, Button, Input, Text, View } from 'native-base';
 import * as Loc from 'expo-location';
 
 import Map from './Map';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { StyleSheet } from 'react-native';
-import FieldSet from 'react-native-fieldset';
-import { BlueShades, WhiteShades } from '../../assets/style/color';
+import { BlueShades, whiteShades } from '../../assets/style/color';
 import { FontAwesome } from '@expo/vector-icons';
 import { updateMyUserProfile } from '../../services/users-service';
 import { fieldSet, legend } from '../../assets/style/fieldsetStyle';
 
-const Location = ({ navigation }) => {
+export default function Location({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
@@ -141,5 +139,4 @@ const Location = ({ navigation }) => {
       </View>
     </View>
   );
-};
-export default Location;
+}

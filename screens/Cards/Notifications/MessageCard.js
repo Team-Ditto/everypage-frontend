@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Heading, VStack, Text, HStack, Image, CircleIcon } from 'native-base';
 import { OrangeShades, BlackShades, BlueShades, SuccessColor } from '../../../assets/style/color';

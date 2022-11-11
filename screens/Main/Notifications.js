@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { StyleSheet } from 'react-native';
-import { VStack, Text, Center, Box, HStack, Button, Row } from 'native-base';
+import { VStack, Box, HStack, Button } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
-
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
 import Messages from '../Notifications/Messages';
@@ -24,6 +23,7 @@ const Notifications = ({ navigation }) => {
       title: `Search Results`,
     });
   };
+
   return (
     <VStack>
       <Box display='flex' width='100%' mt={2}>

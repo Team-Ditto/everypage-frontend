@@ -1,7 +1,6 @@
-import { Checkbox, IconButton, Radio } from 'native-base';
-import React, { Component, useState } from 'react';
-import RadioButtonRN from 'radio-buttons-react-native';
-import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView, RadioButton, Button } from 'react-native';
+import { Radio } from 'native-base';
+import { useState } from 'react';
+import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { sort, genre, location, language, readingStatus } from '../../constants/FilterContent';
 
 const SearchSortFilter = item => {

@@ -1,4 +1,4 @@
-import { Input, Icon, Image } from 'native-base';
+import { Input, Icon, Button, Image } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { BlueShades } from '../../assets/style/color';

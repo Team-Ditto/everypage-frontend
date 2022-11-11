@@ -3,7 +3,7 @@ import { Animated, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
-import { BlackShades, BlueShades, WhiteShades } from '../../assets/style/color';
+import { BlueShades, whiteShades } from '../../assets/style/color';
 
 const FloatingButtons = ({ navigation }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -126,7 +126,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    bottom: 200,
+    bottom: 10,
     width: 70,
     height: 70,
     right: 10,

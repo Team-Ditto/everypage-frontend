@@ -1,16 +1,40 @@
-import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert, Modal, StyleSheet, Text, Pressable, View,Image } from 'react-native';
 import { Icon, IconButton, HStack } from 'native-base';
-import { BlueShades } from '../../../assets/style/color';
+import { Ionicons } from '@expo/vector-icons';
+import { BlueShades, OrangeShades } from '../../../assets/style/color';
 import Sort from './Sort';
 import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
 import FilterIcon from '../../../assets/searchbar-icons/filter.png';
 import DiscoverLocationSettings from './DiscoverLocationSettings';
-
-export default function Filter({ isFromDiscover = false }) {
+import { getMyBooksShelfLocation } from '../../../services/books-service';
+export default function Filter({ ApplyFilterSettings, isFromDiscover = false }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [shelfLocations, setShelfLocations] = useState([]);
+  const [filterSetting, setFilterSetting] = useState({
+    sort: 'Newly Added',
+    genre: 'Action & Adventure',
+    readingStatus: 'To Read',
+    location: isFromDiscover ? '1000' : shelfLocations[0] == undefined ? '' : shelfLocations[0],
+  });
+  useEffect(() => {
+    async function fetchData() {
+      const location = await getMyBooksShelfLocation();
+      setShelfLocations(location.data);
+    }
+    fetchData();
+  }, []);
+
+  const handleFilterSetting = (filterType, filterValue) => {
+    setFilterSetting({ ...filterSetting, [filterType]: filterValue });
+  };
+  const HandleOnPressApplyFilterSettings = () => {
+    ApplyFilterSettings(filterSetting);
+    setModalVisible(!modalVisible);
+  };
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -24,10 +48,14 @@ export default function Filter({ isFromDiscover = false }) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Sort />
-            <Genre />
-            <ReadingStatus />
-            {isFromDiscover == true ? <DiscoverLocationSettings /> : <LocationSetting />}
+            <Sort filterSetting={filterSetting} handleFilterSetting={handleFilterSetting} />
+            <Genre filterSetting={filterSetting} handleFilterSetting={handleFilterSetting} />
+            <ReadingStatus filterSetting={filterSetting} handleFilterSetting={handleFilterSetting} />
+            {isFromDiscover == true ? (
+              <DiscoverLocationSettings filterSetting={filterSetting} handleFilterSetting={handleFilterSetting} />
+            ) : (
+              <LocationSetting filterSetting={filterSetting} handleFilterSetting={handleFilterSetting} />
+            )}
             <HStack space={3} style={{ position: 'absolute', bottom: 20 }}>
               <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
                 <Text
@@ -42,7 +70,7 @@ export default function Filter({ isFromDiscover = false }) {
                   Close
                 </Text>
               </Pressable>
-              <Pressable style={[styles.button, styles.buttonApply]} onPress={() => setModalVisible(!modalVisible)}>
+              <Pressable style={[styles.button, styles.buttonApply]} onPress={HandleOnPressApplyFilterSettings}>
                 <Text style={styles.textStyle}>Apply</Text>
               </Pressable>
             </HStack>

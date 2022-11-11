@@ -7,6 +7,7 @@ import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { BlueShades } from '../../assets/style/color';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);

@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
 import { Text, StyleSheet } from 'react-native';
+import { useEffect, useContext } from 'react';
 import { Button, VStack } from 'native-base';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 import { updateMyUserProfile } from '../../services/users-service';

@@ -1,4 +1,4 @@
-import { Box, AspectRatio, Image, VStack, Text, Pressable, Button, IconButton, Icon, HStack, Link } from 'native-base';
+import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
 
 const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
   const { book, status } = data;

@@ -1,4 +1,4 @@
-import { Radio, CheckIcon, Divider, FormControl, Stack, HStack, Input, Pressable, Switch } from 'native-base';
+import { Radio, Divider, FormControl, Stack, HStack, Input, Switch } from 'native-base';
 import { useState } from 'react';
 import { BlueShades } from '../../../assets/style/color';
 

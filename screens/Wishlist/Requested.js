@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Text, Box, VStack, ScrollView } from 'native-base';
 import WishlistCard from '../Cards/Wishlist/WishlistCard';
 import { WishlistData } from '../../constants/WishlistData';

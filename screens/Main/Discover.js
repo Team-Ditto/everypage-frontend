@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect,useContext } from 'react';
 import Search from '../Assets/Search';
 import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, View, Divider } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LibraryData, genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { Circle } from 'react-native-svg';
 import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Discover({ navigation }) {
@@ -23,10 +23,11 @@ export default function Discover({ navigation }) {
         genre: '',
         readingStatus: '',
       };
-      getUsersBook().then(books => {
-        setSimilarBookData(books.data.results);
-        // setSpinnerVisible(false);
-      });
+
+      let booksData = await getUsersBook();
+      if (booksData !== undefined && booksData.data.results.length > 0) {
+        setSimilarBookData(booksData.data.results);
+      }
     }
     fetchData();
     GetNotificationHeader(navigation);
@@ -34,13 +35,21 @@ export default function Discover({ navigation }) {
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);
   };
+
+  const ApplyFilterSettings = async filterSetting => {
+    console.log(filterSetting);
+    let filterData = await GetFilteredResults(filterSetting, true);
+    if (filterData !== undefined) {
+      setSimilarBookData(filterData.data.results);
+    }
+  };
   return (
-    <VStack>
+    <VStack style={{ height: '100%' }}>
       {/* Search component */}
       <Box display='flex' width='100%' mt='18px' mb='10px'>
         <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onFilterClicked={onFilterClicked} />
-          <Filter isFromDiscover={true} />
+          <Filter ApplyFilterSettings={ApplyFilterSettings} isFromDiscover={true} />
         </HStack>
       </Box>
       {/* Genre Generation */}
@@ -60,7 +69,7 @@ export default function Discover({ navigation }) {
           view all
         </Button>
       </HStack>
-
+      //SV: TEST IF TEXT IS CUTTING
       <ScrollView
         style={{
           display: 'flex',

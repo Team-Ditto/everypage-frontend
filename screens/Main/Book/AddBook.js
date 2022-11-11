@@ -1,9 +1,7 @@
-import { FormControl, Stack, Input, TextArea, Button, Box, VStack } from 'native-base';
-import { useContext, useState } from 'react';
+import { FormControl, Input, TextArea, Button, VStack } from 'native-base';
+import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { BlueShades, WhiteShades } from '../../../assets/style/color';
-import { AuthContext } from '../../../contexts/AuthContext';
-import { addBookForUser } from '../../../firebase/firebase-service';
+import { BlueShades, whiteShades } from '../../../assets/style/color';
 import { addBook } from '../../../services/books-service';
 import BookDetail from './BookDetails';
 import ReadingStatus from './ReadingStatus';
@@ -32,7 +30,7 @@ const AddBook = ({ route, navigation }) => {
     try {
       let responseBook = await addBook(bookObj);
       alert('Book added.');
-      // navigation.navigate('BottomTab');
+      navigation.navigate('BottomTab');
     } catch (err) {
       console.log('Error: ', err);
     }
