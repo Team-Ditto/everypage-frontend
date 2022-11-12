@@ -27,6 +27,7 @@ const SingleView = ({ navigation, route }) => {
       book: bookData._id,
       status: 'Requested',
     };
+
     createNewWishlist(createdWishlist);
     // .then(navigation.navigate('Wishlist'));
   };
@@ -106,6 +107,8 @@ const SingleView = ({ navigation, route }) => {
           shadow={2}
           shadowOffset={{ width: '-20px', height: '-20px' }}
           onPress={handleRequestToBorrow}
+          isDisabled={borrowingStatus !== 'Available' ? true : false}
+          // {borrowingStatus ? disabled : ''}
         >
           Request to Borrow
         </Button>
