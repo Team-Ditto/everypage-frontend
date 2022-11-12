@@ -12,6 +12,7 @@ export default function Requested({ navigation }) {
     async function fetchData() {
       getWishlistsByStatus('Requested').then(wishlist => {
         setWishlistData(wishlist.data);
+        setSpinnerVisible(false);
       });
     }
     fetchData();

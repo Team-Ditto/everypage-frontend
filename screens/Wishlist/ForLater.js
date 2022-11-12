@@ -12,6 +12,7 @@ export default function ForLater({ navigation }) {
     async function fetchData() {
       getWishlistsByStatus('For Later').then(wishlist => {
         setWishlistData(wishlist.data);
+        setSpinnerVisible(false);
       });
     }
     fetchData();

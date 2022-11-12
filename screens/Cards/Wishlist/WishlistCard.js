@@ -1,32 +1,43 @@
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
+import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/color';
 
 const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab }) => {
-  const { book, status } = data;
+  const { book } = data;
 
   let curStyle = {};
 
   const statusStyle = [
     {
       status: 'Available',
-      backgroundColor: '#DCFCE7',
-      textColor: '#14532D',
+      backgroundColor: SuccessColor.successBG,
+      textColor: SuccessColor.successText,
     },
     {
-      status: 'In-use',
-      backgroundColor: '#FEE2E2',
-      textColor: '#A01923',
+      status: 'In-Use',
+      backgroundColor: InUseColor.inUseBG,
+      textColor: InUseColor.inUseText,
+    },
+    {
+      status: 'On-Hold',
+      backgroundColor: OnHoldColor.onHoldBG,
+      textColor: OnHoldColor.onHoldText,
     },
   ];
 
-  switch (status) {
-    //WORK IN PROGRESS
-    //Have to add a status of available or not on the object
-    case 'For Later':
+  switch (book.borrowingStatus) {
+    case 'Available':
       curStyle = statusStyle[0];
+      console.log('Setting curStyle to ' + curStyle.status);
       break;
 
-    case 'Requested':
+    case 'In-Use':
       curStyle = statusStyle[1];
+      console.log('Setting curStyle to ' + curStyle.status);
+      break;
+
+    case 'On-Hold':
+      curStyle = statusStyle[2];
+      console.log('Setting curStyle to ' + curStyle.status);
       break;
 
     default:
@@ -68,7 +79,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
               marginY='7px'
               marginRight='auto'
             >
-              <Text color={curStyle.textColor}>{curStyle.status}</Text>
+              <Text color={curStyle.textColor}>{book.borrowingStatus}</Text>
             </Box>
             <Text fontSize='sm'>Owned by</Text>
             <HStack display='flex' flexDirection='row' gap='10px' alignItems='center'>
