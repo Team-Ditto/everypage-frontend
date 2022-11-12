@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { VStack, Button, FormControl, Input, Link, IconButton, Text, View, HStack } from 'native-base';
+import { VStack, Button, FormControl, Input, Link, Text, View, HStack } from 'native-base';
 import * as Loc from 'expo-location';
 import Map from './Map';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { StyleSheet } from 'react-native';
-import FieldSet from 'react-native-fieldset';
 import { BlueShades, whiteShades } from '../../assets/style/color';
 import { FontAwesome } from '@expo/vector-icons';
 import { fieldSet, legend } from '../../assets/style/fieldsetStyle';
@@ -123,7 +121,14 @@ const Location = ({ navigation }) => {
               navigation.navigate('ReaderInfo');
             }}
           >
-            Next
+            <Link
+              textDecoration='none'
+              onPress={() => {
+                navigation.navigate('Login');
+              }}
+            >
+              Next
+            </Link>
           </Button>
         </View>
       </View>

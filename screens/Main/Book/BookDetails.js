@@ -1,4 +1,17 @@
-import { FormControl, Stack, Input, HStack, Button, Divider, Select, CheckIcon, Box, Image } from 'native-base';
+import {
+  FormControl,
+  Stack,
+  Input,
+  HStack,
+  Button,
+  Divider,
+  Select,
+  CheckIcon,
+  Box,
+  Image,
+  Text,
+  Icon,
+} from 'native-base';
 import { useContext, useState } from 'react';
 import { BlueShades } from '../../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
@@ -36,6 +49,12 @@ const BookDetail = ({ bookObj, setBookObj }) => {
     } else {
       alert("You can't add more than 3 images");
     }
+  };
+
+  const [textColor, setTextColor] = useState(0);
+
+  const handleTextColor = () => {
+    setTextColor(1);
   };
 
   const HandleCancelImage = idx => {
@@ -169,15 +188,43 @@ const BookDetail = ({ bookObj, setBookObj }) => {
                 setBookObj({ ...bookObj, bookCondition: condition });
               }}
               _selectedItem={{
-                endIcon: <CheckIcon color='teal.600' size='5' />,
+                _text: {
+                  color: BlueShades.primaryBlue,
+                },
               }}
               borderWidth='0'
             >
-              <Select.Item label='Like New' value='Like New' />
-              <Select.Item label='Very Good' value='Very Good' />
-              <Select.Item label='Good' value='Good' />
-              <Select.Item label='Fair' value='Fair' />
-              <Select.Item label='Poor' value='Poor' />
+              <Select.Item
+                label={`Like new \n  May have been read but are in mint condition`}
+                value='Like New'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
+
+              <Select.Item
+                label={`Very Good \n  Have been read but are well cared `}
+                value='Very Good'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              ></Select.Item>
+              <Select.Item
+                label={`Good \n  Average used book with complete page present`}
+                value='Good'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
+              <Select.Item
+                label={`Fair \n  Have worn but with complete text pages`}
+                value='Fair'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
+              <Select.Item
+                label={`Poor \n  Have extensive damage`}
+                value='Poor'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
             </Select>
           </HStack>
         </FormControl>
@@ -198,6 +245,10 @@ const styles = StyleSheet.create({
     height: 10,
     width: 10,
     borderRadius: 100,
+  },
+  dropDown: {
+    borderBottomWidth: 1,
+    padding: 3,
   },
 });
 

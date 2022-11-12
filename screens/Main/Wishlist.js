@@ -27,6 +27,7 @@ export default function Wishlist({ navigation }) {
         borderColor='#DC924D'
         borderStyle='solid'
         borderWidth='1px'
+        
       >
         {isForLater ? (
           <HStack display='flex' flexDirection='row'>

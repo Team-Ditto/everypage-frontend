@@ -10,7 +10,6 @@ import {
   Image,
   Box,
   VStack,
-  St,
   HStack,
   Link,
   Icon,
@@ -19,7 +18,7 @@ import {
 } from 'native-base';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { FontAwesome } from '@expo/vector-icons';
+// import { FontAwesome } from '@expo/vector-icons';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -33,7 +32,7 @@ export default function Profile({ navigation }) {
         Logout
       </Button> */}
       <Box style={styles.userData}>
-        <Image source={require('../../assets/person.jpg')} style={styles.personImage} />
+        <Image source={require('../../assets/person.jpg')} alt='user-picture' style={styles.personImage} />
         <VStack>
           <Text fontWeight='semibold'>Mitatatatatta</Text>
           {/* Fetch user name */}
@@ -43,7 +42,7 @@ export default function Profile({ navigation }) {
             joined 24 Oct 2022
           </Text>
         </VStack>
-        <Image source={require('../../assets/pen.png')} style={styles.penIcon} />
+        <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />
       </Box>
       <VStack mx={30} my={5}>
         <Text py={1} fontSize='md' fontWeight='semibold'>
@@ -64,7 +63,7 @@ export default function Profile({ navigation }) {
           <Box py={3} w='15%' flexDirection='row' justifyContent='space-between' borderRadius={4}>
             {/* <FontAwesome name='favorite' size={24} color='black' /> */}
             {libData.map((data, id) => {
-              return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+              return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
             })}
           </Box>
         </ScrollView>
