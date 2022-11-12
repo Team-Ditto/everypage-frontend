@@ -1,6 +1,6 @@
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
 
-const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
+const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab }) => {
   const { book, status } = data;
 
   let curStyle = {};
@@ -25,7 +25,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
       curStyle = statusStyle[0];
       break;
 
-    case 'Recommended':
+    case 'Requested':
       curStyle = statusStyle[1];
       break;
 
@@ -88,7 +88,11 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
           </Box>
         </HStack>
       </Pressable>
-      <Button mt='15px'>Request to Borrow</Button>
+      {selectedTab == 'ForLater' ? (
+        <Button mt='15px'>Request to Borrow</Button>
+      ) : (
+        <Button mt='15px'>Cancel Hold</Button>
+      )}
     </VStack>
   );
 };

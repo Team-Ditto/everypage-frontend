@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Text, Box, VStack, ScrollView } from 'native-base';
+import { Text, Box, VStack, ScrollView, Spinner } from 'native-base';
 import WishlistCard from '../Cards/Wishlist/WishlistCard';
-import { WishlistData } from '../../constants/WishlistData';
 import { getWishlistsByStatus } from '../../services/wishlists-service';
 
 export default function Requested({ navigation }) {
-  const [wishlistData, setWishlistData] = useState(WishlistData);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const [wishlistData, setWishlistData] = useState();
+  const selectedTab = 'Requested';
 
   useEffect(() => {
     async function fetchData() {
       getWishlistsByStatus('Requested').then(wishlist => {
         setWishlistData(wishlist.data);
-        // setSpinnerVisible(false);
       });
     }
     fetchData();
@@ -20,13 +20,17 @@ export default function Requested({ navigation }) {
   return (
     <VStack>
       <Text fontSize='lg' fontWeight='800' ml='4%' mt='23px' mb='16px'>
-        Requested ({wishlistData?.length})
+        Requested ({wishlistData?.length || 0})
       </Text>
       <ScrollView>
         <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center'>
-          {wishlistData?.map((data, id) => {
-            return <WishlistCard key={id} data={data} navigation={navigation} />;
-          })}
+          {wishlistData ? (
+            wishlistData?.map((data, id) => {
+              return <WishlistCard key={id} data={data} navigation={navigation} selectedTab={selectedTab} />;
+            })
+          ) : (
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+          )}
         </Box>
       </ScrollView>
     </VStack>
