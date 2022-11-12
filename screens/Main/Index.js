@@ -6,7 +6,7 @@ import { BOOK_STATUS } from '../../constants/index';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
-import { OrangeShades } from '../../assets/style/color';
+import { OrangeShades, WhiteShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
 import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -75,13 +75,15 @@ const Home = ({ navigation }) => {
         >
           {BOOK_STATUS.map((status, idx) => {
             return (
-              <Box mx={1} mt={2} key={idx} h={60} width={120}>
+              <Box mx={1} mt={2} key={idx}>
                 <Button
-                  px={2}
+                  p={0}
+                  h={28}
+                  width={84}
                   variant='unstyled'
-                  borderRadius={100}
-                  bg={OrangeShades.quaternaryOrange}
-                  _text={{ color: OrangeShades.primaryOrange }}
+                  borderRadius={10}
+                  bg={bookStatus === status ? OrangeShades.primaryOrange : OrangeShades.quaternaryOrange}
+                  _text={{ color: bookStatus === status ? WhiteShades.primaryWhite : OrangeShades.primaryOrange }}
                   style={{
                     borderWidth: 1,
                     borderColor: OrangeShades.primaryOrange,
