@@ -4,6 +4,8 @@ import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { DEFAULT_PROFILE_PHOTO_URL, USER_PROFILE_UPLOAD_DIRECTORY } from '../../../constants';
+import { uploadFile } from '../../../firebase/firebase-service';
 
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
@@ -20,20 +22,18 @@ const BookDetail = ({ bookObj, setBookObj }) => {
       });
 
       if (!result.cancelled) {
-        // try {
-        //   if (result) {
-        //     photoURL = await uploadFile(result, USER_PROFILE_UPLOAD_DIRECTORY, currentUser.displayName);
-        // setImageArr([...imageArr, photoURL]);
-        //   } else {
-        //     photoURL = DEFAULT_PROFILE_PHOTO_URL;
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-        // console.log('PhotoURL', photoURL);
-        // console.log('ImageArr', imageArr);
-        setImageArr([...imageArr, photoURL]);
-        setBookObj(prevState => ({ ...prevState, images: [...imageArr, result.uri] }));
+        try {
+          if (result) {
+            photoURL = await uploadFile(result, USER_PROFILE_UPLOAD_DIRECTORY, currentUser.displayName);
+            setImageArr([...imageArr, photoURL]);
+          } else {
+            photoURL = DEFAULT_PROFILE_PHOTO_URL;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+        console.log('PhotoURL', photoURL);
+        setBookObj({ ...bookObj, images: [...imageArr, photoURL] });
       }
     } else {
       alert("You can't add more than 3 images");

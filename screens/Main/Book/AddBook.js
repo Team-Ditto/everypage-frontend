@@ -1,7 +1,7 @@
 import { FormControl, Input, TextArea, Button, VStack } from 'native-base';
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { BlueShades, whiteShades } from '../../../assets/style/color';
+import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import { addBook } from '../../../services/books-service';
 import BookDetail from './BookDetails';
 import ReadingStatus from './ReadingStatus';
