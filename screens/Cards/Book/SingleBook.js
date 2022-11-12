@@ -46,12 +46,12 @@ const SingleBook = ({ navigation, route }) => {
     borrowingStatus,
     readingStatus,
     location,
-    sharable,
+    shareable,
     note,
   } = bookData;
 
   const [showModal, setShowModal] = useState(false);
-  const [switchValue, setSwitchValue] = useState(sharable);
+  const [switchValue, setSwitchValue] = useState(shareable);
   const [borrowingStatusButton, setBorrowingStatusButton] = useState(borrowingStatus);
 
   const handleBorrowingStatus = b => {
@@ -183,14 +183,18 @@ const SingleBook = ({ navigation, route }) => {
                     : `No other users can request to borrow this book.`}
                 </Text>
               </Box>
-              <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
-                <HStack justifyContent='space-between' alignItems='center'>
-                  <Text fontWeight='bold' fontSize='18px'>
-                    Notes
-                  </Text>
-                </HStack>
-                <Text fontSize={16}>{note ?? ` :: There is no notes :: `}</Text>
-              </Box>
+              {note ? (
+                <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                  <HStack justifyContent='space-between' alignItems='center'>
+                    <Text fontWeight='bold' fontSize='18px'>
+                      Notes
+                    </Text>
+                  </HStack>
+                  <Text fontSize={16}>{note}</Text>
+                </Box>
+              ) : (
+                <></>
+              )}
             </VStack>
           </Box>
         </VStack>
