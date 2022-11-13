@@ -2,6 +2,7 @@ import { genreData } from '../../constants/LibraryData';
 import { VStack, HStack, Text, Pressable, Icon, Divider } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const Genres = ({ navigation }) => {
   return (
@@ -22,6 +23,7 @@ const Genres = ({ navigation }) => {
                 </HStack>
                 <Divider />
               </Pressable>
+
             );
           })}
         </VStack>
