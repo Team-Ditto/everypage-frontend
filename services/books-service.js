@@ -9,6 +9,7 @@ export const addBook = async book => {
     return addedBook;
   } catch (error) {
     console.log('ERROR: ', error);
+    throw new Error(error);
   }
 };
 

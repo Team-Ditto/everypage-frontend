@@ -1,51 +1,76 @@
 import { FormControl, Stack, Input, HStack, Button, Divider, Select, CheckIcon, Box, Image } from 'native-base';
-import { useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
-import { AuthContext } from '../../../contexts/AuthContext';
-import { DEFAULT_PROFILE_PHOTO_URL, USER_PROFILE_UPLOAD_DIRECTORY } from '../../../constants';
-import { uploadFile } from '../../../firebase/firebase-service';
 
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
   const [imageArr, setImageArr] = useState([]);
-  let photoURL = null;
-  const { currentUser } = useContext(AuthContext);
+
   const HandleImageEventClick = async () => {
+    let showSizeError = false;
+
     if (imageArr.length < 3) {
+      // const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+      // if (status !== 'granted') {
+      //   alert('Sorry, we need camera permissions to make this work!');
+      // }
+
+      // let result = await ImagePicker.launchCameraAsync({
+      //   mediaTypes: ImagePicker.MediaTypeOptions.All,
+      //   allowsEditing: true,
+      //   aspect: [4, 3],
+      //   quality: 1,
+      // });
+
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+        quality: 3,
+        allowsMultipleSelection: true,
+        selectionLimit: 3 - imageArr.length,
       });
 
       if (!result.cancelled) {
-        try {
-          if (result) {
-            photoURL = await uploadFile(result, USER_PROFILE_UPLOAD_DIRECTORY, currentUser.displayName);
-            setImageArr([...imageArr, photoURL]);
-          } else {
-            photoURL = DEFAULT_PROFILE_PHOTO_URL;
-          }
-        } catch (err) {
-          console.log(err);
+        const uploadedURIs = result.selected
+          .filter(item => {
+            // if the size of the image is > 2mb, don't add that to array and set show error is true
+            if (item.fileSize / 1024 / 1024 > 2) {
+              showSizeError = true;
+              return false;
+            }
+
+            return true;
+          })
+          .map(item => item.uri);
+
+        setImageArr([...imageArr, ...uploadedURIs]);
+
+        if (showSizeError) {
+          alert('Please upload images less than 2MB.');
         }
-        console.log('PhotoURL', photoURL);
-        setBookObj({ ...bookObj, images: [...imageArr, photoURL] });
       }
     } else {
       alert("You can't add more than 3 images");
     }
   };
 
-  const HandleCancelImage = idx => {
-    let tempArr = imageArr;
-    tempArr.splice(idx, 1);
-    setImageArr([...tempArr]);
-    setBookObj({ ...bookObj, images: [...tempArr] });
+  const HandleCancelImage = uri => {
+    imageArr.splice(uri, 1);
+    setImageArr([...imageArr]);
   };
+
+  useEffect(() => {
+    setBookObj({ ...bookObj, images: [...imageArr] });
+  }, [imageArr]);
+
   return (
     <>
       <FormControl.Label>DETAILS</FormControl.Label>

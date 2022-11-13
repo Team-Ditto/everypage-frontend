@@ -1,7 +1,9 @@
-import { FormControl, Input, TextArea, Button, VStack } from 'native-base';
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { FormControl, Input, TextArea, Button, VStack } from 'native-base';
+
 import { BlueShades, WhiteShades } from '../../../assets/style/color';
+import { uploadBookPictures } from '../../../firebase/firebase-service';
 import { addBook } from '../../../services/books-service';
 import BookDetail from './BookDetails';
 import ReadingStatus from './ReadingStatus';
@@ -28,8 +30,10 @@ const AddBook = ({ route, navigation }) => {
 
   const handleSaveBtn = async () => {
     try {
-      let responseBook = await addBook(bookObj);
-      alert('Book added.');
+      const uploadedURLs = await uploadBookPictures(bookObj.images, bookObj.title);
+
+      await addBook({ ...bookObj, images: [...uploadedURLs] });
+
       navigation.navigate('BottomTab');
     } catch (err) {
       console.log('Error: ', err);
