@@ -3,8 +3,6 @@ import { useState, useEffect, useContext } from 'react';
 import { BOOK_STATUS } from '../../constants/index';
 import { VStack, Text, Box, Button, Spinner, HStack, View, Image } from 'native-base';
 import { ScrollView, StyleSheet } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
-import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
@@ -22,7 +20,7 @@ const Home = ({ navigation }) => {
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
 
-useEffect(() => {
+  useEffect(() => {
     SetTopScreenTitle();
     fetchData();
     GetNotificationHeader(navigation);
@@ -69,7 +67,6 @@ useEffect(() => {
           <Filter ApplyFilterSettings={ApplyFilterSettings} />
         </HStack>
       </Box>
-      {/* button slider */}
       <View style={{ height: 70 }}>
         <ScrollView
           style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
@@ -120,13 +117,13 @@ useEffect(() => {
       ) : (
         <ScrollView>
           <View style={styles.container}>
-            <Image source={require('../../assets/dropdown.png')} />
+            <Image alt='dropDown' source={require('../../assets/dropdown.png')} />
             <Text style={styles.text}>Hi Mita, welcome to everypage!</Text>
             <Text style={styles.content}>
               Now that you have your digital bookshelf setup. Let's addsome books to your Library
             </Text>
           </View>
-          <Image style={styles.downArrow} source={require('../../assets/DownwardArrow.png')} />
+          <Image style={styles.downArrow} alt="Down arrow" source={require('../../assets/DownwardArrow.png')} />
         </ScrollView>
       )}
       <FloatingButtons navigation={navigation} />
