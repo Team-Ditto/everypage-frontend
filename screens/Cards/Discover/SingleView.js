@@ -1,14 +1,24 @@
 import { VStack, HStack, Box, Text, Heading, Badge, Avatar, Button, ScrollView, Link, Divider } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Touchable, TouchableOpacity } from 'react-native';
 
 import Carousel from '../../Assets/Carousel';
 import BooksSameOwner from '../../Assets/BooksSameOwner';
-import { BlueShades, SuccessColor, InUseColor, OnHoldColor, OrangeShades } from '../../../assets/style/color';
+import {
+  BlueShades,
+  SuccessColor,
+  InUseColor,
+  OnHoldColor,
+  OrangeShades,
+  BlackShades,
+} from '../../../assets/style/color';
 import { createNewWishlist } from '../../../services/wishlists-service';
+import { useState } from 'react';
 
 const SingleView = ({ navigation, route }) => {
   const bookData = route.params.bookData;
+  const [isDisabled, setIsDisabled] = useState(false);
   console.log('bookData', bookData);
+
   const { images, title, author, owner, genre, edition, language, isbn, condition, _id, borrowingStatus } = bookData;
 
   const handleBorrowingStatus = b => {
@@ -27,8 +37,15 @@ const SingleView = ({ navigation, route }) => {
       book: bookData._id,
       status: 'Requested',
     };
-    createNewWishlist(createdWishlist);
-    // .then(navigation.navigate('Wishlist'));
+
+    // Update the Book Status first. 
+    // To onHold.
+    // Then create the wishlist. in the rquested State.
+         createNewWishlist(createdWishlist);
+    // Request to borrow trigger
+    //  Hence sending the notification
+          setIsDisabled(true);
+    //  then(navigation.navigate('Wishlist'));
   };
 
   return (
@@ -99,16 +116,30 @@ const SingleView = ({ navigation, route }) => {
       </ScrollView>
       <Divider shadow={2} />
       <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
-        <Button
-          m='24px'
-          backgroundColor={BlueShades.primaryBlue}
-          borderRadius='10px'
-          shadow={2}
-          shadowOffset={{ width: '-20px', height: '-20px' }}
-          onPress={handleRequestToBorrow}
-        >
-          Request to Borrow
-        </Button>
+        {isDisabled ? (
+          <Button
+            m='24px'
+            disabled={true}
+            backgroundColor={BlackShades.tertiaryBlack}
+            borderRadius='10px'
+            shadow={2}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleRequestToBorrow}
+          >
+            Request to Borrow
+          </Button>
+        ) : (
+          <Button
+            m='24px'
+            backgroundColor={BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleRequestToBorrow}
+          >
+            Request to Borrow
+          </Button>
+        )}
       </Box>
     </>
   );

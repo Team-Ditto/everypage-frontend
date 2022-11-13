@@ -62,7 +62,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
               onHeader: false,
             })
           : navigation.navigate('SingleBook', {
-              libCardData: data,
+              bookId: data._id,
             });
       }}
       alignItems='center'

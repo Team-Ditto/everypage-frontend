@@ -73,3 +73,12 @@ export async function getMyBooksShelfLocation() {
     console.log(error);
   }
 }
+
+export async function getBookById(bookId) {
+  try {
+    const book = await axiosRequest.get(`books/${bookId}`);
+    return book;
+  } catch (error) {
+    console.log(error);
+  }
+}
