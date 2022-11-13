@@ -16,7 +16,7 @@ const AddBook = ({ route, navigation }) => {
   const [bookObj, setBookObj] = useState({
     title: routeBookData === undefined ? '' : routeBookData.volumeInfo.title, // eslint-disable-line react/prop-types
     author: routeBookData === undefined ? '' : routeBookData.volumeInfo.authors[0], // eslint-disable-line react/prop-types
-    images: [],
+    images: routeBookData === undefined ? [] : [routeBookData.volumeInfo.imageLinks.thumbnail], // eslint-disable-line react/prop-types
     language: routeBookData === undefined ? '' : routeBookData.volumeInfo.language, // eslint-disable-line react/prop-types
     genre: '',
     edition: '',

@@ -19,7 +19,7 @@ import { StyleSheet } from 'react-native';
 
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
-  const [imageArr, setImageArr] = useState([]);
+  const [imageArr, setImageArr] = useState(bookObj.images);
 
   const HandleImageEventClick = async () => {
     let showSizeError = false;
@@ -78,8 +78,6 @@ const BookDetail = ({ bookObj, setBookObj }) => {
   const HandleCancelImage = uri => {
     imageArr.splice(uri, 1);
     setImageArr([...imageArr]);
-
-
   };
   const [textColor, setTextColor] = useState(0);
 
