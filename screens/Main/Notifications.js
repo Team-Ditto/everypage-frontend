@@ -4,7 +4,7 @@ import { VStack, Box, HStack, Button, Text } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
-import Messages from '../Notifications/Messages';
+import MessagesMain from '../Notifications/MessagesMain';
 import Filter from '../Assets/FilterSettings/Filter';
 import { NotificationContext } from '../../contexts/NotificationContext';
 
@@ -55,7 +55,7 @@ const Notifications = ({ navigation }) => {
       </Box>
       <VStack>
         <Box style={styles.main}>
-          {isNotifications ? <NotificationsMain navigation={navigation} /> : <Messages navigation={navigation} />}
+          {isNotifications ? <NotificationsMain navigation={navigation} /> : <MessagesMain navigation={navigation} />}
         </Box>
       </VStack>
     </VStack>

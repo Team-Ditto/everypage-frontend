@@ -28,13 +28,13 @@ export const signUpWithEmailAndPassword = async (email, password, displayName) =
       photoURL: DEFAULT_PROFILE_PHOTO_URL,
     });
 
+    // create empty user chats on firestore (this will be used later for chats)
+    await setDoc(doc(db, 'userChats', response.user.uid), { chatRefs: [] });
+
     await updateProfile(response.user, {
       displayName,
       photoURL,
     });
-
-    // create empty user chats on firestore (this will be used later for chats)
-    await setDoc(doc(db, 'userChats', response.user.uid), {});
   } catch (err) {
     console.log(err);
     throw err;
