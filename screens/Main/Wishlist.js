@@ -7,7 +7,7 @@ import Search from '../Assets/Search';
 import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 import Filter from '../Assets/FilterSettings/Filter';
-import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 export default function Wishlist({ navigation }) {
   const [isForLater, setIsForLater] = useState(true);
   const [status, setStatus] = useState('For Later');
