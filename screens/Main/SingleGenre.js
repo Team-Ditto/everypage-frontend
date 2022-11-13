@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react';
 import { VStack, Text, Box, ScrollView } from 'native-base';
 import Search from '../Assets/Search';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { LibraryData } from '../../constants/LibraryData';
 import { getUsersBook } from '../../services/books-service';
 
 const SingleGenre = ({ navigation, route }) => {
-  const [searchResults, setSearchResults] = useState(LibraryData);
-  // const [genre, set]
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -15,11 +13,12 @@ const SingleGenre = ({ navigation, route }) => {
         genre: '',
         readingStatus: '',
       };
-      console.log(route.params.genre);
-      getUsersBook(route.params.genre, '').then(books => {
-        setSearchResults(books.data.results);
-        // setSpinnerVisible(false);
-      });
+
+      let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc&genre=${route.params.genre}`;
+      let booksData = await getUsersBook(queryParams, '', '', '', true);
+      if (booksData !== undefined && booksData.data.results.length > 0) {
+        setSearchResults(booksData.data.results);
+      }
     }
     fetchData();
   }, []);
