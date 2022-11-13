@@ -18,6 +18,8 @@ import { AuthContext } from '../contexts/AuthContext';
 import SearchResult from '../screens/Assets/SearchResult';
 import Notifications from '../screens/Main/Notifications';
 import WishlistTopIcon from '../screens/Assets/WishlistTopIcon';
+import Chat from '../screens/Chats/Chat';
+import ChatHeaderTitle from '../screens/Chats/ChatHeaderTitle';
 
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
@@ -99,6 +101,15 @@ const AppStack = () => {
                 options={({ route }) => ({
                   tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
                 })}
+              />
+              <Stack.Screen
+                name='Chat'
+                component={Chat}
+                options={{
+                  headerBackTitleVisible: false,
+                  headerStyle: { height: 96 },
+                  headerTitle: props => <ChatHeaderTitle {...props} />,
+                }}
               />
             </>
           )
