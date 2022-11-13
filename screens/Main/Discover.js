@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
-import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, Divider } from 'native-base';
+import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, Divider, View } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';

@@ -39,7 +39,21 @@ const SingleView = ({ navigation, route }) => {
   const [bookData, setBookData] = useState({});
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [requestor, setRequestor] = useState({});
-  const { images, title, author, owner, genre, edition, language, isbn, condition, _id, borrowingStatus } = bookData;
+  const {
+    images,
+    title,
+    author,
+    owner,
+    genre,
+    edition,
+    language,
+    isbn,
+    condition,
+    _id,
+    borrowingStatus,
+  } = route.params.bookData;
+
+  console.log(route.params.bookId);
 
   useEffect(() => {
     getBookById(bookId).then(book => {
@@ -93,7 +107,7 @@ const SingleView = ({ navigation, route }) => {
             backgroundColor={isDisabled ? BlackShades.tertiaryBlack : BlueShades.primaryBlue}
             borderRadius='10px'
             shadow={2}
-            mx={5}
+            m={5}
             shadowOffset={{ width: '-20px', height: '-20px' }}
             onPress={handleRequestToBorrow}
           >
@@ -103,7 +117,7 @@ const SingleView = ({ navigation, route }) => {
       case 'In-Use':
         return (
           <Button
-            mx={5}
+            m={5}
             backgroundColor={BlueShades.primaryBlue}
             borderRadius='10px'
             shadow={2}
@@ -119,7 +133,7 @@ const SingleView = ({ navigation, route }) => {
             backgroundColor={BlueShades.primaryBlue}
             borderRadius='10px'
             shadow={2}
-            marginX={5}
+            m={5}
             shadowOffset={{ width: '-20px', height: '-20px' }}
             onPress={handleRequestToBorrow}
           >
@@ -133,7 +147,7 @@ const SingleView = ({ navigation, route }) => {
     <>
       <ScrollView>
         <VStack>
-          <Carousel position='sticky' top={0} images={images} />
+          <Carousel images={images} />
           <Box
             borderRadius='10px'
             position='relative'

@@ -30,30 +30,12 @@ import { getBookById, updateBookStatusById } from '../../../services/books-servi
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const SingleBook = ({ navigation, route }) => {
-  const bookData = route.params.libCardData;
-  const {
-    images,
-    title,
-    author,
-    owner,
-    genre,
-    edition,
-    language,
-    isbn,
-    condition,
-    _id,
-    borrowingStatus,
-    readingStatus,
-    location,
-    shareable,
-    note,
-  } = bookData;
-
-  const [showModal, setShowModal] = useState(false);
-  const [switchValue, setSwitchValue] = useState(shareable);
-  const [borrowingStatusButton, setBorrowingStatusButton] = useState(borrowingStatus);
+  const bookId = route.params.bookId;
   const [bookData, setBookData] = useState({});
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [switchValue, setSwitchValue] = useState(bookData.shareable);
+  const [borrowingStatusButton, setBorrowingStatusButton] = useState(bookData.borrowingStatus);
 
   const handleBorrowingStatus = b => {
     switch (b) {
@@ -208,7 +190,7 @@ const SingleBook = ({ navigation, route }) => {
                       Notes
                     </Text>
                   </HStack>
-                  <Text fontSize={16}>{bookData.note ?? ` ~ `}</Text>
+                  <Text fontSize={16}>{bookData.note ?? ` `}</Text>
                 </Box>
               </VStack>
             </Box>

@@ -1,16 +1,10 @@
-import { useState } from 'react';
 import { IconButton, Icon, Box } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { BlueShades, WhiteShades } from '../../assets/style/color';
+import { BlueShades } from '../../assets/style/color';
 
-const WishlistButton = (props, route, navigation) => {
-  const { onHeader = false, isWishlisted, handleWishlistPress, setWishlisted } = props;
-  const [wishlistStatus, setWishlistStatus] = useState(isWishlisted);
-
-  const handleWishlistPressed = () => {
-    handleWishlistPress();
-  };
+const WishlistButton = (props, navigation) => {
+  const { isWishlisted, handleWishlistPress } = props;
 
   return (
     <>
@@ -30,7 +24,7 @@ const WishlistButton = (props, route, navigation) => {
               as={
                 <TouchableOpacity>
                   {isWishlisted ? (
-                    <Ionicons name='bookmark' size={30} color={onHeader ? BlueShades.primaryBlue : 'white'} />
+                    <Ionicons name='bookmark' size={30} color={'white'} />
                   ) : (
                     <Ionicons name='bookmark-outline' size={30} color={BlueShades.primaryBlue} />
                   )}

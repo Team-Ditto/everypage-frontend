@@ -1,13 +1,15 @@
 import { Box, AspectRatio, Image, VStack, Text, Pressable, Badge, HStack } from 'native-base';
 import { StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../../contexts/AuthContext';
 import WishlistButton from '../../Assets/WishlistButton';
 import { SuccessColor, InUseColor, OnHoldColor } from '../../../assets/style/color';
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
 
-const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true, wishlistStatus }) => {
+const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true }) => {
   const { title, author, images, borrowingStatus, _id } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const wishlisted = currentUser.wishlists.some(item => item.book === _id);
@@ -59,12 +61,21 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
     }
   };
 
+  // let i = 0;
+  // while (i < currentUser.wishlists.length) {
+  //   if (currentUser.wishlists[i].book === data._id) {
+  //     setIsWishlisted(true);
+  //   }
+  //   i++;
+  // }
+
   return (
     <Pressable
       onPress={() => {
         showWishListIcon
           ? navigation.navigate('SingleView', {
               bookData: data,
+              bookId: data._id,
               isWishlisted,
             })
           : navigation.navigate('SingleBook', {
