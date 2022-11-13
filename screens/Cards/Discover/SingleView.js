@@ -47,8 +47,8 @@ const SingleView = ({ navigation, route }) => {
     genre,
     edition,
     language,
-    isbn,
-    condition,
+    ISBN,
+    bookCondition,
     _id,
     borrowingStatus,
   } = route.params.bookData;
@@ -215,8 +215,8 @@ const SingleView = ({ navigation, route }) => {
                     <Text fontSize='16px'>{genre}</Text>
                     <Text fontSize='16px'>{edition}</Text>
                     <Text fontSize='16px'>{language}</Text>
-                    <Text fontSize='16px'>{isbn}</Text>
-                    <Text fontSize='16px'>{condition}</Text>
+                    <Text fontSize='16px'>{ISBN}</Text>
+                    <Text fontSize='16px'>{bookCondition}</Text>
                   </VStack>
                 </HStack>
               </Box>
