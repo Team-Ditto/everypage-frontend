@@ -1,19 +1,18 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Search from '../Assets/Search';
 import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, View, Divider } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { LibraryData, genreDiscover } from '../../constants/LibraryData';
+import { genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
-import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Discover({ navigation }) {
-  const [similarBookData, setSimilarBookData] = useState(LibraryData);
+  const [similarBookData, setSimilarBookData] = useState([]);
   const [isFilterVisible, setFilterVisible] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
   useEffect(() => {
     async function fetchData() {
       const params = {
