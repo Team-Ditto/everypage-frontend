@@ -99,14 +99,38 @@ const Home = ({ navigation }) => {
       </View>
 
       {/* My Library Data Collection */}
-      <Text mx={2} my={2} fontWeight='bold'>
+      {/* <Text mx={2} my={2} fontWeight='bold'>
         {bookStatus} ({libData.length})
-      </Text>
+      </Text> */}
       <ScrollView>
-        <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+        <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
           {libData ? (
             libData.map((data, id) => {
-              return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+              switch (bookStatus) {
+                case 'All':
+                  return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  break;
+                case 'Private':
+                  if (!data.shareable) {
+                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  }
+                  break;
+                case 'Borrowed':
+                  if (data.owner._id !== currentUser._id) {
+                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  }
+                  break;
+                case 'Lent':
+                  if (data.bearer !== null || data.requestor !== null) {
+                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  }
+                  break;
+                case 'Shared':
+                  if (data.shareable) {
+                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  }
+                  break;
+              }
             })
           ) : (
             <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
