@@ -10,20 +10,50 @@ import { OrangeShades, WhiteShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
 import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
-import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
   const [screenTitle, setScreenTitle] = useState(` ${currentUser.displayName}'s Library`);
   const [libData, setLibData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
+
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
     GetNotificationHeader(navigation);
   }, []);
+
+  useEffect(() => {
+    switch (bookStatus) {
+      case 'All':
+        setFilteredData(libData);
+        break;
+
+      case 'Private':
+        setFilteredData(libData.filter(item => !item.shareable));
+        break;
+
+      case 'Borrowed':
+        setFilteredData(libData.filter(item => item.owner._id !== currentUser._id));
+        break;
+
+      case 'Lent':
+        setFilteredData(
+          libData.filter(
+            item => item.owner._id === currentUser._id && (item.bearer !== null || item.requestor !== null),
+          ),
+        );
+        break;
+
+      case 'Shared':
+        setFilteredData(libData.filter(item => item.shareable));
+        break;
+    }
+  }, [bookStatus]);
 
   function SetTopScreenTitle() {
     navigation.setOptions({
@@ -34,6 +64,7 @@ const Home = ({ navigation }) => {
   async function fetchData() {
     getBooksOfLoginUser().then(books => {
       setLibData(books.data.results);
+      setFilteredData(books.data.results);
       setSpinnerVisible(false);
     });
   }
@@ -104,33 +135,9 @@ const Home = ({ navigation }) => {
       </Text> */}
       <ScrollView>
         <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-          {libData ? (
-            libData.map((data, id) => {
-              switch (bookStatus) {
-                case 'All':
-                  return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                  break;
-                case 'Private':
-                  if (!data.shareable) {
-                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                  }
-                  break;
-                case 'Borrowed':
-                  if (data.owner._id !== currentUser._id) {
-                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                  }
-                  break;
-                case 'Lent':
-                  if (data.bearer !== null || data.requestor !== null) {
-                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                  }
-                  break;
-                case 'Shared':
-                  if (data.shareable) {
-                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                  }
-                  break;
-              }
+          {filteredData ? (
+            filteredData.map((data, id) => {
+              return <MyLibraryCard key={id} data={data} navigation={navigation} />;
             })
           ) : (
             <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
