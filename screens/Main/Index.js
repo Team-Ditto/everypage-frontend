@@ -92,8 +92,8 @@ const Home = ({ navigation }) => {
   return (
     <VStack style={{ position: 'relative', height: '100%' }}>
       {/* Search component */}
-      <Box display='flex' width='100%' mt={2}>
-        <HStack display='flex' justifyContent='center' alignItems='center'>
+      <Box display='flex' width='100%' mt='18px' mb='10px'>
+        <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
           <Filter ApplyFilterSettings={ApplyFilterSettings} />
         </HStack>
@@ -139,9 +139,9 @@ const Home = ({ navigation }) => {
         />
       ) : libData.length > 0 ? (
         <ScrollView>
-          <Text mx={2} my={2}>
+          {/* <Text mx={4} my={2}>
             {bookStatus} ({filteredData.length})
-          </Text>
+          </Text> */}
           <ScrollView>
             <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
               {filteredData ? (
