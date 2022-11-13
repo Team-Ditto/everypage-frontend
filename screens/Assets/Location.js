@@ -4,7 +4,7 @@ import * as Loc from 'expo-location';
 
 import Map from './Map';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { BlueShades, whiteShades } from '../../assets/style/color';
+import { BlueShades, WhiteShades } from '../../assets/style/color';
 import { FontAwesome } from '@expo/vector-icons';
 import { updateMyUserProfile } from '../../services/users-service';
 import { fieldSet, legend } from '../../assets/style/fieldsetStyle';

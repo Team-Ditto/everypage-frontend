@@ -1,4 +1,5 @@
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
+import { OrangeShades } from '../../../assets/style/color';
 
 const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
   const { book, status } = data;
@@ -81,7 +82,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false }) => {
                 }}
                 alt={book.owner.displayName}
               />
-              <Link href='https://nativebase.io' ml='5px'>
+              <Link href='#' color={OrangeShades.primaryOrange} ml='5px'>
                 {book.owner.displayName}
               </Link>
             </HStack>

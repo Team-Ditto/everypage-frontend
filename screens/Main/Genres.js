@@ -11,21 +11,19 @@ const Genres = ({ navigation }) => {
         <VStack padding={2}>
           {genreData.map(g => {
             return (
-                <Pressable
-                  key={g}
-                  style={styles.buttons}
-                  onPress={() => {
-                    navigation.navigate('SingleGenre', { genre: g });
-                  }}
-                >
-                  <HStack justifyContent='space-between' padding={4}>
-                    <Text fontSize='lg' style={styles.buttons}>
-                      {g}
-                    </Text>
-                    <Icon as={MaterialIcons} name='keyboard-arrow-right' size='lg' />
-                  </HStack>
-                  <Divider />
-                </Pressable>
+              <Pressable
+                key={g}
+                onPress={() => {
+                  navigation.navigate('SingleGenre', { genre: g });
+                }}
+              >
+                <HStack justifyContent='space-between' padding={4}>
+                  <Text fontSize='lg'>{g}</Text>
+                  <Icon as={MaterialIcons} name='keyboard-arrow-right' size='lg' />
+                </HStack>
+                <Divider />
+              </Pressable>
+
             );
           })}
         </VStack>
@@ -33,11 +31,5 @@ const Genres = ({ navigation }) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  buttons: {
-    backgroundColor: 'red',
-  },
-});
 
 export default Genres;

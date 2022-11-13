@@ -1,16 +1,13 @@
 import { Box, AspectRatio, Image, VStack, Text, Pressable, Badge, HStack } from 'native-base';
 import { StyleSheet } from 'react-native';
-import { useState, useContext, useEffect } from 'react';
+import { useState } from 'react';
 import WishlistButton from '../../Assets/WishlistButton';
-import { AuthContext } from '../../../contexts/AuthContext';
 import { SuccessColor, InUseColor, OnHoldColor } from '../../../assets/style/color';
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
-import { responsePathAsArray } from 'graphql';
 
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true, wishlistStatus }) => {
   const { title, author, images, borrowingStatus } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const handleWishlistPress = () => {
     // you call the api
@@ -56,13 +53,13 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
       onPress={() => {
         showWishListIcon
           ? navigation.navigate('SingleView', {
-              bookData: data,
+              bookId: data._id,
               isWishlisted: isWishlisted,
               setIsWishlisted: setIsWishlisted,
               onHeader: false,
             })
           : navigation.navigate('SingleBook', {
-              libCardData: data,
+              bookId: data._id,
             });
       }}
       alignItems='center'

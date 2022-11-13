@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Divider, View, VStack } from 'native-base';
+import { Divider, ScrollView, View } from 'native-base';
 
 import NotificationCard from '../Cards/Notifications/NotificationCard';
 import { NotificationContext } from '../../contexts/NotificationContext';
@@ -8,7 +8,7 @@ const NotificationsMain = ({ navigation }) => {
   const { notifications } = useContext(NotificationContext);
 
   return (
-    <VStack>
+    <ScrollView>
       {notifications?.map(notification => {
         return (
           <View key={notification._id}>
@@ -17,7 +17,7 @@ const NotificationsMain = ({ navigation }) => {
           </View>
         );
       })}
-    </VStack>
+    </ScrollView>
   );
 };
 
