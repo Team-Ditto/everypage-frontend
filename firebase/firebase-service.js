@@ -5,7 +5,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { auth, db, storage } from './';
 import { createNewUser, getBookAsPerUser } from '../services/users-service';
-import { DEFAULT_PROFILE_PHOTO_URL, USER_PROFILE_UPLOAD_DIRECTORY } from '../constants';
+import { BOOKS_UPLOAD_DIRECTORY, DEFAULT_PROFILE_PHOTO_URL } from '../constants';
 
 /**
  * creates new user with the credentials
@@ -15,24 +15,17 @@ import { DEFAULT_PROFILE_PHOTO_URL, USER_PROFILE_UPLOAD_DIRECTORY } from '../con
  * @param {File} file the profile photo file
  * @returns void
  */
-export const signUpWithEmailAndPassword = async (email, password, displayName, file = null) => {
+export const signUpWithEmailAndPassword = async (email, password, displayName) => {
   try {
     let photoURL;
     const response = await createUserWithEmailAndPassword(auth, email, password);
-
-    // @TODO: Can we export it to common place. Resuable code
-    if (file) {
-      photoURL = await uploadFile(file, USER_PROFILE_UPLOAD_DIRECTORY, displayName);
-    } else {
-      photoURL = DEFAULT_PROFILE_PHOTO_URL;
-    }
 
     // create user on MongoDB
     await createNewUser({
       _id: response.user.uid,
       displayName,
       email,
-      photoURL,
+      photoURL: DEFAULT_PROFILE_PHOTO_URL,
     });
 
     await updateProfile(response.user, {
@@ -40,7 +33,7 @@ export const signUpWithEmailAndPassword = async (email, password, displayName, f
       photoURL,
     });
 
-    //   create empty user chats on firestore (this will be used later for chats)
+    // create empty user chats on firestore (this will be used later for chats)
     await setDoc(doc(db, 'userChats', response.user.uid), {});
   } catch (err) {
     console.log(err);
@@ -73,34 +66,39 @@ export const logout = async () => {
 };
 
 /**
+ *
+ * @param {Array} bookUri the array of local book URLs
+ * @param {String} bookName the book title
+ * @returns array of public URLs for the book
+ */
+export const uploadBookPictures = async (bookUri, bookName) => {
+  const bookPromises = [];
+
+  bookUri.forEach((url, index) => {
+    bookPromises.push(uploadFile(url, BOOKS_UPLOAD_DIRECTORY, `${bookName}_${index + 1}`));
+  });
+
+  const response = await Promise.all(bookPromises);
+
+  return response;
+};
+
+/**
  * uploads the file to the firebase storage and returns the public url to access it
- * @param {File} file the file
+ * @param {File} fileUri the local file uri
  * @param {String} folder the folder to be uploaded
  * @param {String} fileName the name of the file
  * @returns the public url for the uploaded file
  */
-export const uploadFile = async (file, folder, fileName) => {
+export const uploadFile = async (fileUri, folder, fileName) => {
   try {
-    const date = new Date().getTime();
-    const storageRef = ref(storage, `${folder}/${fileName}-${date}`);
+    const storageRef = ref(storage, `${folder}/${fileName}`);
 
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError('Network request failed'));
-      };
-      xhr.responseType = 'blob';
-      xhr.open('GET', file.uri, true);
-      xhr.send(null);
-    });
+    const img = await fetch(fileUri);
+    const blob = await img.blob();
 
     await uploadBytes(storageRef, blob);
     const publicURL = await getDownloadURL(storageRef);
-    blob.close();
 
     return publicURL;
   } catch (err) {

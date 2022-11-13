@@ -1,13 +1,25 @@
 import { useState, useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, ScrollView, Text, Image, Box, VStack, HStack, Link, ChevronRightIcon } from 'native-base';
-
 import { logout } from '../../firebase/firebase-service';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { BlueShades } from '../../assets/style/color';
+import {
+  Button,
+  ScrollView,
+  View,
+  Text,
+  Image,
+  Box,
+  VStack,
+  HStack,
+  Link,
+  Icon,
+  ChevronRightIcon,
+  FavouriteIcon,
+} from 'native-base';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -36,7 +48,7 @@ export default function Profile({ navigation }) {
               .replaceAll('-', '/')}
           </Text>
         </VStack>
-        <Image source={require('../../assets/pen.png')} alt='Edit Icon Image' style={styles.penIcon} />
+        <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />
       </Box>
       <VStack mx={30} my={5}>
         <Text py={1} fontSize='md' fontWeight='semibold'>
@@ -57,7 +69,7 @@ export default function Profile({ navigation }) {
           <Box py={3} w='15%' flexDirection='row' justifyContent='space-between' borderRadius={4}>
             {/* <FontAwesome name='favorite' size={24} color='black' /> */}
             {libData.map((data, id) => {
-              return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+              return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
             })}
           </Box>
         </ScrollView>
@@ -110,5 +122,4 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 20,
   },
-  userHistory: {},
 });

@@ -1,51 +1,93 @@
-import { FormControl, Stack, Input, HStack, Button, Divider, Select, CheckIcon, Box, Image } from 'native-base';
-import { useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BlueShades, WhiteShades } from '../../../assets/style/color';
+import {
+  FormControl,
+  Stack,
+  Input,
+  HStack,
+  Button,
+  Divider,
+  Select,
+  CheckIcon,
+  Box,
+  Image,
+  Text,
+  Icon,
+} from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
-import { AuthContext } from '../../../contexts/AuthContext';
 
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
-  const [imageArr, setImageArr] = useState([]);
-  let photoURL = null;
-  const { currentUser } = useContext(AuthContext);
+  const [imageArr, setImageArr] = useState(bookObj.images);
+
   const HandleImageEventClick = async () => {
+    let showSizeError = false;
+
     if (imageArr.length < 3) {
+      // const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+      // if (status !== 'granted') {
+      //   alert('Sorry, we need camera permissions to make this work!');
+      // }
+
+      // let result = await ImagePicker.launchCameraAsync({
+      //   mediaTypes: ImagePicker.MediaTypeOptions.All,
+      //   allowsEditing: true,
+      //   aspect: [4, 3],
+      //   quality: 1,
+      // });
+
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+        quality: 3,
+        allowsMultipleSelection: true,
+        selectionLimit: 3 - imageArr.length,
       });
 
       if (!result.cancelled) {
-        // try {
-        //   if (result) {
-        //     photoURL = await uploadFile(result, USER_PROFILE_UPLOAD_DIRECTORY, currentUser.displayName);
-        // setImageArr([...imageArr, photoURL]);
-        //   } else {
-        //     photoURL = DEFAULT_PROFILE_PHOTO_URL;
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-        // console.log('PhotoURL', photoURL);
-        // console.log('ImageArr', imageArr);
-        setImageArr([...imageArr, photoURL]);
-        setBookObj(prevState => ({ ...prevState, images: [...imageArr, result.uri] }));
+        const uploadedURIs = result.selected
+          .filter(item => {
+            // if the size of the image is > 2mb, don't add that to array and set show error is true
+            if (item.fileSize / 1024 / 1024 > 2) {
+              showSizeError = true;
+              return false;
+            }
+
+            return true;
+          })
+          .map(item => item.uri);
+
+        setImageArr([...imageArr, ...uploadedURIs]);
+
+        if (showSizeError) {
+          alert('Please upload images less than 2MB.');
+        }
       }
     } else {
       alert("You can't add more than 3 images");
     }
   };
 
-  const HandleCancelImage = idx => {
-    let tempArr = imageArr;
-    tempArr.splice(idx, 1);
-    setImageArr([...tempArr]);
-    setBookObj({ ...bookObj, images: [...tempArr] });
+  const HandleCancelImage = uri => {
+    imageArr.splice(uri, 1);
+    setImageArr([...imageArr]);
   };
+  const [textColor, setTextColor] = useState(0);
+
+  const handleTextColor = () => {
+    setTextColor(1);
+  };
+  useEffect(() => {
+    setBookObj({ ...bookObj, images: [...imageArr] });
+  }, [imageArr]);
+
   return (
     <>
       <FormControl.Label>DETAILS</FormControl.Label>
@@ -181,15 +223,43 @@ const BookDetail = ({ bookObj, setBookObj }) => {
                 setBookObj({ ...bookObj, bookCondition: condition });
               }}
               _selectedItem={{
-                endIcon: <CheckIcon color='teal.600' size='5' />,
+                _text: {
+                  color: BlueShades.primaryBlue,
+                },
               }}
               borderWidth='0'
             >
-              <Select.Item label='Like New' value='Like New' />
-              <Select.Item label='Very Good' value='Very Good' />
-              <Select.Item label='Good' value='Good' />
-              <Select.Item label='Fair' value='Fair' />
-              <Select.Item label='Poor' value='Poor' />
+              <Select.Item
+                label={`Like new \n  May have been read but are in mint condition`}
+                value='Like New'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
+
+              <Select.Item
+                label={`Very Good \n  Have been read but are well cared `}
+                value='Very Good'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              ></Select.Item>
+              <Select.Item
+                label={`Good \n  Average used book with complete page present`}
+                value='Good'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
+              <Select.Item
+                label={`Fair \n  Have worn but with complete text pages`}
+                value='Fair'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
+              <Select.Item
+                label={`Poor \n  Have extensive damage`}
+                value='Poor'
+                borderBottomWidth={0.5}
+                borderBottomColor='gray.400'
+              />
             </Select>
           </HStack>
         </FormControl>
@@ -210,6 +280,10 @@ const styles = StyleSheet.create({
     height: 10,
     width: 10,
     borderRadius: 100,
+  },
+  dropDown: {
+    borderBottomWidth: 1,
+    padding: 3,
   },
 });
 

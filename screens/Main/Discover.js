@@ -8,10 +8,12 @@ import { getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState([]);
   const [isFilterVisible, setFilterVisible] = useState(false);
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,8 +24,10 @@ export default function Discover({ navigation }) {
 
       let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc`;
       let booksData = await getUsersBook(queryParams, '', '', '', true);
+
       if (booksData !== undefined && booksData.data.results.length > 0) {
         setSimilarBookData(booksData.data.results);
+        setFilterVisible(false);
       }
     }
     fetchData();
@@ -99,14 +103,22 @@ export default function Discover({ navigation }) {
       {/* View below the Genre Tab */}
 
       <ScrollView>
-        <Text m={2} fontWeight='bold' fontSize='2xl'>
-          Books you might like
-        </Text>
-        <Box py={3} px={2} mb={20} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-          {similarBookData.map((data, id) => {
-            return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
-          })}
-        </Box>
+        {Object.keys(similarBookData).length > 0 ? (
+          <>
+            <Text m={2} fontWeight='bold' fontSize='2xl'>
+              Books you might like
+            </Text>
+            <Box py={3} px={2} mb={20} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+              {similarBookData.map((data, id) => {
+                return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
+              })}
+            </Box>
+          </>
+        ) : (
+          <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+          </View>
+        )}
       </ScrollView>
     </VStack>
   );
