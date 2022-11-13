@@ -190,7 +190,7 @@ const SingleBook = ({ navigation, route }) => {
                       Notes
                     </Text>
                   </HStack>
-                  <Text fontSize={16}>{bookData.note ?? ` :: There is no notes :: `}</Text>
+                  <Text fontSize={16}>{bookData.note ?? ` `}</Text>
                 </Box>
               </VStack>
             </Box>

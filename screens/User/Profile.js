@@ -4,7 +4,7 @@ import { logout } from '../../firebase/firebase-service';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { AuthContext } from '../../contexts/AuthContext';
-import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { BlueShades } from '../../assets/style/color';
 import {
   Button,
@@ -41,7 +41,11 @@ export default function Profile({ navigation }) {
           <Text fontWeight='semibold'>{currentUser.displayName}</Text>
           <Text>{currentUser.readerType}</Text>
           <Text fontStyle='italic' fontSize='sm'>
-            joined {new Date(currentUser.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
+            joined{' '}
+            {new Date(currentUser.createdAt)
+              .toISOString()
+              .substring(0, 10)
+              .replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />

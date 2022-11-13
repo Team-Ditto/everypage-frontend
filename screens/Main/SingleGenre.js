@@ -2,13 +2,10 @@ import { useState, useEffect } from 'react';
 import { VStack, Text, Box, ScrollView, HStack } from 'native-base';
 import Search from '../Assets/Search';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { LibraryData } from '../../constants/LibraryData';
-import { getBooksByKeyword, getUsersBook } from '../../services/books-service';
-import { Alert } from 'react-native';
+import { getUsersBook } from '../../services/books-service';
 
 const SingleGenre = ({ navigation, route }) => {
   const [searchResults, setSearchResults] = useState([]);
-  // const [genre, set]
 
   const onSearchSubmitted = async searchText => {
     // const searchedBooks = await getBooksByKeyword(searchText);
@@ -27,14 +24,12 @@ const SingleGenre = ({ navigation, route }) => {
         genre: '',
         readingStatus: '',
       };
-      console.log(route.params.genre);
-      let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc`;
-      let books = await getUsersBook(queryParams, route.params.genre, '', '', true);
-      // getUsersBook(queryParams, route.params.genre,route.params.readingStatus '', '', true).then(books => {
-      console.log('Books Count', books.data.results.length);
-      setSearchResults(books.data.results);
-      // setSpinnerVisible(false);
-      // });
+
+      let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc&genre=${route.params.genre}`;
+      let booksData = await getUsersBook(queryParams, '', '', '', true);
+      if (booksData !== undefined && booksData.data.results.length > 0) {
+        setSearchResults(booksData.data.results);
+      }
     }
     fetchData();
   }, []);

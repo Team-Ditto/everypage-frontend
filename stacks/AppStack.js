@@ -13,10 +13,11 @@ import ReaderInfo from '../screens/User/ReaderInfo';
 import Genres from '../screens/Main/Genres';
 import SingleGenre from '../screens/Main/SingleGenre';
 import SingleView from '../screens/Cards/Discover/SingleView';
-import WishlistButton from '../screens/Assets/WishlistButton';
+
 import { AuthContext } from '../contexts/AuthContext';
 import SearchResult from '../screens/Assets/SearchResult';
 import Notifications from '../screens/Main/Notifications';
+import WishlistTopIcon from '../screens/Assets/WishlistTopIcon';
 import Chat from '../screens/Chats/Chat';
 import ChatHeaderTitle from '../screens/Chats/ChatHeaderTitle';
 
@@ -83,9 +84,15 @@ const AppStack = () => {
                 name='SingleView'
                 component={SingleView}
                 options={({ route }) => ({
-                  bookId: route.params.bookId,
+                  bookData: route.params.bookData,
+                  isWishlisted: route.params.isWishlisted,
                   headerTitle: 'Discover',
-                  headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
+                  headerRight: () => (
+                    <WishlistTopIcon isWishlistedOld={route.params.isWishlisted} data={route.params.bookData} />
+                  ),
+                  // headerStyle: {
+                  //   backgroundImage: JSON.stringify(route.params.bookData.images[0]),
+                  // },
                 })}
               />
               <Stack.Screen

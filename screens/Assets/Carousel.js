@@ -29,7 +29,7 @@ const Carousel = props => {
         pt={10}
         style={{ backgroundColor: 'rgba(43, 43, 43, 0.9)' }}
       >
-        <View h='235px' w='135px' justifyContent='center' alignItems='center'>
+        <View h='235px' w='135px' justifyContent='center' alignItems='center' overflow='hidden'>
           <ScrollView
             horizontal
             pagingEnabled
