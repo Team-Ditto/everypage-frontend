@@ -7,7 +7,6 @@ import {
   Heading,
   Badge,
   Avatar,
-  Button,
   ScrollView,
   Link,
   Divider,
@@ -18,7 +17,6 @@ import {
 import { StyleSheet } from 'react-native';
 
 import Carousel from '../../Assets/Carousel';
-import BooksSameOwner from '../../Assets/BooksSameOwner';
 import {
   BlueShades,
   SuccessColor,
@@ -27,9 +25,8 @@ import {
   OrangeShades,
   WhiteShades,
 } from '../../../assets/style/color';
-import { createNewWishlist } from '../../../services/wishlists-service';
 import SelectBookStatus from '../../Main/Book/SelectBookStatus';
-import { getBookById } from '../../../services/books-service';
+import { getBookById, updateBookStatusById } from '../../../services/books-service';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const SingleBook = ({ navigation, route }) => {
@@ -55,10 +52,10 @@ const SingleBook = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    console.log('ID', bookId);
     getBookById(bookId).then(res => {
-      console.log('res', res.data);
       setBookData(res.data);
+      setSwitchValue(res.data.shareable);
+      setBorrowingStatusButton(res.data.borrowingStatus);
       setSpinnerVisible(false);
     });
   }, []);
@@ -99,7 +96,7 @@ const SingleBook = ({ navigation, route }) => {
                       <Badge h={30} w={102} borderRadius='6px' style={handleBorrowingStatus(borrowingStatusButton)}>
                         <HStack justifyContent='center' alignItems='center'>
                           <Text w={60} textAlign='center' style={handleBorrowingStatus(borrowingStatusButton)}>
-                            {bookData.borrowingStatusButton}
+                            {bookData.borrowingStatus}
                           </Text>
                           <Divider orientation='vertical' bg={WhiteShades.primaryWhite} mx={1.5} />
                           <ChevronDownIcon style={handleBorrowingStatus(borrowingStatusButton)} />
@@ -176,6 +173,8 @@ const SingleBook = ({ navigation, route }) => {
                       onValueChange={value => {
                         setSwitchValue(value);
                         //  Update Book Status
+                        let res = updateBookStatusById(bookId, { shareable: value });
+                        console.log(res);
                       }}
                     />
                   </HStack>
@@ -195,16 +194,16 @@ const SingleBook = ({ navigation, route }) => {
                 </Box>
               </VStack>
             </Box>
+            <SelectBookStatus
+              showModal={showModal}
+              handleBorrowingStatusSelected={handleBorrowingStatusSelected}
+              handleBadgePressed={handleBadgePressed}
+            />
           </VStack>
         ) : (
           <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
         )}
       </ScrollView>
-      <SelectBookStatus
-        showModal={showModal}
-        handleBorrowingStatusSelected={handleBorrowingStatusSelected}
-        handleBadgePressed={handleBadgePressed}
-      />
     </>
   );
 };

@@ -12,6 +12,15 @@ export const addBook = async book => {
   }
 };
 
+export const updateBookStatusById = async (bookId, bookObj) => {
+  try {
+    let updatedBook = await axiosRequest.put(`books/${bookId}`, bookObj);
+    console.log('RESPONSE From Server:- BOOK : ', updatedBook.data); // eslint-disable-line no-console
+  } catch (error) {
+    console.log('ERROR: ', error);
+  }
+};
+
 export async function getUsersBook(
   queryParam,
   genre = null,

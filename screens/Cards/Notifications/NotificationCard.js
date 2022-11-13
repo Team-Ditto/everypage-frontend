@@ -4,19 +4,24 @@ import { OrangeShades, BlackShades, BlueShades } from '../../../assets/style/col
 import { markNotificationRead } from '../../../firebase/firebase-service';
 
 const NotificationCard = ({ notification, navigation }) => {
-  const { _id, title, description, created, chatRedirect, book, status } = notification;
+  const { _id, title, description, created, chatRedirect, initiator, book, status } = notification;
 
   const handleCardPress = async () => {
     await markNotificationRead(_id);
 
     if (!chatRedirect) {
       // PLEASE UNCOMMENT THE BELOW LINE AFTER THE GETBOOKSBYID IS IMPLEMENTED FOR SINGLE BOOKS
-      
-      // navigation.navigate('SingleView', {
-      //   bookData: book,
-      // });
+
+      console.log('Notification', notification);
+
+      navigation.navigate('SingleView', {
+        bookId: book,
+        isfromNotification: true,
+        requestorId: initiator,
+      });
     } else {
       // TODO redirect to chat
+      alert("Feature not implemented yet. We're working on it!");
     }
   };
 

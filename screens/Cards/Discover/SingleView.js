@@ -1,5 +1,18 @@
-import { VStack, HStack, Box, Text, Heading, Badge, Avatar, Button, ScrollView, Link, Divider } from 'native-base';
-import { StyleSheet, Touchable, TouchableOpacity } from 'react-native';
+import {
+  VStack,
+  HStack,
+  Box,
+  Text,
+  Heading,
+  Badge,
+  Avatar,
+  Button,
+  ScrollView,
+  Link,
+  Divider,
+  View,
+} from 'native-base';
+import { StyleSheet } from 'react-native';
 
 import Carousel from '../../Assets/Carousel';
 import BooksSameOwner from '../../Assets/BooksSameOwner';
@@ -10,16 +23,39 @@ import {
   OnHoldColor,
   OrangeShades,
   BlackShades,
+  WhiteShades,
 } from '../../../assets/style/color';
-import { createNewWishlist } from '../../../services/wishlists-service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { triggerNotificationForAction } from '../../../services/trigger-service';
+import { getBookById } from '../../../services/books-service';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { getUserById } from '../../../services/users-service';
 
 const SingleView = ({ navigation, route }) => {
-  const bookData = route.params.bookData;
+  const bookId = route.params.bookId;
+  const isFromNotification = route.params.isfromNotification;
+  const requestorId = route.params.requestorId;
   const [isDisabled, setIsDisabled] = useState(false);
-  console.log('bookData', bookData);
-
+  const [bookData, setBookData] = useState({});
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const [requestor, setRequestor] = useState({});
   const { images, title, author, owner, genre, edition, language, isbn, condition, _id, borrowingStatus } = bookData;
+
+  useEffect(() => {
+    getBookById(bookId).then(book => {
+      setBookData(book.data);
+      setSpinnerVisible(false);
+    });
+
+    if (isFromNotification) {
+      // get requestor by Id
+      // Not working
+      getUserById(requestorId).then(res => {
+        console.log(res);
+        // setRequestor(res.data);
+      });
+    }
+  }, [bookId]);
 
   const handleBorrowingStatus = b => {
     switch (b) {
@@ -32,23 +68,68 @@ const SingleView = ({ navigation, route }) => {
     }
   };
 
-  const handleRequestToBorrow = () => {
-    const createdWishlist = {
-      book: bookData._id,
-      status: 'Requested',
-    };
-
-    // Update the Book Status first. 
-    // To onHold.
-    // Then create the wishlist. in the rquested State.
-         createNewWishlist(createdWishlist);
-    // Request to borrow trigger
-    //  Hence sending the notification
-          setIsDisabled(true);
-    //  then(navigation.navigate('Wishlist'));
+  const handleRequestToBorrow = async () => {
+    let res = await triggerNotificationForAction({ triggerType: 'request_to_borrow', book: bookData._id });
+    console.log('res', res);
+    setIsDisabled(true);
   };
 
-  return (
+  const HandleAcceptRequest = () => {
+    let res = triggerNotificationForAction({ triggerType: 'borrow_request_accept', book: bookId });
+    console.log('res', res);
+  };
+
+  const HandleDeclineRequest = () => {
+    let res = triggerNotificationForAction({ triggerType: 'borrow_request_decline', book: bookId });
+    console.log('res', res);
+  };
+
+  const ShowButtonAsPerHoldStatus = borrowingStatus => {
+    switch (borrowingStatus) {
+      case 'Available':
+        return (
+          <Button
+            disabled={isDisabled}
+            backgroundColor={isDisabled ? BlackShades.tertiaryBlack : BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            mx={5}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleRequestToBorrow}
+          >
+            Request to Borrow
+          </Button>
+        );
+      case 'In-Use':
+        return (
+          <Button
+            mx={5}
+            backgroundColor={BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleRequestToBorrow}
+          >
+            Return
+          </Button>
+        );
+      case 'On-Hold':
+        return (
+          <Button
+            backgroundColor={BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            marginX={5}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleRequestToBorrow}
+          >
+            Cancel Hold
+          </Button>
+        );
+    }
+  };
+
+  return Object.keys(bookData).length > 0 ? (
     <>
       <ScrollView>
         <VStack>
@@ -77,17 +158,35 @@ const SingleView = ({ navigation, route }) => {
                 </Box>
               </HStack>
               <HStack mb={5} mt={3} alignItems='center'>
-                <Text fontSize='16px'>Owned by </Text>
-                <Avatar
-                  size='sm'
-                  w='30px'
-                  mx={1}
-                  source={{
-                    uri: owner.photoURL,
-                  }}
-                />
-                <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{owner.displayName}</Link>
+                {isFromNotification && Object.keys(requestor).length > 0 ? (
+                  <>
+                    <Text fontSize='16px'>Requested by </Text>
+                    <Avatar
+                      size='sm'
+                      w='30px'
+                      mx={1}
+                      source={{
+                        uri: requestor.photoURL,
+                      }}
+                    />
+                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{requestor.displayName}</Link>
+                  </>
+                ) : (
+                  <>
+                    <Text fontSize='16px'>Owned by </Text>
+                    <Avatar
+                      size='sm'
+                      w='30px'
+                      mx={1}
+                      source={{
+                        uri: owner.photoURL,
+                      }}
+                    />
+                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{owner.displayName}</Link>
+                  </>
+                )}
               </HStack>
+
               <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4}>
                 <Text fontWeight='bold' fontSize='18px'>
                   Details
@@ -115,33 +214,55 @@ const SingleView = ({ navigation, route }) => {
         </VStack>
       </ScrollView>
       <Divider shadow={2} />
-      <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
-        {isDisabled ? (
+      {!isFromNotification ? (
+        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+          {ShowButtonAsPerHoldStatus(borrowingStatus)}
+        </Box>
+      ) : (
+        <HStack
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            backgroundColor: WhiteShades.primaryWhite,
+          }}
+        >
           <Button
-            m='24px'
-            disabled={true}
-            backgroundColor={BlackShades.tertiaryBlack}
-            borderRadius='10px'
-            shadow={2}
-            shadowOffset={{ width: '-20px', height: '-20px' }}
-            onPress={handleRequestToBorrow}
+            borderWidth={1}
+            marginY={5}
+            borderColor={BlueShades.primaryBlue}
+            _text={{ color: BlueShades.primaryBlue }}
+            style={{
+              backgroundColor: WhiteShades.primaryWhite,
+              color: BlueShades.primaryBlue,
+              width: '45%',
+              height: '50px',
+            }}
+            onPress={HandleDeclineRequest}
           >
-            Request to Borrow
+            Decline
           </Button>
-        ) : (
           <Button
-            m='24px'
-            backgroundColor={BlueShades.primaryBlue}
-            borderRadius='10px'
-            shadow={2}
-            shadowOffset={{ width: '-20px', height: '-20px' }}
-            onPress={handleRequestToBorrow}
+            marginY={5}
+            onPress={HandleAcceptRequest}
+            style={{
+              backgroundColor: BlueShades.primaryBlue,
+              color: WhiteShades.primaryWhite,
+              width: '45%',
+              height: '50px',
+            }}
           >
-            Request to Borrow
+            Accept
           </Button>
-        )}
-      </Box>
+        </HStack>
+      )}
     </>
+  ) : (
+    <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+    </View>
   );
 };
 
