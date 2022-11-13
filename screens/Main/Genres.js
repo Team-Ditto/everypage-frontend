@@ -11,8 +11,8 @@ const Genres = ({ navigation }) => {
         <VStack padding={2}>
           {genreData.map(g => {
             return (
-              <>
                 <Pressable
+                  key={g}
                   style={styles.buttons}
                   onPress={() => {
                     navigation.navigate('SingleGenre', { genre: g });
@@ -26,7 +26,6 @@ const Genres = ({ navigation }) => {
                   </HStack>
                   <Divider />
                 </Pressable>
-              </>
             );
           })}
         </VStack>

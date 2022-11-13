@@ -1,78 +1,103 @@
-import { VStack, Text, Box, Button, Spinner, HStack, View, Image } from 'native-base';
 import Search from '../Assets/Search';
+import { useState, useEffect, useContext } from 'react';
+import { BOOK_STATUS } from '../../constants/index';
+import { VStack, Text, Box, Button, Spinner, HStack, View, Image } from 'native-base';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
-import { WelcomeScreen } from '../Assets/WelcomeScreen';
 import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getBooksOfLoginUser } from '../../firebase/firebase-service';
+import { OrangeShades } from '../../assets/style/color';
+import Filter from '../Assets/FilterSettings/Filter';
+import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
-import {
-  getAllBooksForTheUser,
-  getBooksOfLoginUser,
-  signUpWithEmailAndPassword,
-} from '../../firebase/firebase-service';
-import { getBookAsPerUser } from '../../services/users-service';
-import axios from 'axios';
-import { LOCAL_BASE_URL, REQUEST_TIMEOUT } from '../../services/api-config';
-import { async } from '@firebase/util';
-import { BOOK_STATUS } from '../../constants/index';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 
-const Home = ({ navigation, user }) => {
+const Home = ({ navigation }) => {
+  const { currentUser } = useContext(AuthContext);
+  const [screenTitle, setScreenTitle] = useState(` ${currentUser.displayName}'s Library`);
   const [libData, setLibData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-  const [textStyle, setTextStyle] = useState('');
-  const [toggle, setToggle] = useState(false);
 
-  const genreData = ['Art', 'Crime', 'Fiction', 'Biology', 'Art', 'Crime', 'Fiction', 'Biology'];
-  useEffect(() => {
-    async function fetchData() {
-      getBooksOfLoginUser().then(books => {
-        setLibData(books.data);
-        setSpinnerVisible(false);
-      });
-    }
+useEffect(() => {
+    SetTopScreenTitle();
     fetchData();
+    GetNotificationHeader(navigation);
   }, []);
 
+  function SetTopScreenTitle() {
+    navigation.setOptions({
+      title: screenTitle,
+    });
+  }
+
+  async function fetchData() {
+    getBooksOfLoginUser().then(books => {
+      setLibData(books.data.results);
+      setSpinnerVisible(false);
+    });
+  }
+
+  const BookStatusChangeHandle = () => {};
+
+  const onSearchSubmitted = async searchText => {
+    const searchedBooks = await getBooksByKeyword(searchText);
+    setBookStatus(`Results for "${searchText}"`);
+    setLibData(searchedBooks.data.results);
+
+    navigation.setOptions({
+      title: `Search Results`,
+    });
+  };
+
+  const ApplyFilterSettings = async filterSetting => {
+    let filterData = await GetFilteredResults(filterSetting);
+    if (filterData !== undefined) {
+      setLibData(filterData.data.results);
+    }
+  };
+
   return (
-    <VStack>
+    <VStack style={{ position: 'relative', height: '100%' }}>
       {/* Search component */}
-      <Search navigation={navigation} />
+      <Box display='flex' width='100%' mt={2}>
+        <HStack display='flex' justifyContent='center' alignItems='center'>
+          <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
+          <Filter ApplyFilterSettings={ApplyFilterSettings} />
+        </HStack>
+      </Box>
       {/* button slider */}
-      <ScrollView
-        style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-      >
-        {BOOK_STATUS.map((status, idx) => {
-          return (
-            <Box mx={1} key={idx} h='55px' width='120px'>
-              <Button
-                px={5}
-                borderRadius='md'
-                onPress={() => setBookStatus(status)}
-                onTouchEnd={() => setToggle(!toggle)}
-                style={{
-                  backgroundColor: toggle ? '#DC924D' : '#FDF5EA',
-                  border: ' #DC924D',
-                }}
-              >
-                <Text
+      <View style={{ height: 70 }}>
+        <ScrollView
+          style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
+          {BOOK_STATUS.map((status, idx) => {
+            return (
+              <Box mx={1} mt={2} key={idx} h={60} width={120}>
+                <Button
+                  px={2}
+                  variant='unstyled'
+                  borderRadius={100}
+                  bg={OrangeShades.quaternaryOrange}
+                  _text={{ color: OrangeShades.primaryOrange }}
                   style={{
-                    color: toggle ? 'white' : '#DC924D',
+                    borderWidth: 1,
+                    borderColor: OrangeShades.primaryOrange,
                   }}
+                  onPress={e => setBookStatus(status)}
                 >
                   {status}
-                </Text>
-              </Button>
-            </Box>
-          );
-        })}
-      </ScrollView>
-
+                </Button>
+              </Box>
+            );
+          })}
+        </ScrollView>
+      </View>
       {/* My Library Data Collection */}
 
       {libData.length > 0 ? (

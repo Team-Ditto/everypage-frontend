@@ -1,11 +1,9 @@
-import { View, Text } from 'react-native';
-import React from 'react';
-import KnowMore from '../Assets/KnowMore';
+import { VStack, Text } from 'native-base';
 
 export default function Community() {
   return (
-    <View>
+    <VStack>
       <Text>Community</Text>
-    </View>
+    </VStack>
   );
 }

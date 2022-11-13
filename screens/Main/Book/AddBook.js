@@ -1,15 +1,15 @@
-import { FormControl, Stack, Input, TextArea, Button, Box, VStack } from 'native-base';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { BlueShades, whiteShades } from '../../../assets/style/color';
-import { AuthContext } from '../../../contexts/AuthContext';
-import { addBookForUser } from '../../../firebase/firebase-service';
+import { FormControl, Input, TextArea, Button, VStack } from 'native-base';
+
+import { BlueShades, WhiteShades } from '../../../assets/style/color';
+import { uploadBookPictures } from '../../../firebase/firebase-service';
 import { addBook } from '../../../services/books-service';
 import BookDetail from './BookDetails';
 import ReadingStatus from './ReadingStatus';
 
 const AddBook = ({ route, navigation }) => {
-  const routeBookData = undefined;
+  let routeBookData = undefined;
   if (route.params !== undefined && route.params.book !== undefined) {
     routeBookData = route.params.book; // eslint-disable-line react/prop-types
   }
@@ -30,9 +30,11 @@ const AddBook = ({ route, navigation }) => {
 
   const handleSaveBtn = async () => {
     try {
-      let responseBook = await addBook(bookObj);
-      alert('Book added.');
-      // navigation.navigate('BottomTab');
+      const uploadedURLs = await uploadBookPictures(bookObj.images, bookObj.title);
+
+      await addBook({ ...bookObj, images: [...uploadedURLs] });
+
+      navigation.navigate('BottomTab');
     } catch (err) {
       console.log('Error: ', err);
     }
@@ -81,7 +83,7 @@ const AddBook = ({ route, navigation }) => {
             }}
           />
         </FormControl>
-        <Button onPress={handleSaveBtn} my={2}>
+        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: WhiteShades.primaryWhite }}>
           Save
         </Button>
       </ScrollView>

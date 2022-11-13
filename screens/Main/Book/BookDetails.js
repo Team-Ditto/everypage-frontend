@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import {
   FormControl,
   Stack,
@@ -12,57 +14,82 @@ import {
   Text,
   Icon,
 } from 'native-base';
-import { useContext, useState } from 'react';
-import { BlueShades } from '../../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
-import { USER_PROFILE_UPLOAD_DIRECTORY } from '../../../constants';
-import { AuthContext } from '../../../contexts/AuthContext';
-import { uploadFile } from '../../../firebase/firebase-service';
+
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
   const [imageArr, setImageArr] = useState([]);
 
-  const { currentUser } = useContext(AuthContext);
   const HandleImageEventClick = async () => {
+    let showSizeError = false;
+
     if (imageArr.length < 3) {
+      // const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+      // if (status !== 'granted') {
+      //   alert('Sorry, we need camera permissions to make this work!');
+      // }
+
+      // let result = await ImagePicker.launchCameraAsync({
+      //   mediaTypes: ImagePicker.MediaTypeOptions.All,
+      //   allowsEditing: true,
+      //   aspect: [4, 3],
+      //   quality: 1,
+      // });
+
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+        quality: 3,
+        allowsMultipleSelection: true,
+        selectionLimit: 3 - imageArr.length,
       });
 
       if (!result.cancelled) {
-        // try {
-        //   if (result) {
-        //     photoURL = await uploadFile(result, USER_PROFILE_UPLOAD_DIRECTORY, currentUser.displayName);
-        //   } else {
-        //     photoURL = DEFAULT_PROFILE_PHOTO_URL;
-        //   }
-        // } catch (err) {
-        //   console.log(err);
-        // }
-        setImageArr([...imageArr, result.uri]);
-        setBookObj({ ...bookObj, images: [...imageArr, result.uri] });
+        const uploadedURIs = result.selected
+          .filter(item => {
+            // if the size of the image is > 2mb, don't add that to array and set show error is true
+            if (item.fileSize / 1024 / 1024 > 2) {
+              showSizeError = true;
+              return false;
+            }
+
+            return true;
+          })
+          .map(item => item.uri);
+
+        setImageArr([...imageArr, ...uploadedURIs]);
+
+        if (showSizeError) {
+          alert('Please upload images less than 2MB.');
+        }
       }
     } else {
       alert("You can't add more than 3 images");
     }
   };
 
+  const HandleCancelImage = uri => {
+    imageArr.splice(uri, 1);
+    setImageArr([...imageArr]);
+
+
+  };
   const [textColor, setTextColor] = useState(0);
 
   const handleTextColor = () => {
     setTextColor(1);
   };
+  useEffect(() => {
+    setBookObj({ ...bookObj, images: [...imageArr] });
+  }, [imageArr]);
 
-  const HandleCancelImage = idx => {
-    let tempArr = imageArr;
-    tempArr.splice(idx, 1);
-    setImageArr([...tempArr]);
-    setBookObj({ ...bookObj, images: [...tempArr] });
-  };
   return (
     <>
       <FormControl.Label>DETAILS</FormControl.Label>
@@ -87,6 +114,8 @@ const BookDetail = ({ bookObj, setBookObj }) => {
                     />
                     <Button
                       style={styles.floatingBtnStyle}
+                      bg={BlueShades.primaryBlue}
+                      _text={{ color: WhiteShades.primaryWhite }}
                       size='xs'
                       onPress={e => {
                         e.preventDefault();
@@ -99,7 +128,15 @@ const BookDetail = ({ bookObj, setBookObj }) => {
                 );
               })}
               <Box>
-                <Button height={65} width={60} onPress={HandleImageEventClick}>
+                <Button
+                  height={65}
+                  width={60}
+                  bg={BlueShades.primaryBlue}
+                  _text={{
+                    color: WhiteShades.primaryWhite,
+                  }}
+                  onPress={HandleImageEventClick}
+                >
                   +
                 </Button>
               </Box>

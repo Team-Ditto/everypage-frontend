@@ -1,11 +1,13 @@
-import { Button, Icon } from "native-base";
-import { StyleSheet } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { Button, Icon } from 'native-base';
+import { Animated, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { useRef, useState } from 'react';
+import { BlueShades, WhiteShades } from '../../assets/style/color';
 
 const FloatingButtons = ({ navigation }) => {
   const [isPressed, setIsPressed] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   return (
     <>
@@ -15,70 +17,101 @@ const FloatingButtons = ({ navigation }) => {
           // navigation.navigate("AddBook");
           setIsPressed(prevState => !prevState);
           // console.log(isPressed);
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+          }).start();
         }}
       >
         <Icon
-          color="grey"
+          color={WhiteShades.primaryWhite}
           as={
             !isPressed ? (
-              <AntDesign name="plus" style={{ fontSize: "33px" }} />
+              <AntDesign name='plus' style={{ fontSize: '33px', color: WhiteShades.primaryWhite }} />
             ) : (
-              <Ionicons name="close" style={{ fontSize: "33px" }} />
+              <Ionicons name='close' style={{ fontSize: '33px', color: WhiteShades.primaryWhite }} />
             )
           }
-          size="sm"
+          size='sm'
         />
       </Button>
       {isPressed && (
         <>
-          <Button
+          <Animated.View
             style={[
               Styles.floatingBtnStyle,
               {
-                transform: [{ translateX: -90 }, { translateY: -10 }],
+                opacity: fadeAnim,
+                transform: [
+                  {
+                    translateX: fadeAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -90], // 0 : 150, 0.5 : 75, 1 : 0
+                    }),
+                  },
+                ],
                 width: 50,
-                height: 50
-              }
+                height: 50,
+              },
             ]}
-            onPress={() => {
-              navigation.navigate("Scanner");
-            }}
           >
-            <Icon
-              as={
-                <AntDesign
-                  name="barcode"
-                  style={{
-                    fontSize: "22px"
-                  }}
-                />
-              }
-            />
-          </Button>
-          <Button
+            <Button
+              variant={'unstyled'}
+              onPress={() => {
+                navigation.navigate('Scanner');
+              }}
+            >
+              <Icon
+                as={
+                  <AntDesign
+                    name='barcode'
+                    style={{
+                      fontSize: '22px',
+                      color: WhiteShades.primaryWhite,
+                    }}
+                  />
+                }
+              />
+            </Button>
+          </Animated.View>
+          <Animated.View
             style={[
               Styles.floatingBtnStyle,
               {
-                transform: [{ translateX: -10 }, { translateY: -90 }],
+                opacity: fadeAnim,
+                transform: [
+                  {
+                    translateY: fadeAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, -90], // 0 : 150, 0.5 : 75, 1 : 0
+                    }),
+                  },
+                ],
                 width: 50,
-                height: 50
-              }
+                height: 50,
+              },
             ]}
-            onPress={() => {
-              navigation.navigate("AddBook");
-            }}
           >
-            <Icon
-              as={
-                <AntDesign
-                  name="edit"
-                  style={{
-                    fontSize: "22px"
-                  }}
-                />
-              }
-            />
-          </Button>
+            <Button
+              onPress={() => {
+                navigation.navigate('AddBook');
+              }}
+              variant={'unstyled'}
+            >
+              <Icon
+                as={
+                  <AntDesign
+                    name='edit'
+                    style={{
+                      fontSize: '22px',
+                      color: WhiteShades.primaryWhite,
+                    }}
+                  />
+                }
+              />
+            </Button>
+          </Animated.View>
         </>
       )}
     </>
@@ -87,33 +120,33 @@ const FloatingButtons = ({ navigation }) => {
 
 const Styles = StyleSheet.create({
   floatingBtnStyle: {
-    backgroundColor: "white",
-    position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
-    bottom: 200,
+    backgroundColor: BlueShades.primaryBlue,
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    bottom: 10,
     width: 70,
     height: 70,
     right: 10,
-    borderColor: "grey",
+    borderColor: 'grey',
     borderRadius: 100,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-    elevation: 6
+    elevation: 6,
   },
 
   buttonSliderContainer: {
-    display: "flex",
-    flexDirection: "row",
-    width: "10"
-  }
+    display: 'flex',
+    flexDirection: 'row',
+    width: '10',
+  },
 });
 
 export default FloatingButtons;

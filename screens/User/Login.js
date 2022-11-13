@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   HStack,
@@ -8,10 +8,7 @@ import {
   Input,
   Link,
   Button,
-  StatusBar,
-  Icon,
   ScrollView,
-  Heading,
   Image,
   Divider,
   View,
@@ -19,7 +16,7 @@ import {
 import { loginWithEmailAndPassword } from '../../firebase/firebase-service';
 import { AntDesign } from '@expo/vector-icons';
 import Everypage_Logo from '../../assets/Everypage_Logo.png';
-import { BlackShades, BlueShades, OrangeShades, whiteShades } from '../../assets/style/color';
+import { BlackShades, BlueShades, OrangeShades, WhiteShades } from '../../assets/style/color';
 
 const Login = ({ navigation }) => {
   const [err, setErr] = useState(false);
@@ -81,7 +78,7 @@ const Login = ({ navigation }) => {
             </VStack>
             <Button
               leftIcon={<AntDesign name='google' size={24} color='black' />}
-              bg={whiteShades.primaryWhite}
+              bg={WhiteShades.primaryWhite}
               variant='unstyled'
               _text={{
                 color: BlackShades.primaryBlack,

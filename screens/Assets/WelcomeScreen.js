@@ -1,23 +1,22 @@
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
-import React from 'react';
-
+import { StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Image } from 'native-base';
 const WelcomeScreen = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Image source={require('../../assets/dropdown.png')}  />
+        <Image source={require('../../assets/dropdown.png')} alt='Dropdown Image' />
         <Text style={styles.text}>Hi Mita, welcome to everypage!</Text>
-        <Text style={styles.content}>Now that you have your digital bookshelf setup. Let's addsome books to your Library</Text>
+        <Text style={styles.content}>
+          Now that you have your digital bookshelf setup. Let's addsome books to your Library
+        </Text>
       </View>
-      <Image 
-      style={styles.downArrow}
-      source={require('../../assets/DownwardArrow.png')} />
+      <Image style={styles.downArrow} source={require('../../assets/DownwardArrow.png')} alt='Downward Arrow' />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     backgroundColor: 'rgba(0,0,0,0.1)',
     flex: 1,
     flexDirection: 'column',
@@ -26,24 +25,22 @@ const styles = StyleSheet.create({
     margin: 30,
     borderRadius: 10,
     padding: 30,
-
   },
-  text:{
+  text: {
     fontSize: 30,
     padding: 10,
     lineHeight: 30,
   },
-  content:{
+  content: {
     fontSize: 18,
     padding: 10,
     lineHeight: 30,
   },
-  downArrow:{
+  downArrow: {
     position: 'absolute',
     bottom: 8,
     right: 50,
-  }
-  
-})
+  },
+});
 
 export default WelcomeScreen;

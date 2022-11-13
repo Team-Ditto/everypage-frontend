@@ -1,11 +1,29 @@
+import { useState, useEffect } from 'react';
 import { VStack, Text, Box, ScrollView } from 'native-base';
 import Search from '../Assets/Search';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { LibraryData } from '../../constants/LibraryData';
-import { useState } from 'react';
+import { getUsersBook } from '../../services/books-service';
 
 const SingleGenre = ({ navigation, route }) => {
   const [searchResults, setSearchResults] = useState(LibraryData);
+  // const [genre, set]
+
+  useEffect(() => {
+    async function fetchData() {
+      const params = {
+        genre: '',
+        readingStatus: '',
+      };
+      console.log(route.params.genre);
+      getUsersBook(route.params.genre, '').then(books => {
+        setSearchResults(books.data.results);
+        // setSpinnerVisible(false);
+      });
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <VStack margin={2}>

@@ -1,4 +1,4 @@
-import { Radio, CheckIcon, Divider, FormControl, Stack, HStack, Input, Pressable, Switch } from 'native-base';
+import { Radio, Divider, FormControl, Stack, HStack, Input, Switch } from 'native-base';
 import { useState } from 'react';
 import { BlueShades } from '../../../assets/style/color';
 
@@ -9,7 +9,7 @@ const ReadingStatus = ({ bookObj, setBookObj }) => {
       <FormControl.Label mt={4}>READING STATUS</FormControl.Label>
       <Stack backgroundColor={BlueShades.tertiaryBlue} padding={4} borderRadius={5} _focus={{ textStyle: 'bold' }}>
         <Radio.Group
-          defaultValue='1'
+          defaultValue='To Read'
           name='myRadioGroup'
           accessibilityLabel='Pick your favorite number'
           onChange={value => {

@@ -1,7 +1,6 @@
-import { Checkbox, IconButton, Radio } from 'native-base';
-import React, { Component, useState } from 'react';
-import RadioButtonRN from 'radio-buttons-react-native';
-import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView, RadioButton, Button } from 'react-native';
+import { Radio } from 'native-base';
+import { useState } from 'react';
+import { Text, StyleSheet, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { sort, genre, location, language, readingStatus } from '../../constants/FilterContent';
 
 const SearchSortFilter = item => {
@@ -22,8 +21,8 @@ const SearchSortFilter = item => {
   //   onPress={onPressRadioButton}
   // />
 
-  const data= [sort,genre,location,language,readingStatus];
-  const [radioButtons, setRadioButtons] = useState(data)
+  const data = [sort, genre, location, language, readingStatus];
+  const [radioButtons, setRadioButtons] = useState(data);
 
   return (
     <ScrollView>
@@ -35,6 +34,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showSort ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -47,8 +47,8 @@ const SearchSortFilter = item => {
                   {/* <Text key={String(i)}>{item.name}</Text> */}
 
                   <Radio.Group>
-                    <Radio value={item.id} onPress={() => setChecked(!checked)}>
-                      {item.name}
+                    <Radio value={item} onPress={() => setChecked(!checked)}>
+                      {item}
                     </Radio>
                   </Radio.Group>
                   {/* <Checkbox title={item.id} checkedIcon="dot-circle-o">
@@ -71,6 +71,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showGenre ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -106,6 +107,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showLanguage ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -140,6 +142,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showReading ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>
@@ -175,6 +178,7 @@ const SearchSortFilter = item => {
           <Image
             source={require('../../assets/dropdown.png')}
             style={styles.icon}
+            alt='dropdown'
             transform={[{ rotate: showLocation ? '180deg' : '0deg' }]}
           />
         </TouchableOpacity>

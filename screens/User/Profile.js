@@ -1,7 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { logout } from '../../firebase/firebase-service';
+import { LibraryData } from '../../constants/LibraryData';
+import MyLibraryCard from '../Cards/Library/MyLibraryCard';
+import { AuthContext } from '../../contexts/AuthContext';
+import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { BlueShades } from '../../assets/style/color';
 import {
   Button,
   ScrollView,
@@ -16,30 +20,28 @@ import {
   ChevronRightIcon,
   FavouriteIcon,
 } from 'native-base';
-import { LibraryData } from '../../constants/LibraryData';
-import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-// import { FontAwesome } from '@expo/vector-icons';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    GetNotificationHeader(navigation);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
   };
+
   return (
     <ScrollView>
-      {/* <Button mt='2' colorScheme='gray' onPress={handleLogout}>
-        Logout
-      </Button> */}
       <Box style={styles.userData}>
-        <Image source={require('../../assets/person.jpg')} alt='user-picture' style={styles.personImage} />
+        <Image source={{ uri: currentUser.photoURL }} alt={currentUser.displayName} style={styles.personImage} />
         <VStack>
-          <Text fontWeight='semibold'>Mitatatatatta</Text>
-          {/* Fetch user name */}
-          <Text>Casual Reader</Text>
-          {/* Fetech reader type data */}
+          <Text fontWeight='semibold'>{currentUser.displayName}</Text>
+          <Text>{currentUser.readerType}</Text>
           <Text fontStyle='italic' fontSize='sm'>
-            joined 24 Oct 2022
+            joined {new Date(currentUser.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />
@@ -48,9 +50,9 @@ export default function Profile({ navigation }) {
         <Text py={1} fontSize='md' fontWeight='semibold'>
           History
         </Text>
-        <Text py={1}>Books Borrowed (12)</Text>
+        <Text py={1}>Books Borrowed 12</Text>
         {/* All the total number of books borrowed */}
-        <Text>Books Returned (12)</Text>
+        <Text>Books Returned 12</Text>
       </VStack>
       <HStack justifyContent='space-between' mx={30}>
         <Text fontWeight='bold'>Shared Books(25)</Text>
@@ -86,6 +88,9 @@ export default function Profile({ navigation }) {
           </Box>
         </ScrollView>
       </VStack>
+      <Button mt='2' colorScheme='gray' onPress={handleLogout}>
+        Logout
+      </Button>
     </ScrollView>
   );
 }
