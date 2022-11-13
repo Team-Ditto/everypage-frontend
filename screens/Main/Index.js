@@ -1,7 +1,7 @@
 import Search from '../Assets/Search';
 import { useState, useEffect, useContext } from 'react';
 import { BOOK_STATUS } from '../../constants/index';
-import { VStack, Text, Box, Button, Spinner, HStack, View, Image } from 'native-base';
+import { VStack, Text, Box, Button, HStack, View, Image } from 'native-base';
 import { ScrollView, StyleSheet } from 'react-native';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
@@ -12,11 +12,12 @@ import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
   const [screenTitle, setScreenTitle] = useState(` ${currentUser.displayName}'s Library`);
-  const [libData, setLibData] = useState([]);
+  const [libData, setLibData] = useState(null);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
 
@@ -97,20 +98,23 @@ const Home = ({ navigation }) => {
       </View>
       {/* My Library Data Collection */}
 
-      {libData.length > 0 ? (
+      {libData === null ? (
+        <Spinner
+          visible={isSpinnerVisible}
+          textContent={'Loading...'}
+          textStyle={{ color: '#FFF' }}
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        />
+      ) : libData.length > 0 ? (
         <ScrollView>
           <Text mx={2} my={2}>
             {bookStatus} ({libData.length})
           </Text>
           <ScrollView>
             <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-              {libData === 'undefined' || null ? (
-                <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
-              ) : (
-                libData.map((data, id) => {
-                  return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                })
-              )}
+              {libData.map((data, id) => {
+                return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+              })}
             </Box>
           </ScrollView>
         </ScrollView>
