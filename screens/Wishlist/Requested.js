@@ -16,7 +16,7 @@ export default function Requested({ navigation }) {
       });
     }
     fetchData();
-  }, []);
+  }, [wishlistData]);
 
   return (
     <VStack>

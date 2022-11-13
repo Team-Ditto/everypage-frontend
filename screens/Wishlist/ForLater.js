@@ -16,7 +16,7 @@ export default function ForLater({ navigation }) {
       });
     }
     fetchData();
-  }, []);
+  }, [wishlistData]);
 
   return (
     <VStack>

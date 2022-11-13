@@ -1,10 +1,38 @@
+import { useState } from 'react';
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
 import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/color';
+import { requestToBorrow, requestCancelHold } from '../../../services/notifications-services';
+import WishlistButton from '../../Assets/WishlistButton';
+import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
 
 const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab }) => {
+  const [isWishlisted, setIsWishlisted] = useState(true);
   const { book } = data;
 
   let curStyle = {};
+
+  const handleWishlistPress = () => {
+    if (isWishlisted) {
+      setIsWishlisted(false);
+      deleteWishlistByBookId(data.book._id);
+    }
+  };
+
+  function handleRequestToBorrow() {
+    const requestedObject = {
+      wishlist: data._id,
+      triggerType: 'request_to_borrow',
+    };
+    requestToBorrow(requestedObject);
+  }
+
+  function handleCancelHold() {
+    const requestedObject = {
+      book: data.book._id,
+      triggerType: 'cancel_hold',
+    };
+    requestCancelHold(requestedObject);
+  }
 
   const statusStyle = [
     {
@@ -27,17 +55,14 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
   switch (book.borrowingStatus) {
     case 'Available':
       curStyle = statusStyle[0];
-      console.log('Setting curStyle to ' + curStyle.status);
       break;
 
     case 'In-Use':
       curStyle = statusStyle[1];
-      console.log('Setting curStyle to ' + curStyle.status);
       break;
 
     case 'On-Hold':
       curStyle = statusStyle[2];
-      console.log('Setting curStyle to ' + curStyle.status);
       break;
 
     default:
@@ -45,7 +70,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
   }
 
   return (
-    <VStack bgColor='#FFFFFF' borderRadius='10' mx='4%' p='15px' mb='20px'>
+    <VStack bgColor='#FFFFFF' borderRadius='10' mx='4%' p='15px' mb='20px' w='92%'>
       <Pressable
         onPress={() => {
           navigation.navigate('SingleView', {
@@ -55,17 +80,22 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
         alignItems='center'
         mx={1}
       >
-        <HStack>
-          <Image
-            borderRadius='10px'
-            w='40%'
-            source={{
-              uri: book.images[0],
-            }}
-            alt={book.title}
-          />
-          <Box w='55%' ml='3%'>
-            <Text fontWeight='semibold' fontSize='md'>
+        <HStack display='flex' flex='1'>
+          <Box style={{ display: 'flex', flex: 1 }}>
+            <Image
+              style={{ position: 'absolute', left: 0, width: '100%', height: '100%' }}
+              borderRadius='10px'
+              source={{
+                uri: book.images[0],
+              }}
+              alt={book.title}
+            />
+            <Box style={{ position: 'absolute', right: 0, width: 64 }}>
+              <WishlistButton isWishlisted={isWishlisted} handleWishlistPress={handleWishlistPress} onHeader={false} />
+            </Box>
+          </Box>
+          <Box w='55%' ml='3%' display='flex'>
+            <Text flex='1' fontWeight='semibold' fontSize='md'>
               {book.title}
             </Text>
             <Text fontSize='md'>{book.author}</Text>
@@ -100,9 +130,13 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
         </HStack>
       </Pressable>
       {selectedTab == 'ForLater' ? (
-        <Button mt='15px'>Request to Borrow</Button>
+        <Button mt='15px' onPress={handleRequestToBorrow}>
+          Request to Borrow
+        </Button>
       ) : (
-        <Button mt='15px'>Cancel Hold</Button>
+        <Button mt='15px' onPress={handleCancelHold}>
+          Cancel Hold
+        </Button>
       )}
     </VStack>
   );
