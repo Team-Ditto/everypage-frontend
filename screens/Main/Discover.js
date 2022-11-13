@@ -22,7 +22,7 @@ export default function Discover({ navigation }) {
       //   readingStatus: '',
       // };
 
-      let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc`;
+      let queryParams = `?page=1&perPage=10&sortBy=createdAt&sortOrder=asc`;
       let booksData = await getUsersBook(queryParams, '', '', '', true);
 
       if (booksData !== undefined && booksData.data.results.length > 0) {
