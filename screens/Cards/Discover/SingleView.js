@@ -53,8 +53,6 @@ const SingleView = ({ navigation, route }) => {
     borrowingStatus,
   } = route.params.bookData;
 
-  console.log(route.params.bookId);
-
   useEffect(() => {
     getBookById(bookId).then(book => {
       setBookData(book.data);
