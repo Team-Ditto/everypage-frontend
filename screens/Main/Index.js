@@ -98,7 +98,7 @@ const Home = ({ navigation }) => {
       {/* My Library Data Collection */}
 
       {libData.length > 0 ? (
-        <Box>
+        <ScrollView>
           <Text mx={2} my={2}>
             {bookStatus} ({libData.length})
           </Text>
@@ -113,7 +113,7 @@ const Home = ({ navigation }) => {
               )}
             </Box>
           </ScrollView>
-        </Box>
+        </ScrollView>
       ) : (
         <ScrollView>
           <View style={styles.container}>
@@ -123,7 +123,7 @@ const Home = ({ navigation }) => {
               Now that you have your digital bookshelf setup. Let's addsome books to your Library
             </Text>
           </View>
-          <Image style={styles.downArrow} alt="Down arrow" source={require('../../assets/DownwardArrow.png')} />
+          <Image style={styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
         </ScrollView>
       )}
       <FloatingButtons navigation={navigation} />

@@ -17,8 +17,6 @@ import WishlistButton from '../screens/Assets/WishlistButton';
 import { AuthContext } from '../contexts/AuthContext';
 import SearchResult from '../screens/Assets/SearchResult';
 import Notifications from '../screens/Main/Notifications';
-import WelcomeScreen from '../screens/Assets/WelcomeScreen';
-import KnowMore from '../screens/Assets/KnowMore';
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
   const { currentUser } = useContext(AuthContext);
