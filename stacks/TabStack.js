@@ -28,6 +28,7 @@ export default function TabStack() {
       height: 90,
     },
     tabBarActiveTintColor: OrangeShades.primaryOrange,
+    tabBarInactiveTintColor: BlueShades.primaryBlue,
   };
 
   return (
