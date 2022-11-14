@@ -36,8 +36,8 @@ const SingleBook = ({ navigation, route }) => {
   const [bookData, setBookData] = useState({});
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [switchValue, setSwitchValue] = useState(bookData.shareable);
-  const [borrowingStatusButton, setBorrowingStatusButton] = useState(bookData.borrowingStatus);
+  const [switchValue, setSwitchValue] = useState(false);
+  const [borrowingStatusButton, setBorrowingStatusButton] = useState(null);
 
   const handleBorrowingStatus = b => {
     switch (b) {
@@ -53,6 +53,10 @@ const SingleBook = ({ navigation, route }) => {
   useEffect(() => {
     getSingleBook();
   }, []);
+
+  useEffect(() => {
+    console.log(switchValue);
+  }, [switchValue]);
 
   const getSingleBook = async () => {
     const book = await getBookById(bookId);
@@ -85,10 +89,15 @@ const SingleBook = ({ navigation, route }) => {
     await getSingleBook();
   };
 
+  const setShareable = async value => {
+    await updateBookStatusById(bookId, { shareable: value });
+    setSwitchValue(value);
+  };
+
   return (
     <>
       <ScrollView>
-        {Object.keys(bookData).length > 0 ? (
+        {bookData && Object.keys(bookData).length > 0 ? (
           <VStack>
             <Carousel position='sticky' top={0} images={bookData.images !== undefined ? bookData.images : []} />
             <Box
@@ -187,12 +196,7 @@ const SingleBook = ({ navigation, route }) => {
                       onTrackColor={BlueShades.primaryBlue}
                       size='sm'
                       value={switchValue}
-                      onValueChange={value => {
-                        setSwitchValue(value);
-                        //  Update Book Status
-                        let res = updateBookStatusById(bookId, { shareable: value });
-                        console.log(res);
-                      }}
+                      onValueChange={value => setShareable(value)}
                     />
                   </HStack>
                   <Text fontSize={16}>
@@ -222,7 +226,7 @@ const SingleBook = ({ navigation, route }) => {
         )}
       </ScrollView>
       <Divider shadow={2} />
-      {bookData.requestor && borrowingStatusButton === 'On-Hold' && (
+      {bookData && bookData.requestor && borrowingStatusButton === 'On-Hold' && (
         <HStack
           style={{
             position: 'absolute',
