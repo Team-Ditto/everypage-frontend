@@ -9,6 +9,16 @@ export const addBook = async book => {
     return addedBook;
   } catch (error) {
     console.log('ERROR: ', error);
+    throw new Error(error);
+  }
+};
+
+export const updateBookStatusById = async (bookId, bookObj) => {
+  try {
+    let updatedBook = await axiosRequest.put(`books/${bookId}`, bookObj);
+    console.log('RESPONSE From Server:- BOOK : ', updatedBook.data); // eslint-disable-line no-console
+  } catch (error) {
+    console.log('ERROR: ', error);
   }
 };
 
@@ -69,6 +79,15 @@ export async function getMyBooksShelfLocation() {
   try {
     const locations = await axiosRequest.get('books/mine/locations');
     return locations;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getBookById(bookId) {
+  try {
+    const book = await axiosRequest.get(`books/${bookId}`);
+    return book;
   } catch (error) {
     console.log(error);
   }

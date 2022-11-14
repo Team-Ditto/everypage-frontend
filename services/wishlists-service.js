@@ -12,7 +12,8 @@ export async function getWishlistsByStatus(status) {
 export const createNewWishlist = async wishlistObj => {
   try {
     console.log(axiosRequest);
-    await axiosRequest.post('wishlists', wishlistObj);
+    const response = await axiosRequest.post('wishlists', wishlistObj);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -21,7 +22,8 @@ export const createNewWishlist = async wishlistObj => {
 export async function deleteWishlistByBookId(bookId) {
   try {
     console.log(axiosRequest);
-    await axiosRequest.delete(`wishlists/book/${bookId}`);
+    const response = await axiosRequest.delete(`wishlists/book/${bookId}`);
+    return response.data;
   } catch (error) {
     console.log(error);
   }

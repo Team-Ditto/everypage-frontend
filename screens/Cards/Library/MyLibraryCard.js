@@ -1,31 +1,49 @@
 import { Box, AspectRatio, Image, VStack, Text, Pressable, Badge, HStack } from 'native-base';
 import { StyleSheet } from 'react-native';
-import { useState, useContext, useEffect } from 'react';
-import WishlistButton from '../../Assets/WishlistButton';
+import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../../contexts/AuthContext';
+import WishlistButton from '../../Assets/WishlistButton';
 import { SuccessColor, InUseColor, OnHoldColor } from '../../../assets/style/color';
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
-import { responsePathAsArray } from 'graphql';
 
-const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true, wishlistStatus }) => {
-  const { title, author, images, borrowingStatus } = data;
+const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true }) => {
+  const { title, author, images, borrowingStatus, _id } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
-  const handleWishlistPress = () => {
-    // you call the api
-    //in response you will get the created/deleted wishlist
-    const createdWishlist = {
-      book: data._id,
-      status: 'For Later',
-    };
+  useEffect(() => {
+    const wishlisted = currentUser.wishlists.some(item => item.book === _id);
 
-    if (isWishlisted) {
-      setIsWishlisted(false);
-      deleteWishlistByBookId(data._id);
-    } else {
+    setIsWishlisted(wishlisted);
+  }, []);
+
+  const handleDeleteWishlist = wishlist => {
+    const filteredWishlists = currentUser.wishlists.filter(item => item._id !== wishlist._id);
+    setCurrentUser({ ...currentUser, wishlists: filteredWishlists });
+  };
+
+  const handleCreateWishlist = newWishlist => {
+    setCurrentUser({ ...currentUser, wishlists: [...currentUser.wishlists, newWishlist] });
+  };
+
+  const handleWishlistPress = async () => {
+    if (!isWishlisted) {
+      // we have to create a new wishlist
+      const newWishlist = {
+        book: data._id,
+      };
+
+      // call the API to create the new wishlist
+      const createdWishlist = await createNewWishlist(newWishlist);
+
+      handleCreateWishlist(createdWishlist);
+
       setIsWishlisted(true);
-      createNewWishlist(createdWishlist);
+    } else {
+      const removedWishlist = await deleteWishlistByBookId(data._id);
+      handleDeleteWishlist(removedWishlist);
+
+      setIsWishlisted(false);
     }
   };
 
@@ -57,12 +75,11 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
         showWishListIcon
           ? navigation.navigate('SingleView', {
               bookData: data,
-              isWishlisted: isWishlisted,
-              setIsWishlisted: setIsWishlisted,
-              onHeader: false,
+              bookId: data._id,
+              isWishlisted,
             })
           : navigation.navigate('SingleBook', {
-              libCardData: data,
+              bookId: data._id,
             });
       }}
       alignItems='center'
@@ -94,6 +111,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
                 </Box>
                 <WishlistButton
                   isWishlisted={isWishlisted}
+                  setIsWishlisted={setIsWishlisted}
                   handleWishlistPress={handleWishlistPress}
                   onHeader={false}
                 />

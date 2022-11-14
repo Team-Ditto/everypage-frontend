@@ -11,7 +11,7 @@ export const GetNotificationHeader = navigation => {
               navigation.navigate('Notifications');
             }}
           >
-            <Image source={require('../assets/notification.png')} alt='notication icon' />
+            <Image source={require('../assets/notification.png')} alt='notification icon' />
           </Button>
         </View>
       );

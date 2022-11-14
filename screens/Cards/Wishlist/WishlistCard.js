@@ -4,6 +4,7 @@ import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/col
 import { requestToBorrow, requestCancelHold } from '../../../services/notifications-services';
 import WishlistButton from '../../Assets/WishlistButton';
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
+import { OrangeShades } from '../../../assets/style/color';
 
 const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab }) => {
   const [isWishlisted, setIsWishlisted] = useState(true);
@@ -122,7 +123,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
                 }}
                 alt={book.owner.displayName}
               />
-              <Link href='https://nativebase.io' ml='5px'>
+              <Link href='#' color={OrangeShades.primaryOrange} ml='5px'>
                 {book.owner.displayName}
               </Link>
             </HStack>
