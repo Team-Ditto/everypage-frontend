@@ -26,7 +26,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab,
     };
 
     await requestToBorrow(requestedObject);
-    
+
     handleInput();
   }
 
@@ -81,7 +81,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab,
       <Pressable
         onPress={() => {
           navigation.navigate('SingleView', {
-            bookData: book,
+            bookId: book._id,
           });
         }}
         alignItems='center'
