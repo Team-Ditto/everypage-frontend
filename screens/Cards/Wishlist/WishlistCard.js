@@ -6,7 +6,7 @@ import WishlistButton from '../../Assets/WishlistButton';
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
 import { OrangeShades } from '../../../assets/style/color';
 
-const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab }) => {
+const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab, handleInput }) => {
   const [isWishlisted, setIsWishlisted] = useState(true);
   const { book } = data;
 
@@ -19,20 +19,26 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab 
     }
   };
 
-  function handleRequestToBorrow() {
+  async function handleRequestToBorrow() {
     const requestedObject = {
       wishlist: data._id,
       triggerType: 'request_to_borrow',
     };
-    requestToBorrow(requestedObject);
+
+    await requestToBorrow(requestedObject);
+    
+    handleInput();
   }
 
-  function handleCancelHold() {
+  async function handleCancelHold() {
     const requestedObject = {
       book: data.book._id,
       triggerType: 'cancel_hold',
     };
-    requestCancelHold(requestedObject);
+
+    await requestCancelHold(requestedObject);
+
+    handleInput();
   }
 
   const statusStyle = [

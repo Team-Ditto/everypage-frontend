@@ -84,15 +84,8 @@ const AppStack = () => {
                 name='SingleView'
                 component={SingleView}
                 options={({ route }) => ({
-                  bookData: route.params.bookData,
-                  isWishlisted: route.params.isWishlisted,
                   headerTitle: 'Discover',
-                  headerRight: () => (
-                    <WishlistTopIcon isWishlistedOld={route.params.isWishlisted} data={route.params.bookData} />
-                  ),
-                  // headerStyle: {
-                  //   backgroundImage: JSON.stringify(route.params.bookData.images[0]),
-                  // },
+                  headerRight: () => <WishlistTopIcon data={{ _id: route.params.bookId }} />,
                 })}
               />
               <Stack.Screen

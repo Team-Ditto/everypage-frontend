@@ -1,5 +1,4 @@
 import axiosRequest from './api';
-import { async } from '@firebase/util';
 
 export async function getWishlistsByStatus(status) {
   try {

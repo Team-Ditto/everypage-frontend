@@ -9,6 +9,7 @@ import {
   Avatar,
   ScrollView,
   Link,
+  Button,
   Divider,
   Pressable,
   ChevronDownIcon,
@@ -28,6 +29,7 @@ import {
 import SelectBookStatus from '../../Main/Book/SelectBookStatus';
 import { getBookById, updateBookStatusById } from '../../../services/books-service';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { triggerNotificationForAction } from '../../../services/trigger-service';
 
 const SingleBook = ({ navigation, route }) => {
   const bookId = route.params.bookId;
@@ -41,13 +43,10 @@ const SingleBook = ({ navigation, route }) => {
     switch (b) {
       case 'Available':
         return styles.available;
-        break;
       case 'In-Use':
         return styles.inUse;
-        break;
       case 'On-Hold':
         return styles.onHold;
-        break;
     }
   };
 
@@ -66,6 +65,14 @@ const SingleBook = ({ navigation, route }) => {
 
   const handleBorrowingStatusSelected = status => {
     setBorrowingStatusButton(status);
+  };
+
+  const HandleAcceptRequest = async () => {
+    await triggerNotificationForAction({ triggerType: 'borrow_request_accept', book: bookId });
+  };
+
+  const HandleDeclineRequest = async () => {
+    await triggerNotificationForAction({ triggerType: 'borrow_request_decline', book: bookId });
   };
 
   return (
@@ -204,6 +211,47 @@ const SingleBook = ({ navigation, route }) => {
           <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
         )}
       </ScrollView>
+      <Divider shadow={2} />
+      {bookData.requestor && borrowingStatusButton === 'On-Hold' && (
+        <HStack
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            backgroundColor: WhiteShades.primaryWhite,
+          }}
+        >
+          <Button
+            borderWidth={1}
+            marginY={5}
+            borderColor={BlueShades.primaryBlue}
+            _text={{ color: BlueShades.primaryBlue }}
+            style={{
+              backgroundColor: WhiteShades.primaryWhite,
+              color: BlueShades.primaryBlue,
+              width: '45%',
+              height: 50,
+            }}
+            onPress={HandleDeclineRequest}
+          >
+            Decline
+          </Button>
+          <Button
+            marginY={5}
+            onPress={HandleAcceptRequest}
+            style={{
+              backgroundColor: BlueShades.primaryBlue,
+              color: WhiteShades.primaryWhite,
+              width: '45%',
+              height: 50,
+            }}
+          >
+            Accept
+          </Button>
+        </HStack>
+      )}
     </>
   );
 };

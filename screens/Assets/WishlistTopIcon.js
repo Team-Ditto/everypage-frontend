@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { IconButton, Icon, Box } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,9 +6,15 @@ import { BlueShades } from '../../assets/style/color';
 import { createNewWishlist, deleteWishlistByBookId } from '../../services/wishlists-service';
 import { AuthContext } from '../../contexts/AuthContext';
 
-const WishlistTopIcon = ({ isWishlistedOld, data }) => {
-  const [isWishlisted, setIsWishlisted] = useState(isWishlistedOld);
+const WishlistTopIcon = ({ data }) => {
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const wishlisted = currentUser.wishlists.some(item => item.book === data._id);
+
+    setIsWishlisted(wishlisted);
+  }, []);
 
   const handleDeleteWishlist = wishlist => {
     const filteredWishlists = currentUser.wishlists.filter(item => item._id !== wishlist._id);

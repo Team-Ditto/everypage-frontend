@@ -51,7 +51,13 @@ export default function Wishlist({ navigation }) {
         </HStack>
       </Box>
       <ScrollView>
-        <Box>{isForLater ? <ForLater navigation={navigation} /> : <Requested navigation={navigation} />}</Box>
+        <Box>
+          {isForLater ? (
+            <ForLater navigation={navigation} handleInput={handleInput} />
+          ) : (
+            <Requested navigation={navigation} handleInput={handleInput} />
+          )}
+        </Box>
       </ScrollView>
     </VStack>
   );
