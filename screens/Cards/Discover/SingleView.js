@@ -145,8 +145,6 @@ const SingleView = ({ navigation, route }) => {
     }
   };
 
-  console.log(requestor, bearer, currentUser);
-
   return Object.keys(bookData).length > 0 ? (
     <>
       <ScrollView>
