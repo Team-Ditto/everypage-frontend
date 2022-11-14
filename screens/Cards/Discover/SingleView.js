@@ -23,13 +23,13 @@ import {
   OnHoldColor,
   OrangeShades,
   BlackShades,
-  WhiteShades,
 } from '../../../assets/style/color';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { triggerNotificationForAction } from '../../../services/trigger-service';
 import { getBookById } from '../../../services/books-service';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getUserById } from '../../../services/users-service';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const SingleView = ({ navigation, route }) => {
   const bookId = route.params.bookId;
@@ -38,10 +38,24 @@ const SingleView = ({ navigation, route }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [bookData, setBookData] = useState({});
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
-  const [requestor, setRequestor] = useState({});
+  const { currentUser } = useContext(AuthContext);
 
-  const { images, title, author, owner, genre, edition, language, ISBN, bookCondition, _id, borrowingStatus } =
-    bookData;
+  const {
+    images,
+    title,
+    author,
+    owner,
+    genre,
+    edition,
+    language,
+    ISBN,
+    bookCondition,
+    _id,
+    borrowingStatus,
+    requestor,
+    bearer,
+    bookReturnRequest,
+  } = bookData;
 
   useEffect(() => {
     getBookById(bookId).then(book => {
@@ -71,8 +85,17 @@ const SingleView = ({ navigation, route }) => {
   };
 
   const handleRequestToBorrow = async () => {
-    let res = await triggerNotificationForAction({ triggerType: 'request_to_borrow', book: bookData._id });
-    console.log('res', res);
+    await triggerNotificationForAction({ triggerType: 'request_to_borrow', book: bookData._id });
+    setIsDisabled(true);
+  };
+
+  const handleReturnRequest = async () => {
+    let res = await triggerNotificationForAction({ triggerType: 'user_returns', book: bookData._id });
+    setIsDisabled(true);
+  };
+
+  const handleCancelHold = async () => {
+    await triggerNotificationForAction({ triggerType: 'cancel_hold', book: bookData._id });
     setIsDisabled(true);
   };
 
@@ -100,7 +123,8 @@ const SingleView = ({ navigation, route }) => {
             borderRadius='10px'
             shadow={2}
             shadowOffset={{ width: '-20px', height: '-20px' }}
-            onPress={handleRequestToBorrow}
+            onPress={handleReturnRequest}
+            disabled={bookReturnRequest}
           >
             Return
           </Button>
@@ -113,13 +137,15 @@ const SingleView = ({ navigation, route }) => {
             shadow={2}
             m={5}
             shadowOffset={{ width: '-20px', height: '-20px' }}
-            onPress={handleRequestToBorrow}
+            onPress={handleCancelHold}
           >
             Cancel Hold
           </Button>
         );
     }
   };
+
+  console.log(requestor, bearer, currentUser);
 
   return Object.keys(bookData).length > 0 ? (
     <>
@@ -206,9 +232,21 @@ const SingleView = ({ navigation, route }) => {
         </VStack>
       </ScrollView>
       <Divider shadow={2} />
-      {!isFromNotification && (
+      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) && (
         <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
-          {ShowButtonAsPerHoldStatus(borrowingStatus)}
+          {ShowButtonAsPerHoldStatus('On-Hold')}
+        </Box>
+      )}
+
+      {bearer && bearer._id === currentUser._id && borrowingStatus === 'In-Use' && (
+        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+          {ShowButtonAsPerHoldStatus('In-Use')}
+        </Box>
+      )}
+
+      {!bearer && !requestor && (
+        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+          {ShowButtonAsPerHoldStatus('Available')}
         </Box>
       )}
     </>
