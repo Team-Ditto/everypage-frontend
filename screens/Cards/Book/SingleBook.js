@@ -51,13 +51,16 @@ const SingleBook = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    getBookById(bookId).then(res => {
-      setBookData(res.data);
-      setSwitchValue(res.data.shareable);
-      setBorrowingStatusButton(res.data.borrowingStatus);
-      setSpinnerVisible(false);
-    });
+    getSingleBook();
   }, []);
+
+  const getSingleBook = async () => {
+    const book = await getBookById(bookId);
+    setBookData(book.data);
+    setSwitchValue(book.data.shareable);
+    setBorrowingStatusButton(book.data.borrowingStatus);
+    setSpinnerVisible(false);
+  };
 
   const handleBadgePressed = () => {
     setShowModal(!showModal);
@@ -68,11 +71,18 @@ const SingleBook = ({ navigation, route }) => {
   };
 
   const HandleAcceptRequest = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'borrow_request_accept', book: bookId });
+
+    await getSingleBook();
   };
 
   const HandleDeclineRequest = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'borrow_request_decline', book: bookId });
+    await getSingleBook();
   };
 
   return (

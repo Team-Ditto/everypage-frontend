@@ -33,9 +33,6 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
 const SingleView = ({ navigation, route }) => {
   const bookId = route.params.bookId;
-  const isFromNotification = route.params.isfromNotification;
-  const requestorId = route.params.requestorId;
-  const [isDisabled, setIsDisabled] = useState(false);
   const [bookData, setBookData] = useState({});
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const { currentUser } = useContext(AuthContext);
@@ -58,20 +55,14 @@ const SingleView = ({ navigation, route }) => {
   } = bookData;
 
   useEffect(() => {
-    getBookById(bookId).then(book => {
-      setBookData(book.data);
-      setSpinnerVisible(false);
-    });
-
-    if (isFromNotification) {
-      // get requestor by Id
-      // Not working
-      getUserById(requestorId).then(res => {
-        console.log(res);
-        // setRequestor(res.data);
-      });
-    }
+    getSingleBook();
   }, [bookId]);
+
+  const getSingleBook = async () => {
+    const book = await getBookById(bookId);
+    setBookData(book.data);
+    setSpinnerVisible(false);
+  };
 
   const handleBorrowingStatus = b => {
     switch (b) {
@@ -85,18 +76,24 @@ const SingleView = ({ navigation, route }) => {
   };
 
   const handleRequestToBorrow = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'request_to_borrow', book: bookData._id });
-    setIsDisabled(true);
+    await getSingleBook();
   };
 
   const handleReturnRequest = async () => {
-    let res = await triggerNotificationForAction({ triggerType: 'user_returns', book: bookData._id });
-    setIsDisabled(true);
+    setBookData({});
+    setSpinnerVisible(true);
+    await triggerNotificationForAction({ triggerType: 'user_returns', book: bookData._id });
+    await getSingleBook();
   };
 
   const handleCancelHold = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'cancel_hold', book: bookData._id });
-    setIsDisabled(true);
+    await getSingleBook();
   };
 
   const ShowButtonAsPerHoldStatus = borrowingStatus => {
@@ -104,8 +101,7 @@ const SingleView = ({ navigation, route }) => {
       case 'Available':
         return (
           <Button
-            disabled={isDisabled}
-            backgroundColor={isDisabled ? BlackShades.tertiaryBlack : BlueShades.primaryBlue}
+            backgroundColor={BlueShades.primaryBlue}
             borderRadius='10px'
             shadow={2}
             m={5}
@@ -174,7 +170,7 @@ const SingleView = ({ navigation, route }) => {
                 </Box>
               </HStack>
               <HStack mb={5} mt={3} alignItems='center'>
-                {isFromNotification && Object.keys(requestor).length > 0 ? (
+                {requestor && Object.keys(requestor).length > 0 && (
                   <>
                     <Text fontSize='16px'>Requested by </Text>
                     <Avatar
@@ -186,19 +182,6 @@ const SingleView = ({ navigation, route }) => {
                       }}
                     />
                     <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{requestor.displayName}</Link>
-                  </>
-                ) : (
-                  <>
-                    <Text fontSize='16px'>Owned by </Text>
-                    <Avatar
-                      size='sm'
-                      w='30px'
-                      mx={1}
-                      source={{
-                        uri: owner.photoURL,
-                      }}
-                    />
-                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{owner.displayName}</Link>
                   </>
                 )}
               </HStack>
