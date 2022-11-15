@@ -13,12 +13,14 @@ import ReaderInfo from '../screens/User/ReaderInfo';
 import Genres from '../screens/Main/Genres';
 import SingleGenre from '../screens/Main/SingleGenre';
 import SingleView from '../screens/Cards/Discover/SingleView';
-import WishlistButton from '../screens/Assets/WishlistButton';
+
 import { AuthContext } from '../contexts/AuthContext';
 import SearchResult from '../screens/Assets/SearchResult';
 import Notifications from '../screens/Main/Notifications';
-import WelcomeScreen from '../screens/Assets/WelcomeScreen';
-import KnowMore from '../screens/Assets/KnowMore';
+import WishlistTopIcon from '../screens/Assets/WishlistTopIcon';
+import Chat from '../screens/Chats/Chat';
+import ChatHeaderTitle from '../screens/Chats/ChatHeaderTitle';
+
 const AppStack = () => {
   const Stack = createNativeStackNavigator();
   const { currentUser } = useContext(AuthContext);
@@ -82,12 +84,8 @@ const AppStack = () => {
                 name='SingleView'
                 component={SingleView}
                 options={({ route }) => ({
-                  bookData: route.params.bookData,
                   headerTitle: 'Discover',
-                  headerRight: () => <WishlistButton isWishlisted={route.params.isWishlisted} />,
-                  headerStyle: {
-                    backgroundImage: JSON.stringify(route.params.bookData.images[0]),
-                  },
+                  headerRight: () => <WishlistTopIcon data={{ _id: route.params.bookId }} />,
                 })}
               />
               <Stack.Screen
@@ -96,6 +94,15 @@ const AppStack = () => {
                 options={({ route }) => ({
                   tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
                 })}
+              />
+              <Stack.Screen
+                name='Chat'
+                component={Chat}
+                options={{
+                  headerBackTitleVisible: false,
+                  headerStyle: { height: 96 },
+                  headerTitle: props => <ChatHeaderTitle {...props} />,
+                }}
               />
             </>
           )
@@ -124,7 +131,7 @@ const AppStack = () => {
               }}
             />
           </>
-        )} */}
+        )}
       </Stack.Navigator>
     </NavigationContainer>
     // </Provider>

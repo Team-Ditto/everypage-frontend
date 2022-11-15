@@ -1,21 +1,26 @@
 import { useState, useEffect } from 'react';
-import { Text, Box, VStack, ScrollView } from 'native-base';
+import { Text, Box, VStack, ScrollView, Spinner } from 'native-base';
 import WishlistCard from '../Cards/Wishlist/WishlistCard';
-import { WishlistData } from '../../constants/WishlistData';
 import { getWishlistsByStatus } from '../../services/wishlists-service';
 
-export default function ForLater({ navigation }) {
-  const [wishlistData, setWishlistData] = useState(WishlistData);
+export default function ForLater({ navigation, handleInput }) {
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const [wishlistData, setWishlistData] = useState();
+  const selectedTab = 'ForLater';
 
   useEffect(() => {
     async function fetchData() {
       getWishlistsByStatus('For Later').then(wishlist => {
         setWishlistData(wishlist.data);
-        // setSpinnerVisible(false);
+        setSpinnerVisible(false);
       });
     }
     fetchData();
   }, []);
+
+  const goToRequested = () => {
+    handleInput(false);
+  };
 
   return (
     <VStack>
@@ -24,9 +29,21 @@ export default function ForLater({ navigation }) {
       </Text>
       <ScrollView>
         <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center'>
-          {wishlistData?.map((data, id) => {
-            return <WishlistCard key={id} data={data} navigation={navigation} />;
-          })}
+          {wishlistData ? (
+            wishlistData?.map((data, id) => {
+              return (
+                <WishlistCard
+                  key={id}
+                  data={data}
+                  navigation={navigation}
+                  selectedTab={selectedTab}
+                  handleInput={goToRequested}
+                />
+              );
+            })
+          ) : (
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+          )}
         </Box>
       </ScrollView>
     </VStack>

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { VStack, Box, HStack, Button } from 'native-base';
+import { VStack, Box, HStack, Button, ScrollView } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 
 import Search from '../Assets/Search';
 import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 import Filter from '../Assets/FilterSettings/Filter';
-import { GetNotificationHeader } from '../../constants/GetNoticationHeader';
+import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 export default function Wishlist({ navigation }) {
   const [isForLater, setIsForLater] = useState(true);
   const [status, setStatus] = useState('For Later');
@@ -25,9 +25,9 @@ export default function Wishlist({ navigation }) {
   }, []);
 
   return (
-    <VStack>
-      <Box display='flex' width='100%' mt={2}>
-        <HStack display='flex' justifyContent='center' alignItems='center'>
+    <VStack style={{ height: '100%' }}>
+      <Box display='flex' width='100%' mt='18px' mb='10px'>
+        <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onFilterClicked={onFilterClicked} />
           <Filter />
         </HStack>
@@ -50,9 +50,15 @@ export default function Wishlist({ navigation }) {
           </Button>
         </HStack>
       </Box>
-      <VStack>
-        <Box>{isForLater ? <ForLater navigation={navigation} /> : <Requested navigation={navigation} />}</Box>
-      </VStack>
+      <ScrollView>
+        <Box>
+          {isForLater ? (
+            <ForLater navigation={navigation} handleInput={handleInput} />
+          ) : (
+            <Requested navigation={navigation} handleInput={handleInput} />
+          )}
+        </Box>
+      </ScrollView>
     </VStack>
   );
 }

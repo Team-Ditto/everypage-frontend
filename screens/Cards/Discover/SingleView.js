@@ -1,15 +1,68 @@
-import { VStack, HStack, Box, Text, Heading, Badge, Avatar, Button, ScrollView, Link, Divider } from 'native-base';
+import {
+  VStack,
+  HStack,
+  Box,
+  Text,
+  Heading,
+  Badge,
+  Avatar,
+  Button,
+  ScrollView,
+  Link,
+  Divider,
+  View,
+} from 'native-base';
 import { StyleSheet } from 'react-native';
 
 import Carousel from '../../Assets/Carousel';
 import BooksSameOwner from '../../Assets/BooksSameOwner';
-import { BlueShades, SuccessColor, InUseColor, OnHoldColor, OrangeShades } from '../../../assets/style/color';
-import { createNewWishlist } from '../../../services/wishlists-service';
+import {
+  BlueShades,
+  SuccessColor,
+  InUseColor,
+  OnHoldColor,
+  OrangeShades,
+  BlackShades,
+} from '../../../assets/style/color';
+import { useContext, useEffect, useState } from 'react';
+import { triggerNotificationForAction } from '../../../services/trigger-service';
+import { getBookById } from '../../../services/books-service';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { getUserById } from '../../../services/users-service';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const SingleView = ({ navigation, route }) => {
-  const bookData = route.params.bookData;
-  console.log('bookData', bookData);
-  const { images, title, author, owner, genre, edition, language, isbn, condition, _id, borrowingStatus } = bookData;
+  const bookId = route.params.bookId;
+  const [bookData, setBookData] = useState({});
+  const [isSpinnerVisible, setSpinnerVisible] = useState(true);
+  const { currentUser } = useContext(AuthContext);
+
+  const {
+    images,
+    title,
+    author,
+    owner,
+    genre,
+    edition,
+    language,
+    ISBN,
+    bookCondition,
+    _id,
+    borrowingStatus,
+    requestor,
+    bearer,
+    bookReturnRequest,
+  } = bookData;
+
+  useEffect(() => {
+    getSingleBook();
+  }, [bookId]);
+
+  const getSingleBook = async () => {
+    const book = await getBookById(bookId);
+    setBookData(book.data);
+    setSpinnerVisible(false);
+  };
 
   const handleBorrowingStatus = b => {
     switch (b) {
@@ -22,20 +75,77 @@ const SingleView = ({ navigation, route }) => {
     }
   };
 
-  const handleRequestToBorrow = () => {
-    const createdWishlist = {
-      book: bookData._id,
-      status: 'Requested',
-    };
-    createNewWishlist(createdWishlist);
-    // .then(navigation.navigate('Wishlist'));
+  const handleRequestToBorrow = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
+    await triggerNotificationForAction({ triggerType: 'request_to_borrow', book: bookData._id });
+    await getSingleBook();
   };
 
-  return (
+  const handleReturnRequest = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
+    await triggerNotificationForAction({ triggerType: 'user_returns', book: bookData._id });
+    await getSingleBook();
+  };
+
+  const handleCancelHold = async () => {
+    setBookData({});
+    setSpinnerVisible(true);
+    await triggerNotificationForAction({ triggerType: 'cancel_hold', book: bookData._id });
+    await getSingleBook();
+  };
+
+  const ShowButtonAsPerHoldStatus = borrowingStatus => {
+    switch (borrowingStatus) {
+      case 'Available':
+        return (
+          <Button
+            backgroundColor={BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            m={5}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleRequestToBorrow}
+          >
+            Request to Borrow
+          </Button>
+        );
+      case 'In-Use':
+        return (
+          <Button
+            m={5}
+            backgroundColor={BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleReturnRequest}
+            disabled={bookReturnRequest}
+          >
+            Return
+          </Button>
+        );
+      case 'On-Hold':
+        return (
+          <Button
+            backgroundColor={BlueShades.primaryBlue}
+            borderRadius='10px'
+            shadow={2}
+            m={5}
+            shadowOffset={{ width: '-20px', height: '-20px' }}
+            onPress={handleCancelHold}
+          >
+            Cancel Hold
+          </Button>
+        );
+    }
+  };
+
+  return Object.keys(bookData).length > 0 ? (
     <>
       <ScrollView>
         <VStack>
-          <Carousel position='sticky' top={0} images={images} />
+          <Carousel images={images} />
           <Box
             borderRadius='10px'
             position='relative'
@@ -60,17 +170,22 @@ const SingleView = ({ navigation, route }) => {
                 </Box>
               </HStack>
               <HStack mb={5} mt={3} alignItems='center'>
-                <Text fontSize='16px'>Owned by </Text>
-                <Avatar
-                  size='sm'
-                  w='30px'
-                  mx={1}
-                  source={{
-                    uri: owner.photoURL,
-                  }}
-                />
-                <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{owner.displayName}</Link>
+                {requestor && Object.keys(requestor).length > 0 && (
+                  <>
+                    <Text fontSize='16px'>Requested by </Text>
+                    <Avatar
+                      size='sm'
+                      w='30px'
+                      mx={1}
+                      source={{
+                        uri: requestor.photoURL,
+                      }}
+                    />
+                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{requestor.displayName}</Link>
+                  </>
+                )}
               </HStack>
+
               <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4}>
                 <Text fontWeight='bold' fontSize='18px'>
                   Details
@@ -87,8 +202,8 @@ const SingleView = ({ navigation, route }) => {
                     <Text fontSize='16px'>{genre}</Text>
                     <Text fontSize='16px'>{edition}</Text>
                     <Text fontSize='16px'>{language}</Text>
-                    <Text fontSize='16px'>{isbn}</Text>
-                    <Text fontSize='16px'>{condition}</Text>
+                    <Text fontSize='16px'>{ISBN}</Text>
+                    <Text fontSize='16px'>{bookCondition}</Text>
                   </VStack>
                 </HStack>
               </Box>
@@ -98,19 +213,28 @@ const SingleView = ({ navigation, route }) => {
         </VStack>
       </ScrollView>
       <Divider shadow={2} />
-      <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
-        <Button
-          m='24px'
-          backgroundColor={BlueShades.primaryBlue}
-          borderRadius='10px'
-          shadow={2}
-          shadowOffset={{ width: '-20px', height: '-20px' }}
-          onPress={handleRequestToBorrow}
-        >
-          Request to Borrow
-        </Button>
-      </Box>
+      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) && (
+        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+          {ShowButtonAsPerHoldStatus('On-Hold')}
+        </Box>
+      )}
+
+      {bearer && bearer._id === currentUser._id && borrowingStatus === 'In-Use' && (
+        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+          {ShowButtonAsPerHoldStatus('In-Use')}
+        </Box>
+      )}
+
+      {!bearer && !requestor && (
+        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+          {ShowButtonAsPerHoldStatus('Available')}
+        </Box>
+      )}
     </>
+  ) : (
+    <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+    </View>
   );
 };
 

@@ -1,21 +1,21 @@
-import { View, Text, StyleSheet, TouchableOpacity,Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import IndexScreen from '../screens/IndexScreen';
 import Discover from '../screens/Main/Discover';
 import Wishlist from '../screens/Main/Wishlist';
 import Profile from '../screens/User/Profile';
 import Community from '../screens/Main/Community';
-import Notifications from '../screens/Main/Notifications';
-
 import MyLibraryIcon from '../assets/navigation-icons/library.png';
+import MyLibraryIconActive from '../assets/navigation-icons/library_active.png';
 import WishlistIcon from '../assets/navigation-icons/wishlist.png';
+import WishlistIconActive from '../assets/navigation-icons/wishlist_active.png';
 import DiscoverIcon from '../assets/navigation-icons/discover.png';
+import DiscoverIconActive from '../assets/navigation-icons/discover_active.png';
 import CommunityIcon from '../assets/navigation-icons/community.png';
+import CommunityIconActive from '../assets/navigation-icons/community_active.png';
 import ProfileIcon from '../assets/navigation-icons/profile.png';
+import ProfileIconActive from '../assets/navigation-icons/profile_active.png';
 
-import { BlueShades } from '../assets/style/color';
-import Map from '../screens/Assets/Map';
-import { Pressable } from 'native-base';
 import { BlueShades, OrangeShades } from '../assets/style/color';
 export default function TabStack() {
   const TabNavigator = createBottomTabNavigator();
@@ -34,11 +34,7 @@ export default function TabStack() {
         name='Home'
         component={IndexScreen}
         options={({ route }) => ({
-          tabBarIcon: ({ color, size }) => <Image source={MyLibraryIcon} color={BlueShades.primaryBlue} size={34} />,
-          tabBarIcon: ({ focused, color, size }) => {
-            let selectedColor = focused ? OrangeShades.primaryOrange : BlueShades.primaryBlue;
-            return <MaterialIcons name='library-books' size={34} color={selectedColor} />;
-          },
+          tabBarIcon: ({ focused }) => <Image source={focused ? MyLibraryIconActive : MyLibraryIcon} size={34} />,
         })}
       />
 
@@ -47,11 +43,7 @@ export default function TabStack() {
         style={style.buttonClick}
         component={Wishlist}
         options={({ route }) => ({
-          tabBarIcon: ({ color, size }) => <Image source={WishlistIcon} color={BlueShades.primaryBlue} size={34} />,
-          tabBarIcon: ({ focused, color, size }) => {
-            let selectedColor = focused ? OrangeShades.primaryOrange : BlueShades.primaryBlue;
-            return <MaterialIcons name='favorite' size={34} color={selectedColor} />;
-          },
+          tabBarIcon: ({ focused }) => <Image source={focused ? WishlistIconActive : WishlistIcon} size={34} />,
         })}
       />
       {/* <MaterialIcons name='favorite' size={34} color='black' /> */}
@@ -59,11 +51,7 @@ export default function TabStack() {
         name='Discover'
         component={Discover}
         options={({ route }) => ({
-          tabBarIcon: ({ color, size }) => <Image source={DiscoverIcon} color={BlueShades.primaryBlue} size={34} />,
-          tabBarIcon: ({ focused, color, size }) => {
-            let selectedColor = focused ? OrangeShades.primaryOrange : BlueShades.primaryBlue;
-            return <Fontisto name='world-o' size={34} color={selectedColor} />;
-          },
+          tabBarIcon: ({ focused }) => <Image source={focused ? DiscoverIconActive : DiscoverIcon} size={34} />,
         })}
         // <Fontisto name='world-o' size={34} color={} />
       />
@@ -71,11 +59,7 @@ export default function TabStack() {
         name='Community'
         component={Community}
         options={({ route }) => ({
-          tabBarIcon: ({ color, size }) => <Image source={CommunityIcon} color={BlueShades.primaryBlue} size={24} />,
-          tabBarIcon: ({ focused, color, size }) => {
-            let selectedColor = focused ? OrangeShades.primaryOrange : BlueShades.primaryBlue;
-            return <FontAwesome name='users' size={24} color={selectedColor} />;
-          },
+          tabBarIcon: ({ focused }) => <Image source={focused ? CommunityIconActive : CommunityIcon} size={24} />,
         })}
         // <FontAwesome name='users' size={24} color='#DC924c' />,
       />
@@ -83,11 +67,7 @@ export default function TabStack() {
         name='Profile'
         component={Profile}
         options={({ route }) => ({
-          tabBarIcon: ({ color, size }) => <Image source={ProfileIcon} color={BlueShades.primaryBlue} size={34} />,
-          tabBarIcon: ({ focused, color, size }) => {
-            let selectedColor = focused ? OrangeShades.primaryOrange : BlueShades.primaryBlue;
-            return <AntDesign name='user' size={34} color={selectedColor} />;
-          },
+          tabBarIcon: ({ focused }) => <Image source={focused ? ProfileIconActive : ProfileIcon} size={34} />,
         })}
         // <AntDesign name='user' size={34} color='#DC924c' />
       />

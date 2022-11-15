@@ -1,22 +1,36 @@
+import { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { VStack, Text, Pressable } from 'native-base';
+
+import { AuthContext } from '../../../contexts/AuthContext';
 import { OrangeShades, BlackShades, BlueShades } from '../../../assets/style/color';
 import { markNotificationRead } from '../../../firebase/firebase-service';
 
-const NotificationCard = ({ notification, navigation }) => {
-  const { _id, title, description, created, chatRedirect, book, status } = notification;
+const NotificationCard = ({ notification, navigation, handleInput }) => {
+  const { currentUser } = useContext(AuthContext);
+  const { _id, title, description, created, chatRedirect, initiator, book, status } = notification;
 
   const handleCardPress = async () => {
     await markNotificationRead(_id);
 
     if (!chatRedirect) {
-      // PLEASE UNCOMMENT THE BELOW LINE AFTER THE GETBOOKSBYID IS IMPLEMENTED FOR SINGLE BOOKS
-      
-      // navigation.navigate('SingleView', {
-      //   bookData: book,
-      // });
+      console.log('Notification', notification);
+
+      if (notification.bookOwner === currentUser._id) {
+        navigation.navigate('SingleBook', {
+          bookId: book,
+          isfromNotification: true,
+          requestorId: initiator,
+        });
+      } else {
+        navigation.navigate('SingleView', {
+          bookId: book,
+          isfromNotification: true,
+          requestorId: initiator,
+        });
+      }
     } else {
-      // TODO redirect to chat
+      handleInput(false);
     }
   };
 

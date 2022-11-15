@@ -4,7 +4,7 @@ import { VStack, Box, HStack, Button, Text } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 import Search from '../Assets/Search';
 import NotificationsMain from '../Notifications/NotificationsMain';
-import Messages from '../Notifications/Messages';
+import MessagesMain from '../Notifications/MessagesMain';
 import Filter from '../Assets/FilterSettings/Filter';
 import { NotificationContext } from '../../contexts/NotificationContext';
 
@@ -28,9 +28,9 @@ const Notifications = ({ navigation }) => {
     <VStack>
       {/* Do we really need search here. */}
       {/* <Box display='flex' width='100%' mt={2}> */}
-        {/* <HStack display='flex' justifyContent='center' alignItems='center'> */}
-          {/* <Search navigation={navigation} onSearchSubitted={onSearchSubitted} /> */}
-        {/* </HStack> */}
+      {/* <HStack display='flex' justifyContent='center' alignItems='center'> */}
+      {/* <Search navigation={navigation} onSearchSubitted={onSearchSubitted} /> */}
+      {/* </HStack> */}
       {/* </Box> */}
       <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
@@ -55,7 +55,11 @@ const Notifications = ({ navigation }) => {
       </Box>
       <VStack>
         <Box style={styles.main}>
-          {isNotifications ? <NotificationsMain navigation={navigation} /> : <Messages navigation={navigation} />}
+          {isNotifications ? (
+            <NotificationsMain navigation={navigation} handleInput={handleInput} />
+          ) : (
+            <MessagesMain navigation={navigation} />
+          )}
         </Box>
       </VStack>
     </VStack>
