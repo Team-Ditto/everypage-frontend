@@ -13,6 +13,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -21,11 +22,12 @@ const Home = ({ navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
+  const { totalUnreadNotifications } = useContext(NotificationContext);
 
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
-    GetNotificationHeader(navigation);
+    GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
 
   useEffect(() => {
@@ -75,8 +77,9 @@ const Home = ({ navigation }) => {
   const onSearchSubmitted = async searchText => {
     const searchedBooks = await getBooksByKeyword(searchText);
     setBookStatus(`Results for "${searchText}"`);
+    console.log('searchedBooks', searchedBooks);
     setLibData(searchedBooks.data.results);
-
+    setFilteredData(searchedBooks.data.results);
     navigation.setOptions({
       title: `Search Results`,
     });
@@ -86,6 +89,7 @@ const Home = ({ navigation }) => {
     let filterData = await GetFilteredResults(filterSetting);
     if (filterData !== undefined) {
       setLibData(filterData.data.results);
+      setFilteredData(filterData.data.results);
     }
   };
 
@@ -158,7 +162,7 @@ const Home = ({ navigation }) => {
         <ScrollView>
           <View style={styles.container}>
             <Image alt='dropDown' source={require('../../assets/dropdown.png')} />
-            <Text style={styles.text}>Hi Mita, welcome to everypage!</Text>
+            <Text style={styles.text}>Hi {currentUser.displayName}, welcome to everypage!</Text>
             <Text style={styles.content}>
               Now that you have your digital bookshelf setup. Let's addsome books to your Library
             </Text>

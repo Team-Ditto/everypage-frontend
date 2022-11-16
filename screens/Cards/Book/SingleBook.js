@@ -78,7 +78,6 @@ const SingleBook = ({ navigation, route }) => {
     setBookData({});
     setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'borrow_request_accept', book: bookId });
-
     await getSingleBook();
   };
 
@@ -87,6 +86,14 @@ const SingleBook = ({ navigation, route }) => {
     setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'borrow_request_decline', book: bookId });
     await getSingleBook();
+  };
+
+  const HandleReturnBook = async () => {
+    // setBookData({});
+    // setSpinnerVisible(true);
+    // await triggerNotificationForAction({ triggerType: 'user_returns', book: bookId });
+    // await getSingleBook();
+    alert('Working on the Feature....Have faith!!!');
   };
 
   const setShareable = async value => {
@@ -263,6 +270,31 @@ const SingleBook = ({ navigation, route }) => {
             }}
           >
             Accept
+          </Button>
+        </HStack>
+      )}
+      {bookData && bookData.bearer && borrowingStatusButton === 'On-Hold' && (
+        <HStack
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            backgroundColor: WhiteShades.primaryWhite,
+          }}
+        >
+          <Button
+            marginY={5}
+            _text={{ color: WhiteShades.primaryWhite }}
+            style={{
+              backgroundColor: BlueShades.primaryBlue,
+              width: '90%',
+              height: 50,
+            }}
+            onPress={HandleReturnBook}
+          >
+            Return
           </Button>
         </HStack>
       )}

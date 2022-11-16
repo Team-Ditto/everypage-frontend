@@ -4,7 +4,7 @@ import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, 
 import { MaterialIcons } from '@expo/vector-icons';
 import { genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { getUsersBook } from '../../services/books-service';
+import { getBooksByKeyword, getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
@@ -22,7 +22,7 @@ export default function Discover({ navigation }) {
       //   readingStatus: '',
       // };
 
-      let queryParams = `?page=1&perPage=20&sortBy=createdAt&sortOrder=asc`;
+      let queryParams = `?page=1&perPage=30&sortBy=createdAt&sortOrder=asc`;
       let booksData = await getUsersBook(queryParams, '', '', '', true);
 
       if (booksData !== undefined && booksData.data.results.length > 0) {
@@ -38,18 +38,24 @@ export default function Discover({ navigation }) {
   };
 
   const ApplyFilterSettings = async filterSetting => {
-    console.log(filterSetting);
     let filterData = await GetFilteredResults(filterSetting, true);
-    if (filterData !== undefined) {
+    console.log('filterData', filterData);
+    if (filterData !== undefined && filterData.data !== undefined) {
       setSimilarBookData(filterData.data.results);
     }
   };
+
+  const onSearchSubmitted = async searchText => {
+    const searchedBooks = await getBooksByKeyword(searchText);
+    setSimilarBookData(searchedBooks.data.results);
+  };
+
   return (
     <VStack style={{ height: '100%' }}>
       {/* Search component */}
       <Box display='flex' width='100%' mt='18px' mb='10px'>
         <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+          <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
           <Filter ApplyFilterSettings={ApplyFilterSettings} isFromDiscover={true} />
         </HStack>
       </Box>

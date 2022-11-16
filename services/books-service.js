@@ -3,7 +3,8 @@ import axiosRequest from './api';
 // see users-service.js for example
 export const addBook = async book => {
   try {
-    // console.log('addBook', book);
+    book.ISBN = parseInt(book.ISBN, 10);
+    console.log('addBook', book);
     let addedBook = await axiosRequest.post('books', book);
     console.log('RESPONSE From Server:- BOOK : ', addedBook.data); // eslint-disable-line no-console
     return addedBook;
@@ -29,7 +30,6 @@ export async function getUsersBook(
   location = null,
   isFromDiscover = false,
 ) {
-  console.log(isFromDiscover);
   try {
     let queryParams = queryParam;
 
@@ -50,7 +50,7 @@ export async function getUsersBook(
     } else {
       url = 'books/mine';
     }
-
+    console.log(`URL: ${url}${queryParams}`);
     return await axiosRequest.get(`${url}${queryParams}`);
   } catch (err) {
     console.log(err);
@@ -68,7 +68,7 @@ export async function getBooksByUserId(userId) {
 
 export async function getBooksByKeyword(keyword) {
   try {
-    const books = axiosRequest.get(`/books/all?${keyword}`);
+    const books = axiosRequest.get(`/books/all?keyword=${keyword}`);
     return books;
   } catch (error) {
     console.log(error);

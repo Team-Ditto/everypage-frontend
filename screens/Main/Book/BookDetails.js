@@ -230,32 +230,32 @@ const BookDetail = ({ bookObj, setBookObj }) => {
               borderWidth='0'
             >
               <Select.Item
-                label={`Like new \n  May have been read but are in mint condition`}
+                label={`Like new \n May have been read but are in mint condition`}
                 value='Like New'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               />
 
               <Select.Item
-                label={`Very Good \n  Have been read but are well cared `}
+                label={`Very Good \n Have been read but are well cared `}
                 value='Very Good'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               ></Select.Item>
               <Select.Item
-                label={`Good \n  Average used book with complete page present`}
+                label={`Good \n Average used book with complete page present`}
                 value='Good'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               />
               <Select.Item
-                label={`Fair \n  Have worn but with complete text pages`}
+                label={`Fair \n Have worn but with complete text pages`}
                 value='Fair'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               />
               <Select.Item
-                label={`Poor \n  Have extensive damage`}
+                label={`Poor \n Have extensive damage`}
                 value='Poor'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'

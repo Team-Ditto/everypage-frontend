@@ -22,7 +22,7 @@ const AddBook = ({ route, navigation }) => {
     edition: '',
     ISBN: route.params === undefined ? '' : route.params.ISBN, // eslint-disable-line react/prop-types
     bookCondition: '',
-    readingStatus: '',
+    readingStatus: 'To Read',
     location: '',
     shareable: false,
     notes: routeBookData === undefined ? '' : routeBookData.volumeInfo.description, // eslint-disable-line react/prop-types
@@ -31,9 +31,7 @@ const AddBook = ({ route, navigation }) => {
   const handleSaveBtn = async () => {
     try {
       const uploadedURLs = await uploadBookPictures(bookObj.images, bookObj.title);
-
       await addBook({ ...bookObj, images: [...uploadedURLs] });
-
       navigation.navigate('BottomTab');
     } catch (err) {
       console.log('Error: ', err);

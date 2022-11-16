@@ -24,8 +24,5 @@ export async function GetFilteredResults(filterSetting, isFromDiscover = false) 
     filterSetting.location,
     isFromDiscover,
   );
-
-  console.log('FilterDataCount', filterData.data.results.length);
-
   return filterData;
 }
