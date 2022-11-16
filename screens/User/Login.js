@@ -30,7 +30,7 @@ const Login = ({ navigation }) => {
   return (
     <KeyboardAvoidingView
       h={{
-        base: Dimensions.get('window').height - 200,
+        base: Dimensions.get('window').height - 40,
         lg: 'auto',
       }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
