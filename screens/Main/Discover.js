@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Search from '../Assets/Search';
 import {
   Box,
@@ -18,17 +18,18 @@ import { Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { genreDiscover } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
-import { getUsersBook } from '../../services/books-service';
+import { getBooksByKeyword, getUsersBook } from '../../services/books-service';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState([]);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
-
+  const { totalUnreadNotifications } = useContext(NotificationContext);
   useEffect(() => {
     async function fetchData() {
       // const params = {
@@ -36,7 +37,7 @@ export default function Discover({ navigation }) {
       //   readingStatus: '',
       // };
 
-      let queryParams = `?page=1&perPage=20&sortBy=createdAt&sortOrder=asc`;
+      let queryParams = `?page=1&perPage=30&sortBy=createdAt&sortOrder=asc`;
       let booksData = await getUsersBook(queryParams, '', '', '', true);
 
       if (booksData !== undefined && booksData.data.results.length > 0) {
@@ -45,19 +46,25 @@ export default function Discover({ navigation }) {
       }
     }
     fetchData();
-    GetNotificationHeader(navigation);
+    GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);
   };
 
   const ApplyFilterSettings = async filterSetting => {
-    console.log(filterSetting);
     let filterData = await GetFilteredResults(filterSetting, true);
-    if (filterData !== undefined) {
+    console.log('filterData', filterData);
+    if (filterData !== undefined && filterData.data !== undefined) {
       setSimilarBookData(filterData.data.results);
     }
   };
+
+  const onSearchSubmitted = async searchText => {
+    const searchedBooks = await getBooksByKeyword(searchText);
+    setSimilarBookData(searchedBooks.data.results);
+  };
+
   return (
     <KeyboardAvoidingView
       h={{
@@ -70,7 +77,7 @@ export default function Discover({ navigation }) {
         {/* Search component */}
         <Box display='flex' width='100%' mt='18px' mb='10px'>
           <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
-            <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+            <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
             <Filter ApplyFilterSettings={ApplyFilterSettings} isFromDiscover={true} />
           </HStack>
         </Box>

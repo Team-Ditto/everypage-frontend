@@ -19,20 +19,22 @@ const Search = ({ navigation, onSearchSubmitted }) => {
         <Icon as={<Ionicons name='search' />} size={6} ml='2' style={{ color: BlueShades.primaryBlue }} />
       }
       InputRightElement={
-        <Icon
-          as={<Image source={BarScanner} alt='bar scanner' />}
-          style={{
-            color: BlueShades.primaryBlue,
-          }}
-          size={6}
-          ml='2'
-          mr='3'
+        <Button
+          variant='unstyled '
           onPress={() => {
             navigation.navigate('Scanner');
           }}
         >
-          {/* <Image source={require('../../assets/Bar_Scanner.png')} alt='Bar Code Scanner Images' /> */}
-        </Icon>
+          <Icon
+            as={<Image source={BarScanner} alt='bar scanner' />}
+            style={{
+              color: BlueShades.primaryBlue,
+            }}
+            size={6}
+            ml='2'
+          >
+          </Icon>
+        </Button>
       }
       fontSize={16}
       color={BlueShades.primaryBlue}

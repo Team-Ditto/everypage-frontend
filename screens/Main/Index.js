@@ -1,8 +1,8 @@
 import Search from '../Assets/Search';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import { BOOK_STATUS } from '../../constants/index';
 import { VStack, Text, Box, Button, HStack, View, Image, KeyboardAvoidingView } from 'native-base';
-import { ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
@@ -13,6 +13,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -21,11 +22,13 @@ const Home = ({ navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
+  const { totalUnreadNotifications } = useContext(NotificationContext);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
-    GetNotificationHeader(navigation);
+    GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
 
   useEffect(() => {
@@ -75,8 +78,9 @@ const Home = ({ navigation }) => {
   const onSearchSubmitted = async searchText => {
     const searchedBooks = await getBooksByKeyword(searchText);
     setBookStatus(`Results for "${searchText}"`);
+    console.log('searchedBooks', searchedBooks);
     setLibData(searchedBooks.data.results);
-
+    setFilteredData(searchedBooks.data.results);
     navigation.setOptions({
       title: `Search Results`,
     });
@@ -86,8 +90,19 @@ const Home = ({ navigation }) => {
     let filterData = await GetFilteredResults(filterSetting);
     if (filterData !== undefined) {
       setLibData(filterData.data.results);
+      setFilteredData(filterData.data.results);
     }
   };
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => {
+      fetchData();
+      setRefreshing(false);
+    });
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -145,7 +160,10 @@ const Home = ({ navigation }) => {
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
           />
         ) : libData.length > 0 ? (
-          <ScrollView>
+          <ScrollView
+            contentContainerStyle={styles.scrollView}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          >
             {/* <Text mx={4} my={2}>
             {bookStatus} ({filteredData.length})
           </Text> */}

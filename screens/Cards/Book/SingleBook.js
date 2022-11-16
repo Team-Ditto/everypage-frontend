@@ -61,6 +61,7 @@ const SingleBook = ({ navigation, route }) => {
   const getSingleBook = async () => {
     const book = await getBookById(bookId);
     setBookData(book.data);
+    console.log('fetech book data: ', book.data);
     setSwitchValue(book.data.shareable);
     setBorrowingStatusButton(book.data.borrowingStatus);
     setSpinnerVisible(false);
@@ -78,7 +79,6 @@ const SingleBook = ({ navigation, route }) => {
     setBookData({});
     setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'borrow_request_accept', book: bookId });
-
     await getSingleBook();
   };
 
@@ -87,6 +87,14 @@ const SingleBook = ({ navigation, route }) => {
     setSpinnerVisible(true);
     await triggerNotificationForAction({ triggerType: 'borrow_request_decline', book: bookId });
     await getSingleBook();
+  };
+
+  const HandleReturnBook = async () => {
+    // setBookData({});
+    // setSpinnerVisible(true);
+    // await triggerNotificationForAction({ triggerType: 'user_returns', book: bookId });
+    // await getSingleBook();
+    alert('Working on the Feature....Have faith!!!');
   };
 
   const setShareable = async value => {
@@ -167,8 +175,8 @@ const SingleBook = ({ navigation, route }) => {
                       <Text fontSize='16px'>{bookData.genre}</Text>
                       <Text fontSize='16px'>{bookData.edition}</Text>
                       <Text fontSize='16px'>{bookData.language}</Text>
-                      <Text fontSize='16px'>{bookData.isbn}</Text>
-                      <Text fontSize='16px'>{bookData.condition}</Text>
+                      <Text fontSize='16px'>{bookData.ISBN}</Text>
+                      <Text fontSize='16px'>{bookData.bookCondition}</Text>
                     </VStack>
                   </HStack>
                 </Box>
@@ -211,7 +219,7 @@ const SingleBook = ({ navigation, route }) => {
                       Notes
                     </Text>
                   </HStack>
-                  <Text fontSize={16}>{bookData.note ?? ` `}</Text>
+                  <Text fontSize={16}>{bookData.notes ?? ` `}</Text>
                 </Box>
               </VStack>
             </Box>
@@ -263,6 +271,31 @@ const SingleBook = ({ navigation, route }) => {
             }}
           >
             Accept
+          </Button>
+        </HStack>
+      )}
+      {bookData && bookData.bearer && borrowingStatusButton === 'On-Hold' && (
+        <HStack
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            backgroundColor: WhiteShades.primaryWhite,
+          }}
+        >
+          <Button
+            marginY={5}
+            _text={{ color: WhiteShades.primaryWhite }}
+            style={{
+              backgroundColor: BlueShades.primaryBlue,
+              width: '90%',
+              height: 50,
+            }}
+            onPress={HandleReturnBook}
+          >
+            Return
           </Button>
         </HStack>
       )}
