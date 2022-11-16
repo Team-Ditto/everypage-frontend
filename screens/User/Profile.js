@@ -20,13 +20,15 @@ import {
   ChevronRightIcon,
   FavouriteIcon,
 } from 'native-base';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
   const { currentUser } = useContext(AuthContext);
+  const { totalUnreadNotifications } = useContext(NotificationContext);
 
   useEffect(() => {
-    GetNotificationHeader(navigation);
+    GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
 
   const handleLogout = async () => {
@@ -41,11 +43,7 @@ export default function Profile({ navigation }) {
           <Text fontWeight='semibold'>{currentUser.displayName}</Text>
           <Text>{currentUser.readerType}</Text>
           <Text fontStyle='italic' fontSize='sm'>
-            joined{' '}
-            {new Date(currentUser.createdAt)
-              .toISOString()
-              .substring(0, 10)
-              .replaceAll('-', '/')}
+            joined {new Date(currentUser.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />

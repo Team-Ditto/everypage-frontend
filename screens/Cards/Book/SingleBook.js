@@ -61,6 +61,7 @@ const SingleBook = ({ navigation, route }) => {
   const getSingleBook = async () => {
     const book = await getBookById(bookId);
     setBookData(book.data);
+    console.log('fetech book data: ', book.data);
     setSwitchValue(book.data.shareable);
     setBorrowingStatusButton(book.data.borrowingStatus);
     setSpinnerVisible(false);
@@ -174,8 +175,8 @@ const SingleBook = ({ navigation, route }) => {
                       <Text fontSize='16px'>{bookData.genre}</Text>
                       <Text fontSize='16px'>{bookData.edition}</Text>
                       <Text fontSize='16px'>{bookData.language}</Text>
-                      <Text fontSize='16px'>{bookData.isbn}</Text>
-                      <Text fontSize='16px'>{bookData.condition}</Text>
+                      <Text fontSize='16px'>{bookData.ISBN}</Text>
+                      <Text fontSize='16px'>{bookData.bookCondition}</Text>
                     </VStack>
                   </HStack>
                 </Box>
@@ -218,7 +219,7 @@ const SingleBook = ({ navigation, route }) => {
                       Notes
                     </Text>
                   </HStack>
-                  <Text fontSize={16}>{bookData.note ?? ` `}</Text>
+                  <Text fontSize={16}>{bookData.notes ?? ` `}</Text>
                 </Box>
               </VStack>
             </Box>

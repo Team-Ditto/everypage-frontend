@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Search from '../Assets/Search';
 import { Box, Text, Button, ScrollView, VStack, HStack, Icon, Pressable, Image, Divider, View } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,12 +9,13 @@ import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState([]);
   const [isFilterVisible, setFilterVisible] = useState(false);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
-
+  const { totalUnreadNotifications } = useContext(NotificationContext);
   useEffect(() => {
     async function fetchData() {
       // const params = {
@@ -31,7 +32,7 @@ export default function Discover({ navigation }) {
       }
     }
     fetchData();
-    GetNotificationHeader(navigation);
+    GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
   const onFilterClicked = () => {
     setFilterVisible(!isFilterVisible);

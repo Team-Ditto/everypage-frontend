@@ -1,8 +1,8 @@
 import Search from '../Assets/Search';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import { BOOK_STATUS } from '../../constants/index';
 import { VStack, Text, Box, Button, HStack, View, Image } from 'native-base';
-import { ScrollView, StyleSheet } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
@@ -23,6 +23,7 @@ const Home = ({ navigation }) => {
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
   const { totalUnreadNotifications } = useContext(NotificationContext);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     SetTopScreenTitle();
@@ -92,6 +93,16 @@ const Home = ({ navigation }) => {
       setFilteredData(filterData.data.results);
     }
   };
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => {
+      fetchData();
+      setRefreshing(false);
+    });
+  }, []);
 
   return (
     <VStack style={{ position: 'relative', height: '100%' }}>
@@ -142,10 +153,10 @@ const Home = ({ navigation }) => {
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
         />
       ) : libData.length > 0 ? (
-        <ScrollView>
-          {/* <Text mx={4} my={2}>
-            {bookStatus} ({filteredData.length})
-          </Text> */}
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
           <ScrollView>
             <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
               {filteredData ? (
