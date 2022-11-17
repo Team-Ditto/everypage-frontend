@@ -27,7 +27,7 @@ const SingleGenre = ({ navigation, route }) => {
       };
 
       let queryParams = `?page=1&perPage=5&sortBy=createdAt&sortOrder=asc&genre=${route.params.genre}`;
-      let booksData = await getUsersBook(queryParams, '', '', '', true);
+      let booksData = await getUsersBook(queryParams, '', '', '', '', true);
       if (booksData !== undefined && booksData.data.results.length > 0) {
         setSearchResults(booksData.data.results);
       }

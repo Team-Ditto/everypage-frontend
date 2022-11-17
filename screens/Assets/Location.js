@@ -7,6 +7,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { BlueShades, WhiteShades } from '../../assets/style/color';
 import { FontAwesome } from '@expo/vector-icons';
 import { fieldSet, legend } from '../../assets/style/fieldsetStyle';
+import { updateMyUserProfile } from '../../services/users-service';
 
 export default function Location({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -56,12 +57,13 @@ export default function Location({ navigation }) {
   }
 
   const handleSaveLocation = async () => {
-    await updateMyUserProfile({
+    let res = await updateMyUserProfile({
       location: {
         type: 'Point',
         coordinates: [location.longitude, location.latitude],
       },
     });
+    console.log('res', res);
     navigation.navigate('ReaderInfo');
   };
 

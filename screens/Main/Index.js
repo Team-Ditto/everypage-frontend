@@ -133,7 +133,6 @@ const Home = ({ navigation }) => {
       }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-    
       <VStack style={{ position: 'relative', height: '100%' }}>
         {/* Search component */}
         <Box display='flex' width='100%' mt='18px' mb='10px'>
@@ -209,7 +208,10 @@ const Home = ({ navigation }) => {
             </Box>
           </ScrollView>
         ) : (
-          <ScrollView>
+          <ScrollView
+            contentContainerStyle={styles.scrollView}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          >
             <View style={styles.container}>
               <Box height='80px' position='relative' bottom='30px'>
                 <Image alt='dropDown' source={require('../../assets/logo-no-text.png')} />
@@ -244,7 +246,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 100,
+    marginTop: 50,
     marginBottom: 30,
     marginHorizontal: 30,
     borderRadius: 10,
