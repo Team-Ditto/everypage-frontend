@@ -1,7 +1,7 @@
 import Search from '../Assets/Search';
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { BOOK_STATUS } from '../../constants/index';
-import { VStack, Text, Box, Button, HStack, View, Image, KeyboardAvoidingView } from 'native-base';
+import { VStack, Text, Box, Button, HStack, View, Image, KeyboardAvoidingView, Wrap } from 'native-base';
 import { RefreshControl, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
@@ -258,9 +258,10 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
   },
   text: {
+    flexWrap: 'wrap',
     fontSize: 30,
     padding: 15,
-    lineHeight: 20,
+    lineHeight: 40,
   },
   content: {
     width: '100%',
