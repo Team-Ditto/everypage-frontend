@@ -1,5 +1,5 @@
 import { Button, Image, Text, View } from 'native-base';
-import { InUseColor, SuccessColor } from '../assets/style/color';
+import { BlueShades, InUseColor, OrangeShades, SuccessColor } from '../assets/style/color';
 export const GetNotificationHeader = (navigation, totalUnreadNotifications = 0) => {
   console.log('totalUnreadNotifications', totalUnreadNotifications);
   navigation.setOptions({
@@ -20,7 +20,7 @@ export const GetNotificationHeader = (navigation, totalUnreadNotifications = 0) 
               fontSize: 16,
               position: 'absolute',
               right: 8,
-              color: totalUnreadNotifications == 0 ? SuccessColor.success : InUseColor.inUse,
+              color: totalUnreadNotifications == 0 ? BlueShades.primaryBlue : OrangeShades.primaryOrange,
             }}
             fontSize={24}
           >

@@ -216,7 +216,9 @@ const Home = ({ navigation }) => {
               <Box height='80px' position='relative' bottom='30px'>
                 <Image alt='dropDown' source={require('../../assets/logo-no-text.png')} />
               </Box>
-              <Text style={styles.text}>Hi {currentUser.displayName}, welcome to everypage!</Text>
+              <Text style={styles.text}>
+                Hi {currentUser.displayName}, welcome to <Text style={styles.titleText}> everypage!</Text>
+              </Text>
               <Text style={styles.content}>
                 Now that you have your digital bookshelf setup. Let's addsome books to your Library
               </Text>
@@ -246,7 +248,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 30,
     marginBottom: 30,
     marginHorizontal: 30,
     borderRadius: 10,
@@ -254,9 +256,18 @@ const styles = StyleSheet.create({
   },
   text: {
     width: '100%',
-    fontSize: 24,
+    fontSize: 22,
+    padding: 10,
+    fontWeight: 'bold',
+    lineHeight: 30,
+  },
+  titleText: {
+    width: '100%',
+    fontSize: 22,
     padding: 10,
     lineHeight: 30,
+    fontWeight: 'bold',
+    color: BlueShades.primaryBlue,
   },
   content: {
     width: '100%',
