@@ -42,7 +42,7 @@ export default function Discover({ navigation }) {
   useEffect(() => {
     async function fetchData() {
       let queryParams = `?page=1&perPage=30&sortBy=createdAt&sortOrder=asc`;
-      let booksData = await getUsersBook(queryParams, '', '', '', true);
+      let booksData = await getUsersBook(queryParams, '', '', '', '', true);
 
       if (booksData !== undefined && booksData.data.results.length > 0) {
         setSimilarBookData(booksData.data.results);
@@ -58,6 +58,7 @@ export default function Discover({ navigation }) {
       console.log('filterData', filterData.data.results.length);
       setSimilarBookData(filterData.data.results);
     }
+    setSpinnerVisible(false);
   };
 
   const onSearchSubmitted = async () => {
