@@ -9,7 +9,11 @@ const MessagesMain = ({ navigation }) => {
 
   return (
     <VStack>
-      <ScrollView h='100%'>
+      <ScrollView
+        style={{
+          paddingBottom: 200,
+        }}
+      >
         {data.userChats?.map((data, id) => {
           return (
             <View key={id}>

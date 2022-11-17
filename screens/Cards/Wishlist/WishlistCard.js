@@ -3,23 +3,26 @@ import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'nativ
 import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/color';
 import { requestToBorrow, requestCancelHold } from '../../../services/notifications-services';
 import WishlistButton from '../../Assets/WishlistButton';
-import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
+import { deleteWishlistByBookId } from '../../../services/wishlists-service';
 import { OrangeShades } from '../../../assets/style/color';
 
-const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab, handleInput }) => {
+const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData }) => {
   const [isWishlisted, setIsWishlisted] = useState(true);
   const { book } = data;
 
   let curStyle = {};
 
-  const handleWishlistPress = () => {
+  const handleWishlistPress = async () => {
     if (isWishlisted) {
       setIsWishlisted(false);
-      deleteWishlistByBookId(data.book._id);
+      await deleteWishlistByBookId(data.book._id);
+      await fetchData();
     }
   };
 
   async function handleRequestToBorrow() {
+    if (book.borrowingStatus !== 'Available') return;
+    
     const requestedObject = {
       wishlist: data._id,
       triggerType: 'request_to_borrow',
@@ -137,7 +140,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab,
         </HStack>
       </Pressable>
       {selectedTab == 'ForLater' ? (
-        <Button mt='15px' onPress={handleRequestToBorrow}>
+        <Button disabled={book.borrowingStatus !== 'Available'} mt='15px' onPress={handleRequestToBorrow}>
           Request to Borrow
         </Button>
       ) : (
