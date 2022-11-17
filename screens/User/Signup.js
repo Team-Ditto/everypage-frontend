@@ -1,11 +1,23 @@
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { Box, HStack, VStack, FormControl, Input, Link, Button, Text, View, Image } from 'native-base';
+import { StyleSheet, Dimensions } from 'react-native';
+import {
+  Box,
+  HStack,
+  VStack,
+  FormControl,
+  Input,
+  Link,
+  Button,
+  Text,
+  View,
+  Image,
+  KeyboardAvoidingView,
+} from 'native-base';
 import { signUpWithEmailAndPassword } from '../../firebase/firebase-service';
 import Everypage_Logo from '../../assets/Everypage_Logo.png';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
-import { stringify } from 'json5';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Signup = ({ navigation }) => {
   // TODO:please do something with this error
@@ -59,87 +71,95 @@ const Signup = ({ navigation }) => {
 
   return (
     //container start
-    <Box px={3} flex={1}>
-      <Image
-        style={{ width: '100%', height: 200, resizeMode: 'contain' }}
-        source={Everypage_Logo}
-        alt={'Everypage Logo'}
-      />{' '}
-      <View>
-        <Text fontSize='xl'>Create an account. It's Free</Text>
-      </View>
-      <VStack space={3} mt='5'>
-        <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
-          <Input
-            isRequired
-            // isInvalid={'name' in errors}
-            placeholder='xxxxxx'
-            keyboardType='text'
-            returnKeyType='next'
-            value={displayName}
-            onChangeText={value => setDisplayName(value)}
+    <KeyboardAvoidingView
+      h={{
+        base: Dimensions.get('window').height,
+        lg: 'auto',
+      }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView>
+        <Box px={3} flex={1}>
+          <Image
+            style={{ width: '100%', height: 200, resizeMode: 'contain' }}
+            source={Everypage_Logo}
+            alt={'Everypage Logo'}
           />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Email ID</FormControl.Label>
-          <Input
-            isRequired
-            placeholder='xxxxxx@gmail.com'
-            keyboardType='email-address'
-            returnKeyType='next'
-            autoCompleteType='email'
-            value={email}
-            onChangeText={value => setEmail(value)}
-          />
-          {errMsg === 'invalid email' ? <Text color='red.900'>Invalid Email</Text> : ''}
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Password</FormControl.Label>
-          <Input
-            isRequired
-            placeholder='xxxxxxxxx'
-            secureTextEntry
-            type='password'
-            returnKeyType='done'
-            value={password}
-            onChangeText={value => setPassword(value)}
-          />
-          {errMsg === 'weak password' ? <Text color='red.900'>Invalid Password</Text> : ''}
-        </FormControl>
-        <Text>Atleast 6 characters</Text>
-        
-        {/* SV: removed as not needed in UI but code still here for reference */}
-        {/* <Button onPress={pickImage} bg={BlueShades.primaryBlue}>
+          <View>
+            <Text fontSize='xl'>Create an account. It's Free!</Text>
+          </View>
+          <VStack space={3} mt='5'>
+            <FormControl>
+              <FormControl.Label>Name</FormControl.Label>
+              <Input
+                isRequired
+                placeholder='xxxxxx'
+                keyboardType='text'
+                returnKeyType='next'
+                value={displayName}
+                onChangeText={value => setDisplayName(value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Email ID</FormControl.Label>
+              <Input
+                isRequired
+                placeholder='xxxxxx@gmail.com'
+                keyboardType='email-address'
+                returnKeyType='next'
+                autoCompleteType='email'
+                value={email}
+                onChangeText={value => setEmail(value)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Password</FormControl.Label>
+              <Input
+                isRequired
+                placeholder='xxxxxxxxx'
+                secureTextEntry
+                type='password'
+                returnKeyType='done'
+                value={password}
+                onChangeText={value => setPassword(value)}
+              />
+            </FormControl>
+            <Text>At least 8 characters</Text>
+
+            {/* SV: removed as not needed in UI but code still here for reference */}
+            {/* <Button onPress={pickImage} bg={BlueShades.primaryBlue}>
           Pick Image
         </Button> */}
-        <Button mt='6' bg={BlueShades.primaryBlue} onPress={handleSubmit}>
-          Next
-        </Button>
-        <HStack mt='6' justifyContent='center'>
-          <Text
-            fontSize='sm'
-            color='coolGray.600'
-            _dark={{
-              color: 'warmGray.200',
-            }}
-          >
-            Already have an account?.{' '}
-          </Text>
-          <Link
-            _text={{
-              color: OrangeShades.primaryOrange,
-              fontWeight: 'bold',
-            }}
-            onPress={() => {
-              navigation.navigate('Login');
-            }}
-          >
-            Login
-          </Link>
-        </HStack>
-      </VStack>
-    </Box>
+            <Button mt='6' bg={BlueShades.primaryBlue} onPress={handleSubmit}>
+              Next
+            </Button>
+            <HStack mt='6' justifyContent='center'>
+              <Text
+                fontSize='sm'
+                color='coolGray.600'
+                _dark={{
+                  color: 'warmGray.200',
+                }}
+              >
+                Already have an account?.
+              </Text>
+              <Link
+                pb={40}
+                _text={{
+                  color: OrangeShades.primaryOrange,
+                  fontWeight: 'bold',
+                }}
+                onPress={() => {
+                  navigation.navigate('Login');
+                }}
+              >
+                Login
+              </Link>
+            </HStack>
+          </VStack>
+        </Box>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

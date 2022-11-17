@@ -1,26 +1,14 @@
 import { useState, useEffect } from 'react';
 import { BlueShades, WhiteShades } from '../../../assets/style/color';
-import {
-  FormControl,
-  Stack,
-  Input,
-  HStack,
-  Button,
-  Divider,
-  Select,
-  CheckIcon,
-  Box,
-  Image,
-  Text,
-  Icon,
-} from 'native-base';
+import { FormControl, Stack, Input, HStack, Button, Divider, Select, CheckIcon, Box, Image } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import { StyleSheet } from 'react-native';
+import { genreData } from '../../../constants/LibraryData';
 
 const BookDetail = ({ bookObj, setBookObj }) => {
   const [bookCondition, setBookCondition] = useState('');
   const [imageArr, setImageArr] = useState(bookObj.images);
-
+  const [bookGenre, setBookGenre] = useState('');
   const HandleImageEventClick = async () => {
     let showSizeError = false;
 
@@ -162,17 +150,26 @@ const BookDetail = ({ bookObj, setBookObj }) => {
         <FormControl>
           <HStack justifyContent='space-between'>
             <FormControl.Label pr={2}>Genre</FormControl.Label>
-            <Input
-              w='70%'
-              placeholder='Fiction'
-              borderWidth='0'
-              textAlign='right'
-              borderRadius={10}
-              value={bookObj.genre} // eslint-disable-line react/prop-types
-              onChangeText={text => {
-                setBookObj({ ...bookObj, genre: text });
+            <Select
+              minWidth='200'
+              accessibilityLabel='Choose genre'
+              placeholder='Choose genre'
+              selectedValue={bookGenre}
+              onValueChange={genre => {
+                setBookGenre(genre);
+                setBookObj({ ...bookObj, genre: genre });
               }}
-            />
+              _selectedItem={{
+                bg: BlueShades.primaryBlue,
+                _text: { color: WhiteShades.primaryWhite },
+                endIcon: <CheckIcon size={5} />,
+              }}
+              mt='1'
+            >
+              {genreData.map((item, index) => {
+                return <Select.Item key={index} label={item} value={item} />;
+              })}
+            </Select>
           </HStack>
         </FormControl>
         <Divider my={2} bg='lightgrey' />
@@ -230,32 +227,32 @@ const BookDetail = ({ bookObj, setBookObj }) => {
               borderWidth='0'
             >
               <Select.Item
-                label={`Like new \n  May have been read but are in mint condition`}
+                label={`Like new \n May have been read but are in mint condition`}
                 value='Like New'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               />
 
               <Select.Item
-                label={`Very Good \n  Have been read but are well cared `}
+                label={`Very Good \n Have been read but are well cared `}
                 value='Very Good'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               ></Select.Item>
               <Select.Item
-                label={`Good \n  Average used book with complete page present`}
+                label={`Good \n Average used book with complete page present`}
                 value='Good'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               />
               <Select.Item
-                label={`Fair \n  Have worn but with complete text pages`}
+                label={`Fair \n Have worn but with complete text pages`}
                 value='Fair'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'
               />
               <Select.Item
-                label={`Poor \n  Have extensive damage`}
+                label={`Poor \n Have extensive damage`}
                 value='Poor'
                 borderBottomWidth={0.5}
                 borderBottomColor='gray.400'

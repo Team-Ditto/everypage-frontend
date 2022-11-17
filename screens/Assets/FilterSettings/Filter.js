@@ -1,37 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View,Image } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Image } from 'react-native';
 import { Icon, IconButton, HStack } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
-import { BlueShades, OrangeShades } from '../../../assets/style/color';
+import { BlueShades } from '../../../assets/style/color';
 import Sort from './Sort';
 import Genre from './Genre';
 import ReadingStatus from './ReadingStatus';
 import LocationSetting from './LocationSetting';
 import FilterIcon from '../../../assets/searchbar-icons/filter.png';
 import DiscoverLocationSettings from './DiscoverLocationSettings';
-import { getMyBooksShelfLocation } from '../../../services/books-service';
-export default function Filter({ ApplyFilterSettings, isFromDiscover = false }) {
+export default function Filter({ filterSetting, setFilterSetting, ApplyFilterSettings, isFromDiscover = false }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [shelfLocations, setShelfLocations] = useState([]);
-  const [filterSetting, setFilterSetting] = useState({
-    sort: 'Newly Added',
-    genre: 'Action & Adventure',
-    readingStatus: 'To Read',
-    location: isFromDiscover ? '1000' : shelfLocations[0] == undefined ? '' : shelfLocations[0],
-  });
-  useEffect(() => {
-    async function fetchData() {
-      const location = await getMyBooksShelfLocation();
-      setShelfLocations(location.data);
-    }
-    fetchData();
-  }, []);
 
   const handleFilterSetting = (filterType, filterValue) => {
     setFilterSetting({ ...filterSetting, [filterType]: filterValue });
   };
   const HandleOnPressApplyFilterSettings = () => {
-    ApplyFilterSettings(filterSetting);
+    ApplyFilterSettings();
     setModalVisible(!modalVisible);
   };
 

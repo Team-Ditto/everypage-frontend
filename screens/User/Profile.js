@@ -20,14 +20,15 @@ import {
   ChevronRightIcon,
   FavouriteIcon,
 } from 'native-base';
-import ReaderInfo from './ReaderInfo';
+import { NotificationContext } from '../../contexts/NotificationContext';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
   const { currentUser } = useContext(AuthContext);
+  const { totalUnreadNotifications } = useContext(NotificationContext);
 
   useEffect(() => {
-    GetNotificationHeader(navigation);
+    GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
 
   const handleLogout = async () => {
