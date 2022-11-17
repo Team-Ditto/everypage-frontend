@@ -11,13 +11,15 @@ export default function DiscoverLocationSettings({ filterSetting, handleFilterSe
     <View style={{ width: '100%', paddingTop: 20, paddingHorizontal: 10 }}>
       {currentUser['location'] !== undefined ? (
         <Accordion
-          title='Location'
+          title='Location (meters)'
           content={Distance}
           filterSetting={filterSetting}
           handleFilterSetting={handleFilterSetting}
         />
       ) : (
-        <Text bold fontSize="md">*** No Location ***</Text>
+        <Text bold fontSize='md'>
+          *** No Location ***
+        </Text>
       )}
     </View>
   );
