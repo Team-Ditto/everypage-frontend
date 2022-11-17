@@ -20,6 +20,7 @@ import {
   ChevronRightIcon,
   FavouriteIcon,
 } from 'native-base';
+import ReaderInfo from './ReaderInfo';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -41,11 +42,7 @@ export default function Profile({ navigation }) {
           <Text fontWeight='semibold'>{currentUser.displayName}</Text>
           <Text>{currentUser.readerType}</Text>
           <Text fontStyle='italic' fontSize='sm'>
-            joined{' '}
-            {new Date(currentUser.createdAt)
-              .toISOString()
-              .substring(0, 10)
-              .replaceAll('-', '/')}
+            joined {new Date(currentUser.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />
@@ -95,6 +92,7 @@ export default function Profile({ navigation }) {
       <Button mt='2' colorScheme='gray' onPress={handleLogout}>
         Logout
       </Button>
+      
     </ScrollView>
   );
 }

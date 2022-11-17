@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
-import { OrangeShades, WhiteShades } from '../../assets/style/color';
+import { BlueShades, OrangeShades, WhiteShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
 import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -157,10 +157,11 @@ const Home = ({ navigation }) => {
       ) : (
         <ScrollView>
           <View style={styles.container}>
-            <Image alt='dropDown' source={require('../../assets/dropdown.png')} />
-            <Text style={styles.text}>Hi Mita, welcome to everypage!</Text>
+            <Image alt='dropDown' source={require('../../assets/logo.png')} width={24} height={24} />
+            <Text style={styles.text}>Hi Mita, welcome to</Text>
+            <Text style={styles.everypageText}> everypage!</Text>
             <Text style={styles.content}>
-              Now that you have your digital bookshelf setup. Let's addsome books to your Library
+              Now that you have your digital bookshelf setup. Let's addsome books to your library.
             </Text>
           </View>
           <Image style={styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
@@ -182,22 +183,25 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   container: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: BlueShades.tertiaryBlue,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 150,
+    // marginTop: 150,
     marginRight: 30,
     marginLeft: 30,
     marginBottom: 30,
     borderRadius: 10,
-    padding: 30,
+    paddingTop: 30,
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingBottom: 70,
   },
   text: {
     fontSize: 30,
-    padding: 10,
-    lineHeight: 30,
+    padding: 15,
+    lineHeight: 20,
   },
   content: {
     fontSize: 18,
@@ -206,8 +210,16 @@ const styles = StyleSheet.create({
   },
   downArrow: {
     position: 'absolute',
-    bottom: 8,
-    right: 50,
+    bottom: 5,
+    right: 45,
+  },
+  everypageText: {
+    color: BlueShades.primaryBlue,
+    fontSize: 30,
+    paddingTop: 10,
+    paddingRight: 100,
+    paddingBottom: 30,
+    fontWeight: 'bold',
   },
 });
 

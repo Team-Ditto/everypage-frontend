@@ -5,18 +5,20 @@ import { signUpWithEmailAndPassword } from '../../firebase/firebase-service';
 import Everypage_Logo from '../../assets/Everypage_Logo.png';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 import * as ImagePicker from 'expo-image-picker';
+import { stringify } from 'json5';
 
 const Signup = ({ navigation }) => {
   // TODO:please do something with this error
   const [err, setErr] = useState(false);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [singleFile, setSingleFile] = useState(null);
+  const [errMsg, setErrMsg] = useState('');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
+    
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -29,6 +31,10 @@ const Signup = ({ navigation }) => {
     }
   };
 
+  // const validate = () => {
+  //   setErrors({ ...errors });
+  // };
+
   const handleSubmit = async () => {
     try {
       if (email && password && displayName) {
@@ -36,7 +42,18 @@ const Signup = ({ navigation }) => {
       }
     } catch (err) {
       console.log(JSON.stringify(err));
+      console.log(err.code)
+
       setErr(true);
+      switch (err.code) {
+        case 'auth/weak-password':
+          setErrMsg('weak password');
+          break;
+
+        case 'auth/invalid-email':
+          setErrMsg('invalid email');
+          break;
+      }
     }
   };
 
@@ -56,6 +73,7 @@ const Signup = ({ navigation }) => {
           <FormControl.Label>Name</FormControl.Label>
           <Input
             isRequired
+            // isInvalid={'name' in errors}
             placeholder='xxxxxx'
             keyboardType='text'
             returnKeyType='next'
@@ -74,6 +92,7 @@ const Signup = ({ navigation }) => {
             value={email}
             onChangeText={value => setEmail(value)}
           />
+          {errMsg === 'invalid email' ? <Text color='red.900'>Invalid Email</Text> : ''}
         </FormControl>
         <FormControl>
           <FormControl.Label>Password</FormControl.Label>
@@ -86,9 +105,10 @@ const Signup = ({ navigation }) => {
             value={password}
             onChangeText={value => setPassword(value)}
           />
+          {errMsg === 'weak password' ? <Text color='red.900'>Invalid Password</Text> : ''}
         </FormControl>
-        <Text>Atleast 8 characters</Text>
-
+        <Text>Atleast 6 characters</Text>
+        
         {/* SV: removed as not needed in UI but code still here for reference */}
         {/* <Button onPress={pickImage} bg={BlueShades.primaryBlue}>
           Pick Image

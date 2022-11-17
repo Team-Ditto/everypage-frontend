@@ -1,5 +1,5 @@
-import { Text, StyleSheet } from 'react-native';
-import { useEffect, useContext } from 'react';
+import { Text, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
+import { useEffect, useContext, useState } from 'react';
 import { Button, VStack } from 'native-base';
 import { BlueShades, OrangeShades } from '../../assets/style/color';
 import { updateMyUserProfile } from '../../services/users-service';
@@ -7,6 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export default function ReaderInfo({ navigation }) {
   const { setCurrentUser } = useContext(AuthContext);
+  const [bgColor, setBgColor] = useState('A');
 
   useEffect(() => {
     navigation.setOptions({
@@ -21,30 +22,57 @@ export default function ReaderInfo({ navigation }) {
     // do not navigate from here, it should happen automatically
   };
 
+  const handleColor = () => {
+    setBgColor(!bgColor);
+  };
+
   return (
     <>
-      <VStack mt={10} mb={5} mx={5}>
+      <VStack mt={10} mb={5} mx={5} style={styles.container}>
         <Text style={{ fontSize: '34' }}>You're almost there @username</Text>
         <Text style={{ marginTop: 20, fontSize: '24' }}>What type of reader are you?</Text>
       </VStack>
       <VStack mx={5} space={30}>
-        <VStack style={styles.readerTypeContainer} space={1}>
+        <TouchableOpacity
+          // style={styles.readerTypeContainer}
+          space={1}
+          onPress={() => setBgColor('A')}
+          style={
+            bgColor === 'A'
+              ? (styles.readerTypeContainer, styles.colorOnSelet)
+              : (styles.readerTypeContainer, styles.colorDefault)
+          }
+        >
           <Text style={{ fontSize: '24' }}>Fast Reader</Text>
           <Text style={{ fontSize: '16' }}>Read one or more than one book in a day</Text>
-        </VStack>
-        <VStack style={styles.readerTypeContainer}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setBgColor('B')}
+          // style={styles.readerTypeContainer}
+          style={
+            bgColor === 'B'
+              ? (styles.readerTypeContainer, styles.colorOnSelet)
+              : (styles.readerTypeContainer, styles.colorDefault)
+          }
+        >
           <Text style={{ fontSize: '24' }}>Casual Reader</Text>
           <Text style={{ fontSize: '16' }}>Read book as often as I like</Text>
-        </VStack>
-        <VStack
-          style={styles.readerTypeContainer}
-          onPress={() => {
-            alert('asd');
-          }}
+        </TouchableOpacity>
+        <TouchableOpacity
+          // style={styles.readerTypeContainer}
+          onPress={
+            () => setBgColor('C')
+            // alert('asd');
+          }
+          style={
+            bgColor === 'C'
+              ? (styles.readerTypeContainer, styles.colorOnSelet)
+              : (styles.readerTypeContainer, styles.colorDefault)
+          }
         >
           <Text style={{ fontSize: '24' }}>Slow Reader</Text>
           <Text style={{ fontSize: '16' }}>Read one book in more than 3 days</Text>
-        </VStack>
+        </TouchableOpacity>
       </VStack>
       <VStack
         style={{
@@ -72,11 +100,30 @@ export default function ReaderInfo({ navigation }) {
 
 const styles = StyleSheet.create({
   readerTypeContainer: {
+    // backgroundColor: OrangeShades.quaternaryOrange,
+    borderWidth: 1,
+    borderColor: OrangeShades.primaryOrange,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+  },
+  colorOnSelet: {
+    backgroundColor: OrangeShades.primaryOrange,
+    borderWidth: 1,
+    borderColor: OrangeShades.primaryOrange,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+  },
+  colorDefault: {
     backgroundColor: OrangeShades.quaternaryOrange,
     borderWidth: 1,
     borderColor: OrangeShades.primaryOrange,
     paddingVertical: 20,
     paddingHorizontal: 25,
     borderRadius: 10,
+  },
+  container: {
+    borderTopRightRadius: 5,
   },
 });
