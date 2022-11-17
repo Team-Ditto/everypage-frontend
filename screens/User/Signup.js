@@ -111,6 +111,7 @@ const Signup = ({ navigation }) => {
                 value={email}
                 onChangeText={value => setEmail(value)}
               />
+              {errMsg === 'invalid email' ? <Text color='red.900'>Invalid Email</Text> : ''}
             </FormControl>
             <FormControl>
               <FormControl.Label>Password</FormControl.Label>
@@ -123,6 +124,7 @@ const Signup = ({ navigation }) => {
                 value={password}
                 onChangeText={value => setPassword(value)}
               />
+              {errMsg === 'weak password' ? <Text color='red.900'>Invalid Password</Text> : ''}
             </FormControl>
             <Text>At least 8 characters</Text>
 
