@@ -24,4 +24,4 @@ axiosRequest.interceptors.request.use(
   },
 );
 
-  export default axiosRequest;
+export default axiosRequest;

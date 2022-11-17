@@ -13,15 +13,19 @@ function GetSortedFilterSetting(sort) {
   }
 }
 
-export async function GetFilteredResults(filterSetting, isFromDiscover = false) {
+export async function GetFilteredResults(filterSetting, keyword, isFromDiscover = false) {
   console.log(filterSetting);
   let SortMethodolgy = GetSortedFilterSetting(filterSetting.sort);
-  let queryParams = `?page=1&perPage=5&sortBy=${SortMethodolgy.SortBy}&sortOrder=${SortMethodolgy.SortOrder}`;
+
+  let queryParams = `?page=1&perPage=${isFromDiscover ? '30' : '5'}&sortBy=${SortMethodolgy.SortBy}&sortOrder=${
+    SortMethodolgy.SortOrder
+  }`;
   let filterData = await getUsersBook(
     queryParams,
     filterSetting.genre,
     filterSetting.readingStatus,
     filterSetting.location,
+    keyword,
     isFromDiscover,
   );
   return filterData;

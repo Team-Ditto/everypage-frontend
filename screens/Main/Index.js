@@ -6,9 +6,9 @@ import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import FloatingButtons from '../Assets/FloatingButtons';
 import { getBooksOfLoginUser } from '../../firebase/firebase-service';
+import { getMyBooksShelfLocation } from '../../services/books-service';
 import { OrangeShades, WhiteShades } from '../../assets/style/color';
 import Filter from '../Assets/FilterSettings/Filter';
-import { getBooksByKeyword } from '../../services/books-service';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
@@ -24,10 +24,20 @@ const Home = ({ navigation }) => {
   const [bookStatus, setBookStatus] = useState('All');
   const { totalUnreadNotifications } = useContext(NotificationContext);
   const [refreshing, setRefreshing] = useState(false);
+  const [shelfLocations, setShelfLocations] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [filterSetting, setFilterSetting] = useState({
+    sort: 'Newly Added',
+    genre: 'Action & Adventure',
+    readingStatus: 'To Read',
+    location: shelfLocations.length > 0 ? shelfLocations[0] : '',
+  });
+  const [searchResultLabel, setSearchResultLabel] = useState('');
 
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
+
     GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
 
@@ -71,27 +81,35 @@ const Home = ({ navigation }) => {
       setFilteredData(books.data.results);
       setSpinnerVisible(false);
     });
+    const shelfLocation = await getMyBooksShelfLocation();
+    setShelfLocations(shelfLocation);
   }
 
-  const BookStatusChangeHandle = () => {};
-
-  const onSearchSubmitted = async searchText => {
-    const searchedBooks = await getBooksByKeyword(searchText);
-    setBookStatus(`Results for "${searchText}"`);
-    console.log('searchedBooks', searchedBooks);
-    setLibData(searchedBooks.data.results);
-    setFilteredData(searchedBooks.data.results);
-    navigation.setOptions({
-      title: `Search Results`,
-    });
+  const onSearchSubmitted = async () => {
+    if (searchText.length > 0) {
+      let filterData = await GetFilteredResults(filterSetting, searchText);
+      if (filterData !== undefined) {
+        console.log('filterData', filterData.data.results.length);
+        setLibData(filterData.data.results);
+        setFilteredData(filterData.data.results);
+        setSearchResultLabel(`Search Results for "${searchText}"`);
+        navigation.setOptions({
+          title: `Search Results`,
+        });
+      }
+    } else {
+      fetchData();
+      setSearchResultLabel('');
+    }
   };
 
-  const ApplyFilterSettings = async filterSetting => {
-    let filterData = await GetFilteredResults(filterSetting);
+  const ApplyFilterSettings = async () => {
+    let filterData = await GetFilteredResults(filterSetting, searchText);
     if (filterData !== undefined) {
       setLibData(filterData.data.results);
       setFilteredData(filterData.data.results);
     }
+    setSpinnerVisible(false);
   };
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -100,6 +118,9 @@ const Home = ({ navigation }) => {
     setRefreshing(true);
     wait(1000).then(() => {
       fetchData();
+      navigation.setOptions({
+        title: `${currentUser.displayName}'s Library`,
+      });
       setRefreshing(false);
     });
   }, []);
@@ -109,25 +130,34 @@ const Home = ({ navigation }) => {
       {/* Search component */}
       <Box display='flex' width='100%' mt='18px' mb='10px'>
         <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
-          <Filter ApplyFilterSettings={ApplyFilterSettings} />
+          <Search
+            searchText={searchText}
+            setSearchText={setSearchText}
+            navigation={navigation}
+            onSearchSubmitted={onSearchSubmitted}
+          />
+          <Filter
+            filterSetting={filterSetting}
+            setFilterSetting={setFilterSetting}
+            ApplyFilterSettings={ApplyFilterSettings}
+          />
         </HStack>
       </Box>
-      <View style={{ height: 70 }}>
+      <View style={{ height: 30 }} px={2}>
         <ScrollView
-          style={{ display: 'flex', flexDirection: 'row', margin: 5 }}
+          style={{ display: 'flex', flexDirection: 'row', mx: 2 }}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         >
           {BOOK_STATUS.map((status, idx) => {
             return (
-              <Box mx={1} mt={2} key={idx}>
+              <Box mx={1} key={idx}>
                 <Button
                   p={0}
                   h={28}
                   width={84}
                   variant='unstyled'
-                  borderRadius={10}
+                  borderRadius={5}
                   bg={bookStatus === status ? OrangeShades.primaryOrange : OrangeShades.quaternaryOrange}
                   _text={{ color: bookStatus === status ? WhiteShades.primaryWhite : OrangeShades.primaryOrange }}
                   style={{
@@ -144,7 +174,10 @@ const Home = ({ navigation }) => {
         </ScrollView>
       </View>
       {/* My Library Data Collection */}
-
+      {}
+      <Text px={3} py={3} w='100%' bold fontSize='lg'>
+        {searchResultLabel}
+      </Text>
       {libData === null ? (
         <Spinner
           visible={isSpinnerVisible}

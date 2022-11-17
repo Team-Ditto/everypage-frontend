@@ -27,12 +27,12 @@ export default function Wishlist({ navigation }) {
 
   return (
     <VStack style={{ height: '100%' }}>
-      <Box display='flex' width='100%' mt='18px' mb='10px'>
+      {/* <Box display='flex' width='100%' mt='18px' mb='10px'>
         <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
           <Search navigation={navigation} onFilterClicked={onFilterClicked} />
           <Filter />
         </HStack>
-      </Box>
+      </Box> */}
       <Box style={styles.tabsBox}>
         <HStack display='flex' flexDirection='row'>
           <Button

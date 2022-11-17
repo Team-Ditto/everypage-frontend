@@ -21,10 +21,19 @@ export default function Scanner({ navigation }) {
     var url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + data;
 
     axios.get(url).then(response => {
-      var book = response.data.items[0];
+      if (
+        response !== undefined &&
+        response.data !== undefined &&
+        response.data.items !== undefined &&
+        response.data.items.length > 0
+      ) {
+        var book = response.data.items[0];
 
-      console.log('BOOK DATA FROM GOOGLE : ', book); // eslint-disable-line no-console
-      navigation.navigate('AddBook', { book: book, ISBN: data });
+        console.log('BOOK DATA FROM GOOGLE : ', book); // eslint-disable-line no-console
+        navigation.navigate('AddBook', { book: book, ISBN: data });
+      } else {
+        console.log('BOOK NOT FOUND'); // eslint-disable-line no-console
+      }
     });
   };
 

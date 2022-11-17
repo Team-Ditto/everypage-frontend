@@ -28,6 +28,7 @@ export async function getUsersBook(
   genre = null,
   readingStatus = null,
   location = null,
+  keyword = null,
   isFromDiscover = false,
 ) {
   try {
@@ -42,6 +43,9 @@ export async function getUsersBook(
     }
     if (location) {
       queryParams += `&location=${location}`;
+    }
+    if (keyword !== '') {
+      queryParams += `&keyword=${keyword}`;
     }
 
     let url = '';
@@ -69,6 +73,15 @@ export async function getBooksByUserId(userId) {
 export async function getBooksByKeyword(keyword) {
   try {
     const books = axiosRequest.get(`/books/all?keyword=${keyword}`);
+    return books;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getMyBooks(queryparams) {
+  try {
+    const books = axiosRequest.get(`/books/mine?${queryparams}`);
     return books;
   } catch (error) {
     console.log(error);

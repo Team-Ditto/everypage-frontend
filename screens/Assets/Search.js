@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { BlueShades } from '../../assets/style/color';
 import BarScanner from '../../assets/searchbar-icons/bar-scanner.png';
 
-const Search = ({ navigation, onSearchSubmitted }) => {
-  const [searchText, setSearchText] = useState('');
+const Search = ({ searchText, setSearchText, navigation, onSearchSubmitted }) => {
   return (
     <Input
       ml={2}
@@ -32,8 +31,7 @@ const Search = ({ navigation, onSearchSubmitted }) => {
             }}
             size={6}
             ml='2'
-          >
-          </Icon>
+          ></Icon>
         </Button>
       }
       fontSize={16}
@@ -41,7 +39,8 @@ const Search = ({ navigation, onSearchSubmitted }) => {
       placeholder='Search'
       returnKeyType='done'
       onSubmitEditing={text => {
-        onSearchSubmitted(text.nativeEvent.text);
+        setSearchText(text.nativeEvent.text);
+        onSearchSubmitted();
       }}
     />
   );

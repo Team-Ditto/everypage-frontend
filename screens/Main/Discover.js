@@ -10,45 +10,49 @@ import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { NotificationContext } from '../../contexts/NotificationContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState([]);
-  const [isFilterVisible, setFilterVisible] = useState(false);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const { totalUnreadNotifications } = useContext(NotificationContext);
+  const { currentUser } = useContext(AuthContext);
+  const [filterSetting, setFilterSetting] = useState({
+    sort: 'Newly Added',
+    genre: 'Action & Adventure',
+    readingStatus: 'To Read',
+    location: currentUser['location'] !== undefined ? '1000' : undefined,
+  });
+  const [searchText, setSearchText] = useState('');
+
   useEffect(() => {
     async function fetchData() {
-      // const params = {
-      //   genre: '',
-      //   readingStatus: '',
-      // };
-
       let queryParams = `?page=1&perPage=30&sortBy=createdAt&sortOrder=asc`;
       let booksData = await getUsersBook(queryParams, '', '', '', true);
 
       if (booksData !== undefined && booksData.data.results.length > 0) {
         setSimilarBookData(booksData.data.results);
-        setFilterVisible(false);
       }
     }
     fetchData();
     GetNotificationHeader(navigation, totalUnreadNotifications);
   }, []);
-  const onFilterClicked = () => {
-    setFilterVisible(!isFilterVisible);
-  };
 
-  const ApplyFilterSettings = async filterSetting => {
-    let filterData = await GetFilteredResults(filterSetting, true);
-    console.log('filterData', filterData);
+  const ApplyFilterSettings = async () => {
+    let filterData = await GetFilteredResults(filterSetting, searchText, true);
     if (filterData !== undefined && filterData.data !== undefined) {
+      console.log('filterData', filterData.data.results.length);
       setSimilarBookData(filterData.data.results);
     }
   };
 
-  const onSearchSubmitted = async searchText => {
-    const searchedBooks = await getBooksByKeyword(searchText);
-    setSimilarBookData(searchedBooks.data.results);
+  const onSearchSubmitted = async () => {
+    let filterData = await GetFilteredResults(filterSetting, searchText, true);
+    if (filterData !== undefined && filterData.data !== undefined) {
+      console.log('filterData', filterData.data.results.length);
+      setSimilarBookData(filterData.data.results);
+    }
+    setSpinnerVisible(false);
   };
 
   return (
@@ -56,8 +60,18 @@ export default function Discover({ navigation }) {
       {/* Search component */}
       <Box display='flex' width='100%' mt='18px' mb='10px'>
         <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
-          <Filter ApplyFilterSettings={ApplyFilterSettings} isFromDiscover={true} />
+          <Search
+            searchText={searchText}
+            setSearchText={setSearchText}
+            navigation={navigation}
+            onSearchSubmitted={onSearchSubmitted}
+          />
+          <Filter
+            filterSetting={filterSetting}
+            setFilterSetting={setFilterSetting}
+            ApplyFilterSettings={ApplyFilterSettings}
+            isFromDiscover={true}
+          />
         </HStack>
       </Box>
       {/* Genre Generation */}
