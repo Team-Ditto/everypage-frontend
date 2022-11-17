@@ -1,6 +1,6 @@
 export const REQUEST_TIMEOUT = 15000;
 
-export const LOCAL_BASE_URL = 'http://10.0.0.47:3200/api/v1/';
+export const LOCAL_BASE_URL = 'https://everypage.herokuapp.com/api/v1';
 
 // if you want to run backend locally then follow below steps
 // 1) please use your IPV4 address and not localhost
