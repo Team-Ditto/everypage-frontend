@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
-import { StyleSheet } from 'react-native';
-import { VStack, Box, HStack, Button, ScrollView } from 'native-base';
+import { StyleSheet, Dimensions } from 'react-native';
+import { VStack, Box, HStack, Button, ScrollView, KeyboardAvoidingView } from 'native-base';
 import { OrangeShades } from '../../assets/style/color';
 
 import Search from '../Assets/Search';
@@ -26,41 +26,49 @@ export default function Wishlist({ navigation }) {
   }, []);
 
   return (
-    <VStack style={{ height: '100%' }}>
-      {/* <Box display='flex' width='100%' mt='18px' mb='10px'>
-        <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
-          <Search navigation={navigation} onFilterClicked={onFilterClicked} />
-          <Filter />
-        </HStack>
-      </Box> */}
-      <Box style={styles.tabsBox}>
-        <HStack display='flex' flexDirection='row'>
-          <Button
-            style={isForLater ? styles.activeTab : styles.inactiveTab}
-            _text={isForLater ? styles.activeTab : styles.inactiveTab}
-            onPress={() => handleInput(true)}
-          >
-            For Later
-          </Button>
-          <Button
-            style={isForLater ? styles.inactiveTab : styles.activeTab}
-            _text={isForLater ? styles.inactiveTab : styles.activeTab}
-            onPress={() => handleInput(false)}
-          >
-            Requested
-          </Button>
-        </HStack>
-      </Box>
-      <ScrollView>
-        <Box>
-          {isForLater ? (
-            <ForLater navigation={navigation} handleInput={handleInput} />
-          ) : (
-            <Requested navigation={navigation} handleInput={handleInput} />
-          )}
+    <KeyboardAvoidingView
+      h={{
+        base: Dimensions.get('window').height - 90,
+        lg: 'auto',
+      }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <VStack style={{ height: '100%' }}>
+        {/* <Box display='flex' width='100%' mt='18px' mb='10px'>
+          <HStack pl={2} display='flex' justifyContent='center' alignItems='center'>
+            <Search navigation={navigation} onFilterClicked={onFilterClicked} />
+            <Filter />
+          </HStack>
+        </Box> */}
+        <Box style={styles.tabsBox}>
+          <HStack display='flex' flexDirection='row'>
+            <Button
+              style={isForLater ? styles.activeTab : styles.inactiveTab}
+              _text={isForLater ? styles.activeTab : styles.inactiveTab}
+              onPress={() => handleInput(true)}
+            >
+              For Later
+            </Button>
+            <Button
+              style={isForLater ? styles.inactiveTab : styles.activeTab}
+              _text={isForLater ? styles.inactiveTab : styles.activeTab}
+              onPress={() => handleInput(false)}
+            >
+              Requested
+            </Button>
+          </HStack>
         </Box>
-      </ScrollView>
-    </VStack>
+        <ScrollView>
+          <Box>
+            {isForLater ? (
+              <ForLater navigation={navigation} handleInput={handleInput} />
+            ) : (
+              <Requested navigation={navigation} handleInput={handleInput} />
+            )}
+          </Box>
+        </ScrollView>
+      </VStack>
+    </KeyboardAvoidingView>
   );
 }
 

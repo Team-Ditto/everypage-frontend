@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { VStack, Text, Box, ScrollView, HStack } from 'native-base';
+import { VStack, Text, Box, ScrollView, HStack, KeyboardAvoidingView } from 'native-base';
+import { Dimensions } from 'react-native';
 import Search from '../Assets/Search';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { getUsersBook } from '../../services/books-service';
@@ -36,24 +37,32 @@ const SingleGenre = ({ navigation, route }) => {
 
   return (
     <>
-      <VStack margin={2} style={{ height: '100%' }}>
-        <Box display='flex' width='100%' mt={2}>
-          <HStack display='flex' justifyContent='center' alignItems='center'>
-            <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
-            {/* <Filter ApplyFilterSettings={ApplyFilterSettings} /> */}
-          </HStack>
-        </Box>
-        <Text px={2} pt={2}>
-          {searchResults.length} Books
-        </Text>
-        <ScrollView>
-          <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-            {searchResults.map((r, id) => {
-              return <MyLibraryCard key={id} data={r} navigation={navigation} showWishListIcon={true} />;
-            })}
+      <KeyboardAvoidingView
+        h={{
+          base: Dimensions.get('window').height - 90,
+          lg: 'auto',
+        }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <VStack margin={2} style={{ height: '100%' }}>
+          <Box display='flex' width='100%' mt={2}>
+            <HStack display='flex' justifyContent='center' alignItems='center'>
+              <Search navigation={navigation} onSearchSubmitted={onSearchSubmitted} />
+              {/* <Filter ApplyFilterSettings={ApplyFilterSettings} /> */}
+            </HStack>
           </Box>
-        </ScrollView>
-      </VStack>
+          <Text px={2} pt={2}>
+            {searchResults.length} Books
+          </Text>
+          <ScrollView>
+            <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+              {searchResults.map((r, id) => {
+                return <MyLibraryCard key={id} data={r} navigation={navigation} showWishListIcon={true} />;
+              })}
+            </Box>
+          </ScrollView>
+        </VStack>
+      </KeyboardAvoidingView>
     </>
   );
 };
