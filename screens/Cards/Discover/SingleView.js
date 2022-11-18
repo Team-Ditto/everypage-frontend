@@ -213,7 +213,7 @@ const SingleView = ({ navigation, route }) => {
         </VStack>
       </ScrollView>
       <Divider shadow={2} />
-      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) && (
+      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) && borrowingStatus !== 'In-Use' && (
         <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
           {ShowButtonAsPerHoldStatus('On-Hold')}
         </Box>
