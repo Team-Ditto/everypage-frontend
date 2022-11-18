@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   VStack,
   HStack,
@@ -30,6 +30,7 @@ import SelectBookStatus from '../../Main/Book/SelectBookStatus';
 import { getBookById, updateBookStatusById } from '../../../services/books-service';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { triggerNotificationForAction } from '../../../services/trigger-service';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const SingleBook = ({ navigation, route }) => {
   const bookId = route.params.bookId;
@@ -38,7 +39,7 @@ const SingleBook = ({ navigation, route }) => {
   const [showModal, setShowModal] = useState(false);
   const [switchValue, setSwitchValue] = useState(false);
   const [borrowingStatusButton, setBorrowingStatusButton] = useState(null);
-
+  const { currentUser } = useContext(AuthContext);
   const handleBorrowingStatus = b => {
     switch (b) {
       case 'Available':
@@ -53,15 +54,9 @@ const SingleBook = ({ navigation, route }) => {
   useEffect(() => {
     getSingleBook();
   }, []);
-
-  useEffect(() => {
-    console.log(switchValue);
-  }, [switchValue]);
-
   const getSingleBook = async () => {
     const book = await getBookById(bookId);
     setBookData(book.data);
-    console.log('fetech book data: ', book.data);
     setSwitchValue(book.data.shareable);
     setBorrowingStatusButton(book.data.borrowingStatus);
     setSpinnerVisible(false);
@@ -71,8 +66,14 @@ const SingleBook = ({ navigation, route }) => {
     setShowModal(!showModal);
   };
 
-  const handleBorrowingStatusSelected = status => {
+  const handleBorrowingStatusSelected = async status => {
+    setSpinnerVisible(true);
     setBorrowingStatusButton(status);
+    await updateBookStatusById(bookId, { borrowingStatus: status });
+    setBookData({ ...bookData, borrowingStatus: status });
+    // setBookData(updatedBook.data);
+    setSpinnerVisible(false);
+    setShowModal(false);
   };
 
   const HandleAcceptRequest = async () => {
@@ -90,16 +91,36 @@ const SingleBook = ({ navigation, route }) => {
   };
 
   const HandleReturnBook = async () => {
-    // setBookData({});
-    // setSpinnerVisible(true);
-    // await triggerNotificationForAction({ triggerType: 'user_returns', book: bookId });
-    // await getSingleBook();
-    alert('Working on the Feature....Have faith!!!');
+    setBookData({});
+    setSpinnerVisible(true);
+    await triggerNotificationForAction({ triggerType: 'user_returns', book: bookId });
+    await getSingleBook();
   };
 
   const setShareable = async value => {
     await updateBookStatusById(bookId, { shareable: value });
     setSwitchValue(value);
+  };
+
+  const GenerateButtonAsPerBookOwner = () => {
+    if (bookData.owner._id !== currentUser._id) {
+      return (
+        <Button
+          marginY={5}
+          _text={{ color: WhiteShades.primaryWhite }}
+          style={{
+            backgroundColor: BlueShades.primaryBlue,
+            width: '90%',
+            height: 50,
+          }}
+          onPress={HandleReturnBook}
+        >
+          Return
+        </Button>
+      );
+    } else {
+      return <></>;
+    }
   };
 
   return (
@@ -274,31 +295,24 @@ const SingleBook = ({ navigation, route }) => {
           </Button>
         </HStack>
       )}
-      {bookData && bookData.bearer && borrowingStatusButton === 'On-Hold' && (
-        <HStack
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            backgroundColor: WhiteShades.primaryWhite,
-          }}
-        >
-          <Button
-            marginY={5}
-            _text={{ color: WhiteShades.primaryWhite }}
+
+      {bookData &&
+        bookData.bearer &&
+        !bookData.bookReturnRequest &&
+        (borrowingStatusButton === 'On-Hold' || borrowingStatusButton === 'In-Use') && (
+          <HStack
             style={{
-              backgroundColor: BlueShades.primaryBlue,
-              width: '90%',
-              height: 50,
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              backgroundColor: WhiteShades.primaryWhite,
             }}
-            onPress={HandleReturnBook}
           >
-            Return
-          </Button>
-        </HStack>
-      )}
+            {GenerateButtonAsPerBookOwner()}
+          </HStack>
+        )}
     </>
   );
 };
