@@ -23,13 +23,11 @@ import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { NotificationContext } from '../../contexts/NotificationContext';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Discover({ navigation }) {
   const [similarBookData, setSimilarBookData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
-  const { totalUnreadNotifications } = useContext(NotificationContext);
   const { currentUser } = useContext(AuthContext);
   const [filterSetting, setFilterSetting] = useState({
     sort: 'Newly Added',
@@ -49,7 +47,7 @@ export default function Discover({ navigation }) {
       }
     }
     fetchData();
-    GetNotificationHeader(navigation, totalUnreadNotifications);
+    GetNotificationHeader(navigation);
   }, []);
 
   const ApplyFilterSettings = async () => {

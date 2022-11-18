@@ -9,7 +9,11 @@ const NotificationsMain = ({ navigation, handleInput }) => {
 
   return (
     <VStack>
-      <ScrollView h='100%'>
+      <ScrollView
+        style={{
+          marginBottom: 200,
+        }}
+      >
         {notifications?.map(notification => {
           return (
             <View key={notification._id}>

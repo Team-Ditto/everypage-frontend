@@ -7,11 +7,13 @@ import NotificationsMain from '../Notifications/NotificationsMain';
 import MessagesMain from '../Notifications/MessagesMain';
 import Filter from '../Assets/FilterSettings/Filter';
 import { NotificationContext } from '../../contexts/NotificationContext';
+import { ChatContext } from '../../contexts/ChatContext';
 
 const Notifications = ({ navigation }) => {
   //const [wishlistData, setWishlistData] = useState(WishlistData);
   const [isNotifications, setIsNotifications] = useState(true);
   const { totalUnreadNotifications } = useContext(NotificationContext);
+  const { data } = useContext(ChatContext);
 
   function handleInput(value) {
     setIsNotifications(value);
@@ -40,7 +42,13 @@ const Notifications = ({ navigation }) => {
             onPress={() => handleInput(true)}
           >
             Notifications
-            <Text position='absolute' left='95' top='-1' fontSize='16' color='white'>
+            <Text
+              position='absolute'
+              left='95'
+              top='-1'
+              fontSize='16'
+              style={isNotifications ? styles.activeColor : styles.inactiveColor}
+            >
               {totalUnreadNotifications}
             </Text>
           </Button>
@@ -50,6 +58,15 @@ const Notifications = ({ navigation }) => {
             onPress={() => handleInput(false)}
           >
             Messages
+            <Text
+              position='absolute'
+              right='-20'
+              top='-1'
+              fontSize='16'
+              style={isNotifications ? styles.inactiveColor : styles.activeColor}
+            >
+              {data.userChats.length}
+            </Text>
           </Button>
         </HStack>
       </Box>
@@ -88,12 +105,14 @@ const styles = StyleSheet.create({
     color: OrangeShades.quaternaryOrange,
     flexGrow: true,
     borderRadius: '9px',
+    position: 'relative',
   },
   inactiveTab: {
     backgroundColor: OrangeShades.quaternaryOrange,
     color: OrangeShades.primaryOrange,
     flexGrow: true,
     borderRadius: '9px',
+    position: 'relative',
   },
   main: {
     marginTop: 17,
@@ -102,6 +121,12 @@ const styles = StyleSheet.create({
     justifySelf: 'center',
     width: '92%',
     height: '100%',
+  },
+  activeColor: {
+    color: OrangeShades.quaternaryOrange,
+  },
+  inactiveColor: {
+    color: OrangeShades.primaryOrange,
   },
 });
 

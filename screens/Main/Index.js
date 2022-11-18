@@ -13,7 +13,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { NotificationContext } from '../../contexts/NotificationContext';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -22,7 +21,6 @@ const Home = ({ navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-  const { totalUnreadNotifications } = useContext(NotificationContext);
   const [refreshing, setRefreshing] = useState(false);
   const [shelfLocations, setShelfLocations] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -38,7 +36,7 @@ const Home = ({ navigation }) => {
     SetTopScreenTitle();
     fetchData();
 
-    GetNotificationHeader(navigation, totalUnreadNotifications);
+    GetNotificationHeader(navigation);
   }, []);
 
   useEffect(() => {

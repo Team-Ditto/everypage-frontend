@@ -8,12 +8,11 @@ import ForLater from '../Wishlist/ForLater';
 import Requested from '../Wishlist/Requested';
 import Filter from '../Assets/FilterSettings/Filter';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
-import { NotificationContext } from '../../contexts/NotificationContext';
+
 export default function Wishlist({ navigation }) {
   const [isForLater, setIsForLater] = useState(true);
   const [status, setStatus] = useState('For Later');
   const [isFilterVisible, setFilterVisible] = useState(false);
-  const { totalUnreadNotifications } = useContext(NotificationContext);
   function handleInput(value) {
     setIsForLater(value);
   }
@@ -22,7 +21,7 @@ export default function Wishlist({ navigation }) {
   };
 
   useEffect(() => {
-    GetNotificationHeader(navigation, totalUnreadNotifications);
+    GetNotificationHeader(navigation);
   }, []);
 
   return (
