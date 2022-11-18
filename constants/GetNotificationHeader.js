@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Button, Image, Text, View, Pressable } from 'native-base';
 
-import {  BlueShades, OrangeShades} from '../assets/style/color';
+import { BlueShades, OrangeShades } from '../assets/style/color';
 import { NotificationContext } from '../contexts/NotificationContext';
 
 export const GetNotificationHeader = navigation => {
@@ -34,7 +34,7 @@ const NotificationBadge = ({ navigation }) => {
           style={{
             fontSize: 16,
             position: 'absolute',
-            right: 8,
+            right: 0,
             color: totalUnreadNotifications == 0 ? BlueShades.primaryBlue : OrangeShades.primaryOrange,
           }}
           fontSize={24}
