@@ -1,21 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
 import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/color';
 import { requestToBorrow, requestCancelHold } from '../../../services/notifications-services';
 import WishlistButton from '../../Assets/WishlistButton';
 import { deleteWishlistByBookId } from '../../../services/wishlists-service';
 import { OrangeShades } from '../../../assets/style/color';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData }) => {
   const [isWishlisted, setIsWishlisted] = useState(true);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const { book } = data;
 
   let curStyle = {};
 
   const handleWishlistPress = async () => {
     if (isWishlisted) {
-      setIsWishlisted(false);
-      await deleteWishlistByBookId(data.book._id);
+      const deletedWishlist = await deleteWishlistByBookId(data.book._id);
+      const filteredWishlists = currentUser.wishlists.filter(item => item._id !== deletedWishlist._id);
+      setCurrentUser({ ...currentUser, wishlists: filteredWishlists });
       await fetchData();
     }
   };
