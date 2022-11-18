@@ -14,10 +14,31 @@ const AddBook = ({ route, navigation }) => {
     routeBookData = route.params.book; // eslint-disable-line react/prop-types
   }
   const [bookObj, setBookObj] = useState({
-    title: routeBookData === undefined ? '' : routeBookData.volumeInfo.title, // eslint-disable-line react/prop-types
-    author: routeBookData === undefined ? '' : routeBookData.volumeInfo.authors[0], // eslint-disable-line react/prop-types
-    images: routeBookData === undefined ? [] : [routeBookData.volumeInfo.imageLinks.thumbnail], // eslint-disable-line react/prop-types
-    language: routeBookData === undefined ? '' : routeBookData.volumeInfo.language, // eslint-disable-line react/prop-types
+    title:
+      routeBookData === undefined &&
+      routeBookData.volumeInfo === undefined &&
+      routeBookData.volumeInfo.title === undefined
+        ? ''
+        : routeBookData.volumeInfo.title, // eslint-disable-line react/prop-types
+    author:
+      routeBookData === undefined &&
+      routeBookData.volumeInfo === undefined &&
+      routeBookData.volumeInfo.authors === undefined
+        ? ''
+        : routeBookData.volumeInfo.authors[0], // eslint-disable-line react/prop-types
+    images:
+      routeBookData !== undefined &&
+      routeBookData !== null &&
+      routeBookData.volumeInfo !== undefined &&
+      routeBookData.volumeInfo.imageLinks !== undefined
+        ? [routeBookData.volumeInfo.imageLinks.thumbnail] // eslint-disable-line react/prop-types
+        : [],
+    language:
+      routeBookData === undefined &&
+      routeBookData.volumeInfo === undefined &&
+      routeBookData.volumeInfo.language === undefined
+        ? ''
+        : routeBookData.volumeInfo.language, // eslint-disable-line react/prop-types
     genre: '',
     edition: '',
     ISBN: route.params === undefined ? '' : route.params.ISBN, // eslint-disable-line react/prop-types
@@ -25,7 +46,12 @@ const AddBook = ({ route, navigation }) => {
     readingStatus: 'To Read',
     location: '',
     shareable: false,
-    notes: routeBookData === undefined ? '' : routeBookData.volumeInfo.description, // eslint-disable-line react/prop-types
+    notes:
+      routeBookData === undefined &&
+      routeBookData.volumeInfo === undefined &&
+      routeBookData.volumeInfo.description === undefined
+        ? ''
+        : routeBookData.volumeInfo.description, // eslint-disable-line react/prop-types
   });
 
   const handleSaveBtn = async () => {

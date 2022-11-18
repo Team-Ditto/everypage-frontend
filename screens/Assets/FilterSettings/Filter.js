@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   modalView: {
-    width: '50%',
+    width: '55%',
     height: '100%',
     backgroundColor: 'white',
     borderRadius: 20,
