@@ -11,47 +11,40 @@ import ReadingStatus from './ReadingStatus';
 const AddBook = ({ route, navigation }) => {
   let routeBookData = undefined;
   if (route.params !== undefined && route.params.book !== undefined) {
-    routeBookData = route.params.book; // eslint-disable-line react/prop-types
+    routeBookData = route.params.book;
   }
   const [bookObj, setBookObj] = useState({
     title:
-      routeBookData === undefined &&
-      routeBookData.volumeInfo === undefined &&
-      routeBookData.volumeInfo.title === undefined
-        ? ''
-        : routeBookData.volumeInfo.title, // eslint-disable-line react/prop-types
+      routeBookData && routeBookData.volumeInfo && routeBookData.volumeInfo.title ? routeBookData.volumeInfo.title : '',
     author:
-      routeBookData === undefined &&
-      routeBookData.volumeInfo === undefined &&
-      routeBookData.volumeInfo.authors === undefined
-        ? ''
-        : routeBookData.volumeInfo.authors[0], // eslint-disable-line react/prop-types
+      routeBookData &&
+      routeBookData.volumeInfo &&
+      routeBookData.volumeInfo.authors &&
+      routeBookData.volumeInfo.authors.length > 0
+        ? routeBookData.volumeInfo.authors[0]
+        : '',
     images:
-      routeBookData !== undefined &&
-      routeBookData !== null &&
-      routeBookData.volumeInfo !== undefined &&
-      routeBookData.volumeInfo.imageLinks !== undefined
-        ? [routeBookData.volumeInfo.imageLinks.thumbnail] // eslint-disable-line react/prop-types
+      routeBookData &&
+      routeBookData.volumeInfo &&
+      routeBookData.volumeInfo.imageLinks &&
+      routeBookData.volumeInfo.imageLinks.thumbnail
+        ? [routeBookData.volumeInfo.imageLinks.thumbnail]
         : [],
     language:
-      routeBookData === undefined &&
-      routeBookData.volumeInfo === undefined &&
-      routeBookData.volumeInfo.language === undefined
-        ? ''
-        : routeBookData.volumeInfo.language, // eslint-disable-line react/prop-types
+      routeBookData && routeBookData.volumeInfo && routeBookData.volumeInfo.language
+        ? routeBookData.volumeInfo.language
+        : '',
     genre: '',
     edition: '',
-    ISBN: route.params === undefined ? '' : route.params.ISBN, // eslint-disable-line react/prop-types
+    ISBN: route && route.params && route && route.params.ISBN ? route.params.ISBN : '',
     bookCondition: '',
     readingStatus: 'To Read',
     location: '',
     shareable: false,
     notes:
-      routeBookData === undefined &&
-      routeBookData.volumeInfo === undefined &&
-      routeBookData.volumeInfo.description === undefined
-        ? ''
-        : routeBookData.volumeInfo.description, // eslint-disable-line react/prop-types
+      routeBookData && routeBookData.volumeInfo && routeBookData.volumeInfo.description
+        ? routeBookData.volumeInfo.description
+        : '',
   });
 
   const handleSaveBtn = async () => {
