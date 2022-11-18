@@ -29,18 +29,20 @@ const NotificationBadge = ({ navigation }) => {
         >
           <Image source={require('../assets/notification.png')} alt='notification icon' />
         </Button>
-        <Text
-          bold
-          style={{
-            fontSize: 16,
-            position: 'absolute',
-            right: 0,
-            color: totalUnreadNotifications == 0 ? BlueShades.primaryBlue : OrangeShades.primaryOrange,
-          }}
-          fontSize={24}
-        >
-          {totalUnreadNotifications}
-        </Text>
+        {totalUnreadNotifications > 0 && (
+          <Text
+            bold
+            style={{
+              fontSize: 16,
+              position: 'absolute',
+              right: 7,
+              color: OrangeShades.primaryOrange,
+            }}
+            fontSize={24}
+          >
+            {totalUnreadNotifications}
+          </Text>
+        )}
       </Pressable>
     </View>
   );
