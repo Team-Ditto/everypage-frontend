@@ -115,10 +115,12 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
         </AspectRatio>
         <Box pt={1} pb={3}>
           <VStack>
-            <Text fontWeight='semibold' textTransform='capitalize'>
+            <Text fontWeight='semibold' textTransform='capitalize' numberOfLines={2} ellipsizeMode='tail'>
               {title}
             </Text>
-            <Text>{author}</Text>
+            <Text numberOfLines={2} ellipsizeMode='tail'>
+              {author}
+            </Text>
           </VStack>
         </Box>
       </VStack>
