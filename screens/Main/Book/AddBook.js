@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { FormControl, Input, TextArea, Button, VStack } from 'native-base';
+import { ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { FormControl, Input, TextArea, Button, VStack, KeyboardAvoidingView } from 'native-base';
 
 import { BlueShades, WhiteShades } from '../../../assets/style/color';
 import { uploadBookPictures } from '../../../firebase/firebase-service';
@@ -58,53 +58,67 @@ const AddBook = ({ route, navigation }) => {
   };
 
   return (
-    <VStack bg='muted.50' padding={3}>
-      <ScrollView>
-        <FormControl required>
-          <FormControl.Label color='black'>TITLE</FormControl.Label>
-          <Input
-            borderWidth={0}
-            style={styles.inputStyle}
-            borderRadius={10}
-            value={bookObj.title} // eslint-disable-line react/prop-types
-            onChangeText={text => {
-              setBookObj(prevState => ({ ...prevState, title: text }));
-            }}
-          />
-        </FormControl>
-        <FormControl required my={2}>
-          <FormControl.Label>AUTHOR</FormControl.Label>
-          <Input
-            borderWidth={0}
-            style={styles.inputStyle}
-            borderRadius={10}
-            value={bookObj.author} // eslint-disable-line react/prop-types
-            onChangeText={text => {
-              setBookObj(prevState => ({ ...prevState, author: text }));
-            }}
-          />
-        </FormControl>
-        <BookDetail bookObj={bookObj} setBookObj={setBookObj} />
-        <ReadingStatus bookObj={bookObj} setBookObj={setBookObj} />
-        <FormControl my={2} mt={4}>
-          <FormControl.Label>ADDITIONAL INFORMAITON</FormControl.Label>
-          <TextArea
-            placeholder='Note'
-            height={30}
-            borderWidth={0}
-            borderRadius={10}
-            value={bookObj.notes} // eslint-disable-line react/prop-types
-            bg={BlueShades.tertiaryBlue}
-            onChangeText={text => {
-              setBookObj(prevState => ({ ...prevState, notes: text }));
-            }}
-          />
-        </FormControl>
-        <Button onPress={handleSaveBtn} my={2} bg={BlueShades.primaryBlue} _text={{ color: WhiteShades.primaryWhite }}>
-          Save
-        </Button>
-      </ScrollView>
-    </VStack>
+    <KeyboardAvoidingView
+      h={{
+        base: Dimensions.get('window').height - 40,
+        lg: 'auto',
+      }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <VStack bg='muted.50' padding={3}>
+        <ScrollView>
+          <FormControl required>
+            <FormControl.Label color='black'>TITLE</FormControl.Label>
+            <Input
+              borderWidth={0}
+              style={styles.inputStyle}
+              borderRadius={10}
+              value={bookObj.title} // eslint-disable-line react/prop-types
+              onChangeText={text => {
+                setBookObj(prevState => ({ ...prevState, title: text }));
+              }}
+            />
+          </FormControl>
+          <FormControl required my={2}>
+            <FormControl.Label>AUTHOR</FormControl.Label>
+            <Input
+              borderWidth={0}
+              style={styles.inputStyle}
+              borderRadius={10}
+              value={bookObj.author} // eslint-disable-line react/prop-types
+              onChangeText={text => {
+                setBookObj(prevState => ({ ...prevState, author: text }));
+              }}
+            />
+          </FormControl>
+          <BookDetail bookObj={bookObj} setBookObj={setBookObj} />
+          <ReadingStatus bookObj={bookObj} setBookObj={setBookObj} />
+          <FormControl my={2} mt={4}>
+            <FormControl.Label>ADDITIONAL INFORMAITON</FormControl.Label>
+            <TextArea
+              placeholder='Note'
+              height={30}
+              borderWidth={0}
+              borderRadius={10}
+              value={bookObj.notes} // eslint-disable-line react/prop-types
+              bg={BlueShades.tertiaryBlue}
+              onChangeText={text => {
+                setBookObj(prevState => ({ ...prevState, notes: text }));
+              }}
+            />
+          </FormControl>
+          <Button
+            onPress={handleSaveBtn}
+            mt={2}
+            mb={20}
+            bg={BlueShades.primaryBlue}
+            _text={{ color: WhiteShades.primaryWhite }}
+          >
+            Save
+          </Button>
+        </ScrollView>
+      </VStack>
+    </KeyboardAvoidingView>
   );
 };
 
