@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
-import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/color';
+import { InUseColor, OnHoldColor, SuccessColor, BlueShades } from '../../../assets/style/color';
 import { requestToBorrow, requestCancelHold } from '../../../services/notifications-services';
 import WishlistButton from '../../Assets/WishlistButton';
 import { deleteWishlistByBookId } from '../../../services/wishlists-service';
@@ -25,7 +25,7 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
 
   async function handleRequestToBorrow() {
     if (book.borrowingStatus !== 'Available') return;
-    
+
     const requestedObject = {
       wishlist: data._id,
       triggerType: 'request_to_borrow',
@@ -143,11 +143,16 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
         </HStack>
       </Pressable>
       {selectedTab == 'ForLater' ? (
-        <Button disabled={book.borrowingStatus !== 'Available'} mt='15px' onPress={handleRequestToBorrow}>
+        <Button
+          disabled={book.borrowingStatus !== 'Available'}
+          backgroundColor={BlueShades.primaryBlue}
+          mt='15px'
+          onPress={handleRequestToBorrow}
+        >
           Request to Borrow
         </Button>
       ) : (
-        <Button mt='15px' onPress={handleCancelHold}>
+        <Button mt='15px' onPress={handleCancelHold} backgroundColor={BlueShades.primaryBlue}>
           Cancel Hold
         </Button>
       )}
