@@ -16,7 +16,7 @@ export default function App() {
         <ChatContextProvider>
           <NativeBaseProvider>
             <AppStack />
-            <StatusBar style='inverted' />
+            <StatusBar style='auto' />
           </NativeBaseProvider>
         </ChatContextProvider>
       </NotificationContextProvider>

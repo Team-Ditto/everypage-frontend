@@ -148,9 +148,9 @@ const Home = ({ navigation }) => {
             />
           </HStack>
         </Box>
-        <View style={{ height: 30 }} px={2}>
+        <View pb={2} px={2}>
           <ScrollView
-            style={{ display: 'flex', flexDirection: 'row', mx: 2 }}
+            style={{ display: 'flex', flexDirection: 'row', marginHorizontal: 4 }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
@@ -179,10 +179,6 @@ const Home = ({ navigation }) => {
           </ScrollView>
         </View>
         {/* My Library Data Collection */}
-        {}
-        <Text px={3} py={3} w='100%' bold fontSize='lg'>
-          {searchResultLabel}
-        </Text>
         {libData === null ? (
           <Spinner
             visible={isSpinnerVisible}
@@ -191,20 +187,25 @@ const Home = ({ navigation }) => {
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
           />
         ) : libData.length > 0 ? (
-          <ScrollView
-            contentContainerStyle={styles.scrollView}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-          >
-            <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-              {filteredData ? (
-                filteredData.map((data, id) => {
-                  return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                })
-              ) : (
-                <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
-              )}
-            </Box>
-          </ScrollView>
+          <>
+            {/* <Text px={3} py={3} w='100%' bold fontSize='lg'>
+              {searchResultLabel}
+            </Text> */}
+            <ScrollView
+              contentContainerStyle={styles.scrollView}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            >
+              <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+                {filteredData ? (
+                  filteredData.map((data, id) => {
+                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  })
+                ) : (
+                  <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+                )}
+              </Box>
+            </ScrollView>
+          </>
         ) : (
           <ScrollView
             contentContainerStyle={styles.scrollView}
@@ -221,10 +222,9 @@ const Home = ({ navigation }) => {
                 Now that you have your digital bookshelf setup. Let's addsome books to your Library
               </Text>
             </View>
-            <Image style={styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
           </ScrollView>
         )}
-        <FloatingButtons navigation={navigation} />
+        <FloatingButtons navigation={navigation} libDataLength={libData.length} />
       </VStack>
     </KeyboardAvoidingView>
   );
@@ -272,11 +272,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 10,
     lineHeight: 30,
-  },
-  downArrow: {
-    position: 'absolute',
-    bottom: 8,
-    right: 50,
   },
 });
 
