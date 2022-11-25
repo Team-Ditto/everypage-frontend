@@ -169,6 +169,24 @@ const SingleView = ({ navigation, route }) => {
                   </Badge>
                 </Box>
               </HStack>
+              <HStack my={3} alignItems='center'>
+                <Text fontSize='16px'>Owned by </Text>
+                {bookData.owner !== undefined ? (
+                  <Avatar
+                    size='sm'
+                    w='30px'
+                    mx={1}
+                    source={{
+                      uri: bookData.owner.photoURL,
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+                <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
+                  {bookData.owner !== undefined ? bookData.owner.displayName : ''}
+                </Link>
+              </HStack>
               <HStack mb={5} mt={3} alignItems='center'>
                 {requestor && Object.keys(requestor).length > 0 && (
                   <>
@@ -213,11 +231,12 @@ const SingleView = ({ navigation, route }) => {
         </VStack>
       </ScrollView>
       <Divider shadow={2} />
-      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) && borrowingStatus !== 'In-Use' && (
-        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
-          {ShowButtonAsPerHoldStatus('On-Hold')}
-        </Box>
-      )}
+      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) &&
+        borrowingStatus !== 'In-Use' && (
+          <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+            {ShowButtonAsPerHoldStatus('On-Hold')}
+          </Box>
+        )}
 
       {bearer && bearer._id === currentUser._id && borrowingStatus === 'In-Use' && (
         <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>

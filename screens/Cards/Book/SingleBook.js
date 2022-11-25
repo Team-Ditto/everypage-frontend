@@ -127,129 +127,153 @@ const SingleBook = ({ navigation, route }) => {
     <>
       <ScrollView>
         {bookData && Object.keys(bookData).length > 0 ? (
-          <VStack>
-            <Carousel position='sticky' top={0} images={bookData.images !== undefined ? bookData.images : []} />
-            <Box
-              borderRadius='10px'
-              position='relative'
-              bottom='20px'
-              backgroundColor='white'
-              p={5}
-              display='flex'
-              h='100%'
-            >
-              <VStack>
-                <HStack w='100%' justifyContent='space-between'>
-                  <VStack w='75%'>
-                    <Heading fontSize='20px' textTransform='capitalize'>
-                      {bookData.title}
-                    </Heading>
-                    <Text fontSize='16px'>{bookData.author}</Text>
-                  </VStack>
-                  {switchValue ? (
-                    <Pressable mt={1} onPress={handleBadgePressed}>
-                      <Badge h={30} w={102} borderRadius='6px' style={handleBorrowingStatus(borrowingStatusButton)}>
-                        <HStack justifyContent='center' alignItems='center'>
-                          <Text w={60} textAlign='center' style={handleBorrowingStatus(borrowingStatusButton)}>
-                            {bookData.borrowingStatus}
-                          </Text>
-                          <Divider orientation='vertical' bg={WhiteShades.primaryWhite} mx={1.5} />
-                          <ChevronDownIcon style={handleBorrowingStatus(borrowingStatusButton)} />
-                        </HStack>
-                      </Badge>
-                    </Pressable>
-                  ) : (
-                    <></>
-                  )}
-                </HStack>
-                <HStack my={3} alignItems='center'>
-                  <Text fontSize='16px'>Owned by </Text>
-                  {bookData.owner !== undefined ? (
-                    <Avatar
-                      size='sm'
-                      w='30px'
-                      mx={1}
-                      source={{
-                        uri: bookData.owner.photoURL,
-                      }}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                  <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
-                    {bookData.owner !== undefined ? bookData.owner.displayName : ''}
-                  </Link>
-                </HStack>
-                <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
-                  <Text fontWeight='bold' fontSize='18px'>
-                    Details
-                  </Text>
-                  <HStack justifyContent='space-between'>
-                    <VStack>
-                      <Text fontSize='16px'>Genre</Text>
-                      <Text fontSize='16px'>Edition</Text>
-                      <Text fontSize='16px'>Language</Text>
-                      <Text fontSize='16px'>ISBN</Text>
-                      <Text fontSize='16px'>Condition</Text>
+          <>
+            <VStack>
+              <Carousel position='sticky' top={0} images={bookData.images !== undefined ? bookData.images : []} />
+              <Box
+                borderRadius='10px'
+                position='relative'
+                bottom='20px'
+                backgroundColor='white'
+                p={5}
+                display='flex'
+                h='100%'
+              >
+                <VStack>
+                  <HStack w='100%' justifyContent='space-between'>
+                    <VStack w='75%'>
+                      <Heading fontSize='20px' textTransform='capitalize'>
+                        {bookData.title}
+                      </Heading>
+                      <Text fontSize='16px'>{bookData.author}</Text>
                     </VStack>
-                    <VStack>
-                      <Text fontSize='16px'>{bookData.genre}</Text>
-                      <Text fontSize='16px'>{bookData.edition}</Text>
-                      <Text fontSize='16px'>{bookData.language}</Text>
-                      <Text fontSize='16px'>{bookData.ISBN}</Text>
-                      <Text fontSize='16px'>{bookData.bookCondition}</Text>
-                    </VStack>
+                    {switchValue ? (
+                      <Pressable mt={1} onPress={handleBadgePressed}>
+                        <Badge h={30} w={102} borderRadius='6px' style={handleBorrowingStatus(borrowingStatusButton)}>
+                          <HStack justifyContent='center' alignItems='center'>
+                            <Text w={60} textAlign='center' style={handleBorrowingStatus(borrowingStatusButton)}>
+                              {bookData.borrowingStatus}
+                            </Text>
+                            <Divider orientation='vertical' bg={WhiteShades.primaryWhite} mx={1.5} />
+                            <ChevronDownIcon style={handleBorrowingStatus(borrowingStatusButton)} />
+                          </HStack>
+                        </Badge>
+                      </Pressable>
+                    ) : (
+                      <></>
+                    )}
                   </HStack>
-                </Box>
-                <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
-                  <Text fontWeight='bold' fontSize='18px'>
-                    Reading Info
-                  </Text>
-                  <HStack justifyContent='space-between'>
-                    <VStack>
-                      <Text fontSize='16px'>Reading Status</Text>
-                      <Text fontSize='16px'>Location</Text>
-                    </VStack>
-                    <VStack alignItems='start'>
-                      <Text fontSize='16px'>{bookData.readingStatus}</Text>
-                      <Text fontSize='16px'>{bookData.location}</Text>
-                    </VStack>
-                  </HStack>
-                </Box>
-                <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
-                  <HStack justifyContent='space-between' alignItems='center'>
+                  {/* <HStack my={3} alignItems='center'>
+                    <Text fontSize='16px'>Owned by </Text>
+                    {bookData.owner !== undefined ? (
+                      <Avatar
+                        size='sm'
+                        w='30px'
+                        mx={1}
+                        source={{
+                          uri: bookData.owner.photoURL,
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
+                      {bookData.owner !== undefined ? bookData.owner.displayName : ''}
+                    </Link>
+                  </HStack> */}
+                  <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
                     <Text fontWeight='bold' fontSize='18px'>
-                      Share
+                      Details
                     </Text>
-                    <Switch
-                      onTrackColor={BlueShades.primaryBlue}
-                      size='sm'
-                      value={switchValue}
-                      onValueChange={value => setShareable(value)}
-                    />
-                  </HStack>
-                  <Text fontSize={16}>
-                    {switchValue
-                      ? `Book is available for other users to request.`
-                      : `No other users can request to borrow this book.`}
-                  </Text>
-                </Box>
-                <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
-                  <HStack justifyContent='space-between' alignItems='center'>
+                    <HStack justifyContent='space-between'>
+                      <VStack>
+                        <Text fontSize='16px'>Genre</Text>
+                        <Text fontSize='16px'>Edition</Text>
+                        <Text fontSize='16px'>Language</Text>
+                        <Text fontSize='16px'>ISBN</Text>
+                        <Text fontSize='16px'>Condition</Text>
+                      </VStack>
+                      <VStack>
+                        <Text fontSize='16px'>{bookData.genre}</Text>
+                        <Text fontSize='16px'>{bookData.edition}</Text>
+                        <Text fontSize='16px'>{bookData.language}</Text>
+                        <Text fontSize='16px'>{bookData.ISBN}</Text>
+                        <Text fontSize='16px'>{bookData.bookCondition}</Text>
+                      </VStack>
+                    </HStack>
+                  </Box>
+                  <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
                     <Text fontWeight='bold' fontSize='18px'>
-                      Notes
+                      Reading Info
                     </Text>
-                  </HStack>
-                  <Text fontSize={16}>{bookData.notes ?? ` `}</Text>
-                </Box>
-              </VStack>
+                    <HStack justifyContent='space-between'>
+                      <VStack>
+                        <Text fontSize='16px'>Reading Status</Text>
+                        <Text fontSize='16px'>Location</Text>
+                      </VStack>
+                      <VStack alignItems='start'>
+                        <Text fontSize='16px'>{bookData.readingStatus}</Text>
+                        <Text fontSize='16px'>{bookData.location}</Text>
+                      </VStack>
+                    </HStack>
+                  </Box>
+                  <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                    <HStack justifyContent='space-between' alignItems='center'>
+                      <Text fontWeight='bold' fontSize='18px'>
+                        Share
+                      </Text>
+                      <Switch
+                        onTrackColor={BlueShades.primaryBlue}
+                        size='sm'
+                        value={switchValue}
+                        onValueChange={value => setShareable(value)}
+                      />
+                    </HStack>
+                    <Text fontSize={16}>
+                      {switchValue
+                        ? `Book is available for other users to request.`
+                        : `No other users can request to borrow this book.`}
+                    </Text>
+                  </Box>
+                  <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
+                    <HStack justifyContent='space-between' alignItems='center'>
+                      <Text fontWeight='bold' fontSize='18px'>
+                        Notes
+                      </Text>
+                    </HStack>
+                    <Text fontSize={16}>{bookData.notes ?? ` `}</Text>
+                  </Box>
+                </VStack>
+              </Box>
+              <SelectBookStatus
+                showModal={showModal}
+                handleBorrowingStatusSelected={handleBorrowingStatusSelected}
+                handleBadgePressed={handleBadgePressed}
+              />
+            </VStack>
+            <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+              <Button
+                backgroundColor={BlueShades.primaryBlue}
+                borderRadius='10px'
+                shadow={2}
+                m={5}
+                shadowOffset={{ width: '-20px', height: '-20px' }}
+                onPress={handleCancelHold}
+              >
+                Delete
+              </Button>
+              <Button
+                backgroundColor={BlueShades.primaryBlue}
+                borderRadius='10px'
+                shadow={2}
+                m={5}
+                shadowOffset={{ width: '-20px', height: '-20px' }}
+                onPress={handleCancelHold}
+              >
+                Edit
+              </Button>
             </Box>
-            <SelectBookStatus
-              showModal={showModal}
-              handleBorrowingStatusSelected={handleBorrowingStatusSelected}
-              handleBadgePressed={handleBadgePressed}
-            />
-          </VStack>
+          </>
         ) : (
           <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
         )}
