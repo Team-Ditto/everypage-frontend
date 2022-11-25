@@ -94,7 +94,7 @@ const AddBook = ({ route, navigation }) => {
           <BookDetail bookObj={bookObj} setBookObj={setBookObj} />
           <ReadingStatus bookObj={bookObj} setBookObj={setBookObj} />
           <FormControl my={2} mt={4}>
-            <FormControl.Label>ADDITIONAL INFORMAITON</FormControl.Label>
+            <FormControl.Label>ADDITIONAL INFORMATION</FormControl.Label>
             <TextArea
               placeholder='Note'
               height={30}
