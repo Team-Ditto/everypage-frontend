@@ -195,7 +195,7 @@ const Home = ({ navigation }) => {
               contentContainerStyle={styles.scrollView}
               refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
-              <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+              <Box py={0} px={2} w='100%' mb={20} flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
                 {filteredData ? (
                   filteredData.map((data, id) => {
                     return <MyLibraryCard key={id} data={data} navigation={navigation} />;

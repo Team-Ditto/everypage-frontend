@@ -55,7 +55,7 @@ const SingleGenre = ({ navigation, route }) => {
             {searchResults.length} Books
           </Text>
           <ScrollView>
-            <Box py={3} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+            <Box py={3} px={2} mb={20} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
               {searchResults.map((r, id) => {
                 return <MyLibraryCard key={id} data={r} navigation={navigation} showWishListIcon={true} />;
               })}

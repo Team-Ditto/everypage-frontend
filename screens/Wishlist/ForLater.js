@@ -38,7 +38,7 @@ export default function ForLater({ navigation, handleInput }) {
       </Text>
       {isSpinnerVisible && <Spinner textContent={'Loading...'} textStyle={{ color: '#FFF' }} marginBottom={5} />}
       <ScrollView>
-        <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center'>
+        <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center' mb={20}>
           {wishlistData &&
             wishlistData?.map((data, id) => {
               return (
