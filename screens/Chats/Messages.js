@@ -33,6 +33,8 @@ const Messages = () => {
         <Text style={styles.banner}>{banner}</Text>
       </HStack>
       <ScrollView>
+        {/* insert the book card here. See if we can make use of existing card components, if not do not 
+        create a new component and just do the markup here. For data refer to firebase/chats collection */}
         {messages.map(m => (
           <Message message={m} key={m._id} />
         ))}
