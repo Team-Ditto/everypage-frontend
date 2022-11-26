@@ -103,7 +103,7 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
               }}
               alt={book.title}
             />
-            <Box style={{ position: 'absolute', right: 0, width: 64 }}>
+            <Box style={{ position: 'absolute', right: 0, width: 50 }}>
               <WishlistButton isWishlisted={isWishlisted} handleWishlistPress={handleWishlistPress} onHeader={false} />
             </Box>
           </Box>
