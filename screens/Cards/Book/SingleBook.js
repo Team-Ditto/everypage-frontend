@@ -163,42 +163,66 @@ const SingleBook = ({ navigation, route }) => {
                       <></>
                     )}
                   </HStack>
-                  {/* <HStack my={3} alignItems='center'>
-                    <Text fontSize='16px'>Owned by </Text>
-                    {bookData.owner !== undefined ? (
-                      <Avatar
-                        size='sm'
-                        w='30px'
-                        mx={1}
-                        source={{
-                          uri: bookData.owner.photoURL,
-                        }}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
-                      {bookData.owner !== undefined ? bookData.owner.displayName : ''}
-                    </Link>
-                  </HStack> */}
+                  {bookData.bearer === currentUser._id ? (
+                    <HStack my={3} alignItems='center'>
+                      <Text fontSize='16px'>Borrowed from </Text>
+                      {bookData.owner !== undefined ? (
+                        <Avatar
+                          size='sm'
+                          w='30px'
+                          mx={1}
+                          source={{
+                            uri: bookData.owner.photoURL,
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                      <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
+                        {bookData.owner !== undefined ? bookData.owner.displayName : ''}
+                      </Link>
+                    </HStack>
+                  ) : (
+                    <></>
+                  )}
                   <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
                     <Text fontWeight='bold' fontSize='18px'>
                       Details
                     </Text>
                     <HStack justifyContent='space-between'>
                       <VStack>
-                        <Text fontSize='16px'>Genre</Text>
-                        <Text fontSize='16px'>Edition</Text>
-                        <Text fontSize='16px'>Language</Text>
-                        <Text fontSize='16px'>ISBN</Text>
-                        <Text fontSize='16px'>Condition</Text>
+                        <Text fontSize='16px' mt={1}>
+                          Genre
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          Edition
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          Language
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          ISBN
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          Condition
+                        </Text>
                       </VStack>
                       <VStack>
-                        <Text fontSize='16px'>{bookData.genre}</Text>
-                        <Text fontSize='16px'>{bookData.edition}</Text>
-                        <Text fontSize='16px'>{bookData.language}</Text>
-                        <Text fontSize='16px'>{bookData.ISBN}</Text>
-                        <Text fontSize='16px'>{bookData.bookCondition}</Text>
+                        <Text fontSize='16px' mt={1}>
+                          {bookData.genre}
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          {bookData.edition}
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          {bookData.language}
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          {bookData.ISBN}
+                        </Text>
+                        <Text fontSize='16px' mt={1}>
+                          {bookData.bookCondition}
+                        </Text>
                       </VStack>
                     </HStack>
                   </Box>
