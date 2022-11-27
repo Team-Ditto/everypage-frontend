@@ -25,7 +25,7 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
 
   async function handleRequestToBorrow() {
     if (book.borrowingStatus !== 'Available') return;
-    
+
     const requestedObject = {
       wishlist: data._id,
       triggerType: 'request_to_borrow',
