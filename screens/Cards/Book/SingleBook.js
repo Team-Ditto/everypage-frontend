@@ -282,7 +282,6 @@ const SingleBook = ({ navigation, route }) => {
                 shadow={2}
                 m={5}
                 shadowOffset={{ width: '-20px', height: '-20px' }}
-                onPress={handleCancelHold}
               >
                 Delete
               </Button>
@@ -292,7 +291,6 @@ const SingleBook = ({ navigation, route }) => {
                 shadow={2}
                 m={5}
                 shadowOffset={{ width: '-20px', height: '-20px' }}
-                onPress={handleCancelHold}
               >
                 Edit
               </Button>
