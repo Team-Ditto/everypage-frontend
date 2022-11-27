@@ -4,7 +4,7 @@ const SelectBookStatus = props => {
   const { showModal, handleBorrowingStatusSelected, handleBadgePressed } = props;
   return (
     <>
-      <Actionsheet isOpen={showModal} onClose={handleBadgePressed}>
+      <Actionsheet isOpen={showModal} onClose={handleBadgePressed} >
         <Actionsheet.Content px={0}>
           <Box w='100%' h='50px' justifyContent='center'>
             <Text
