@@ -114,7 +114,6 @@ const FloatingButtons = ({ navigation, libDataLength }) => {
           </Animated.View>
         </>
       )}
-      {console.log(libDataLength)}
       {libDataLength == 0 && !isPressed ? (
         <Image style={Styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
       ) : (
