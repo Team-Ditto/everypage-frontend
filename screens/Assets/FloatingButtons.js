@@ -1,11 +1,11 @@
-import { Button, Icon } from 'native-base';
+import { Button, Icon, Image } from 'native-base';
 import { Animated, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
 import { BlueShades, WhiteShades } from '../../assets/style/color';
 
-const FloatingButtons = ({ navigation }) => {
+const FloatingButtons = ({ navigation, libDataLength }) => {
   const [isPressed, setIsPressed] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
@@ -114,6 +114,11 @@ const FloatingButtons = ({ navigation }) => {
           </Animated.View>
         </>
       )}
+      {libDataLength == 0 && !isPressed ? (
+        <Image style={Styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
@@ -126,10 +131,10 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    bottom: 110,
+    bottom: 100,
     width: 70,
     height: 70,
-    right: 20,
+    right: 10,
     borderColor: 'grey',
     borderRadius: 100,
     shadowColor: '#000',
@@ -146,6 +151,11 @@ const Styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: '10',
+  },
+  downArrow: {
+    position: 'absolute',
+    bottom: 170,
+    right: 20,
   },
 });
 

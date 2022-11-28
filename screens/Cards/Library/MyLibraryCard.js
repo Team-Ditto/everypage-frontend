@@ -61,14 +61,6 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
     }
   };
 
-  // let i = 0;
-  // while (i < currentUser.wishlists.length) {
-  //   if (currentUser.wishlists[i].book === data._id) {
-  //     setIsWishlisted(true);
-  //   }
-  //   i++;
-  // }
-
   return (
     <Pressable
       onPress={() => {
@@ -87,7 +79,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
       mx={1}
     >
       <VStack>
-        <AspectRatio w='100%' ratio={164 / 210}>
+        <AspectRatio w='100%' ratio={152 / 204}>
           <VStack style={{ display: 'flex', position: 'relative' }}>
             <Image
               w='100%'
@@ -102,7 +94,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
               <HStack position='absolute' left='0' justifyContent='space-between' width='100%'>
                 <Box justifyContent='center' m={2}>
                   {displayBadge ? (
-                    <Badge p={0.5} px={1} style={handleBorrowingStatus(borrowingStatus)}>
+                    <Badge p={0} px={1} style={handleBorrowingStatus(borrowingStatus)}>
                       <Text style={handleBorrowingStatus(borrowingStatus)}>{borrowingStatus}</Text>
                     </Badge>
                   ) : (
@@ -123,10 +115,12 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
         </AspectRatio>
         <Box pt={1} pb={3}>
           <VStack>
-            <Text fontWeight='semibold' textTransform='capitalize'>
+            <Text fontWeight='semibold' textTransform='capitalize' numberOfLines={2} ellipsizeMode='tail'>
               {title}
             </Text>
-            <Text>{author}</Text>
+            <Text numberOfLines={2} ellipsizeMode='tail'>
+              {author}
+            </Text>
           </VStack>
         </Box>
       </VStack>
@@ -140,18 +134,21 @@ const styles = StyleSheet.create({
     borderColor: SuccessColor.successText,
     color: SuccessColor.successText,
     borderRadius: '4px',
+    fontSize: '12px',
   },
   inUse: {
     backgroundColor: InUseColor.inUseBG,
     borderColor: InUseColor.inUseText,
     color: InUseColor.inUseText,
     borderRadius: '4px',
+    fontSize: '12px',
   },
   onHold: {
     backgroundColor: OnHoldColor.onHoldBG,
     borderColor: OnHoldColor.onHoldText,
     color: OnHoldColor.onHoldText,
     borderRadius: '4px',
+    fontSize: '12px',
   },
 });
 

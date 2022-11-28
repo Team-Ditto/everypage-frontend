@@ -13,7 +13,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { GetFilteredResults } from '../Assets/FilterSettings/GetFilteredResults';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { NotificationContext } from '../../contexts/NotificationContext';
 
 const Home = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -22,7 +21,6 @@ const Home = ({ navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [isSpinnerVisible, setSpinnerVisible] = useState(true);
   const [bookStatus, setBookStatus] = useState('All');
-  const { totalUnreadNotifications } = useContext(NotificationContext);
   const [refreshing, setRefreshing] = useState(false);
   const [shelfLocations, setShelfLocations] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -37,8 +35,7 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
-
-    GetNotificationHeader(navigation, totalUnreadNotifications);
+    GetNotificationHeader(navigation);
   }, []);
 
   useEffect(() => {
@@ -150,9 +147,9 @@ const Home = ({ navigation }) => {
             />
           </HStack>
         </Box>
-        <View style={{ height: 30 }} px={2}>
+        <View pb={2} px={2}>
           <ScrollView
-            style={{ display: 'flex', flexDirection: 'row', mx: 2 }}
+            style={{ display: 'flex', flexDirection: 'row', marginHorizontal: 4 }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
@@ -181,10 +178,6 @@ const Home = ({ navigation }) => {
           </ScrollView>
         </View>
         {/* My Library Data Collection */}
-        {}
-        <Text px={3} py={3} w='100%' bold fontSize='lg'>
-          {searchResultLabel}
-        </Text>
         {libData === null ? (
           <Spinner
             visible={isSpinnerVisible}
@@ -193,20 +186,25 @@ const Home = ({ navigation }) => {
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
           />
         ) : libData.length > 0 ? (
-          <ScrollView
-            contentContainerStyle={styles.scrollView}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-          >
-            <Box py={0} px={2} w='100%' flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
-              {filteredData ? (
-                filteredData.map((data, id) => {
-                  return <MyLibraryCard key={id} data={data} navigation={navigation} />;
-                })
-              ) : (
-                <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
-              )}
-            </Box>
-          </ScrollView>
+          <>
+            {/* <Text px={3} py={3} w='100%' bold fontSize='lg'>
+              {searchResultLabel}
+            </Text> */}
+            <ScrollView
+              contentContainerStyle={styles.scrollView}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+            >
+              <Box py={0} px={2} w='100%' mb={20} flexDirection='row' flexWrap='wrap' justifyContent='space-between'>
+                {filteredData ? (
+                  filteredData.map((data, id) => {
+                    return <MyLibraryCard key={id} data={data} navigation={navigation} />;
+                  })
+                ) : (
+                  <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+                )}
+              </Box>
+            </ScrollView>
+          </>
         ) : (
           <ScrollView
             contentContainerStyle={styles.scrollView}
@@ -216,15 +214,16 @@ const Home = ({ navigation }) => {
               <Box height='80px' position='relative' bottom='30px'>
                 <Image alt='dropDown' source={require('../../assets/logo-no-text.png')} />
               </Box>
-              <Text style={styles.text}>Hi {currentUser.displayName}, welcome to everypage!</Text>
+              <Text style={styles.text}>
+                Hi {currentUser.displayName}, welcome to <Text style={styles.titleText}> everypage!</Text>
+              </Text>
               <Text style={styles.content}>
                 Now that you have your digital bookshelf setup. Let's addsome books to your Library
               </Text>
             </View>
-            <Image style={styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
           </ScrollView>
         )}
-        <FloatingButtons navigation={navigation} />
+        <FloatingButtons navigation={navigation} libDataLength={libData.length} />
       </VStack>
     </KeyboardAvoidingView>
   );
@@ -246,9 +245,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 150,
-    marginRight: 30,
-    marginLeft: 30,
+    marginTop: 30,
     marginBottom: 30,
     marginHorizontal: 30,
     borderRadius: 10,
@@ -258,29 +255,25 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
   },
   text: {
-    flexWrap: 'wrap',
-    fontSize: 30,
-    padding: 15,
-    lineHeight: 40,
+    width: '100%',
+    fontSize: 22,
+    padding: 10,
+    fontWeight: 'bold',
+    lineHeight: 30,
+  },
+  titleText: {
+    width: '100%',
+    fontSize: 22,
+    padding: 10,
+    lineHeight: 30,
+    fontWeight: 'bold',
+    color: BlueShades.primaryBlue,
   },
   content: {
     width: '100%',
     fontSize: 16,
     padding: 10,
     lineHeight: 30,
-  },
-  downArrow: {
-    position: 'absolute',
-    bottom: 5,
-    right: 45,
-  },
-  everypageText: {
-    color: BlueShades.primaryBlue,
-    fontSize: 30,
-    paddingTop: 10,
-    paddingRight: 100,
-    paddingBottom: 30,
-    fontWeight: 'bold',
   },
 });
 

@@ -8,7 +8,15 @@ const WishlistButton = (props, navigation) => {
 
   return (
     <>
-      <Box m={2} bg={isWishlisted ? BlueShades.primaryBlue : 'white'} borderRadius='full' shadow={3}>
+      <Box
+        m={2}
+        p={0}
+        w='32px'
+        h='32px'
+        bg={isWishlisted ? BlueShades.primaryBlue : BlueShades.tertiaryBlue}
+        borderRadius='full'
+        shadow={3}
+      >
         <IconButton
           variant='ghost'
           onPress={handleWishlistPress}
@@ -17,16 +25,19 @@ const WishlistButton = (props, navigation) => {
               size='xl'
               onPress={handleWishlistPress}
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                // display: 'flex',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                position: 'relative',
+                bottom: 5,
+                left: 4,
               }}
               as={
                 <TouchableOpacity>
                   {isWishlisted ? (
-                    <Ionicons name='bookmark' size={30} color={'white'} />
+                    <Ionicons name='bookmark' size={20} color={BlueShades.tertiaryBlue} />
                   ) : (
-                    <Ionicons name='bookmark-outline' size={30} color={BlueShades.primaryBlue} />
+                    <Ionicons name='bookmark-outline' size={20} color={BlueShades.primaryBlue} />
                   )}
                 </TouchableOpacity>
               }

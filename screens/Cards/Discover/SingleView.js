@@ -169,7 +169,25 @@ const SingleView = ({ navigation, route }) => {
                   </Badge>
                 </Box>
               </HStack>
-              <HStack mb={5} mt={3} alignItems='center'>
+              <HStack mt={3} alignItems='center'>
+                <Text fontSize='16px'>Owned by </Text>
+                {bookData.owner !== undefined ? (
+                  <Avatar
+                    size='sm'
+                    w='30px'
+                    mx={1}
+                    source={{
+                      uri: bookData.owner.photoURL,
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
+                <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
+                  {bookData.owner !== undefined ? bookData.owner.displayName : ''}
+                </Link>
+              </HStack>
+              <HStack mb={5} alignItems='center'>
                 {requestor && Object.keys(requestor).length > 0 && (
                   <>
                     <Text fontSize='16px'>Requested by </Text>
@@ -192,18 +210,38 @@ const SingleView = ({ navigation, route }) => {
                 </Text>
                 <HStack justifyContent='space-between'>
                   <VStack>
-                    <Text fontSize='16px'>Genre</Text>
-                    <Text fontSize='16px'>Edition</Text>
-                    <Text fontSize='16px'>Language</Text>
-                    <Text fontSize='16px'>ISBN</Text>
-                    <Text fontSize='16px'>Condition</Text>
+                    <Text fontSize='16px' mt={1}>
+                      Genre
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      Edition
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      Language
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      ISBN
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      Condition
+                    </Text>
                   </VStack>
                   <VStack>
-                    <Text fontSize='16px'>{genre}</Text>
-                    <Text fontSize='16px'>{edition}</Text>
-                    <Text fontSize='16px'>{language}</Text>
-                    <Text fontSize='16px'>{ISBN}</Text>
-                    <Text fontSize='16px'>{bookCondition}</Text>
+                    <Text fontSize='16px' mt={1}>
+                      {genre}
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      {edition}
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      {language}
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      {ISBN}
+                    </Text>
+                    <Text fontSize='16px' mt={1}>
+                      {bookCondition}
+                    </Text>
                   </VStack>
                 </HStack>
               </Box>
@@ -213,11 +251,12 @@ const SingleView = ({ navigation, route }) => {
         </VStack>
       </ScrollView>
       <Divider shadow={2} />
-      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) && (
-        <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
-          {ShowButtonAsPerHoldStatus('On-Hold')}
-        </Box>
-      )}
+      {((requestor && requestor._id === currentUser._id) || (bearer && bearer._id === currentUser._id)) &&
+        borrowingStatus !== 'In-Use' && (
+          <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>
+            {ShowButtonAsPerHoldStatus('On-Hold')}
+          </Box>
+        )}
 
       {bearer && bearer._id === currentUser._id && borrowingStatus === 'In-Use' && (
         <Box position='fixed' bottom={0} backgroundColor='white' pb='10px'>

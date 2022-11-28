@@ -9,14 +9,24 @@ export default function Requested({ navigation, handleInput }) {
   const selectedTab = 'Requested';
 
   useEffect(() => {
-    async function fetchData() {
-      getWishlistsByStatus('Requested').then(wishlist => {
+    fetchData();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  async function fetchData() {
+    setSpinnerVisible(true);
+    getWishlistsByStatus('Requested')
+      .then(wishlist => {
         setWishlistData(wishlist.data);
         setSpinnerVisible(false);
-      });
-    }
-    fetchData();
-  }, []);
+      })
+      .finally(() => setSpinnerVisible(false));
+  }
 
   const goToForLater = () => {
     handleInput(true);
@@ -27,9 +37,10 @@ export default function Requested({ navigation, handleInput }) {
       <Text fontSize='lg' fontWeight='800' ml='4%' mt='23px' mb='16px'>
         Requested ({wishlistData?.length || 0})
       </Text>
+      {isSpinnerVisible && <Spinner textContent={'Loading...'} textStyle={{ color: '#FFF' }} marginBottom={5} />}
       <ScrollView>
-        <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center'>
-          {wishlistData ? (
+        <Box w='100%' flexDirection='row' flexWrap='wrap' justifyContent='center' mb={20}>
+          {wishlistData &&
             wishlistData?.map((data, id) => {
               return (
                 <WishlistCard
@@ -38,12 +49,10 @@ export default function Requested({ navigation, handleInput }) {
                   navigation={navigation}
                   selectedTab={selectedTab}
                   handleInput={goToForLater}
+                  fetchData={fetchData}
                 />
               );
-            })
-          ) : (
-            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
-          )}
+            })}
         </Box>
       </ScrollView>
     </VStack>

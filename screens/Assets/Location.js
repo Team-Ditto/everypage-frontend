@@ -68,71 +68,76 @@ export default function Location({ navigation }) {
   };
 
   return (
-    <View bg={WhiteShades.primaryWhite} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-      <VStack my={10} mx={5} style={{ display: 'flex', flexDirection: 'column' }}>
-        <Text fontSize={24}>Set your library Location.</Text>
-        <Text>Set it now or updtae in your profile</Text>
-      </VStack>
-      <View style={fieldSet}>
-        <Text style={legend}>Your zip code</Text>
-        <Input
-          variant='unstyled'
-          placeholder='XXX-XXX'
-          value={zipCode}
-          returnKeyType='done'
-          onChangeText={handleZipCodeChange}
-          onSubmitEditing={() => {
-            let lat = '';
-            let long = '';
-            let address = zipCode;
-
-            Loc.geocodeAsync(address)
-              .then(res => {
-                console.log(res);
-                lat = res[0]['latitude'];
-                long = res[0]['longitude'];
-                setLocation({ latitude: lat, longitude: long });
-              })
-              .catch(err => {
-                console.log(err);
-                alert("Couldn't find the location");
-              });
-          }}
-        ></Input>
-      </View>
+    <View bg={BlueShades.primaryBlue} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       <View
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          marginBottom: 20,
-          marginTop: 5,
-        }}
+        bg={WhiteShades.primaryWhite}
+        style={{ display: 'flex', flexDirection: 'column', flex: 1, borderRadius: '20px' }}
       >
-        <FontAwesome name='location-arrow' size={24} color='black' />
-        <Text> Use my current location</Text>
-      </View>
-      <View style={{ display: 'flex', flexDirection: 'column', flex: '1', position: 'relative', height: '100%' }}>
-        {location ? (
-          <Map longitude={location.longitude} latitude={location.latitude} />
-        ) : (
-          <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
-        )}
+        <VStack mt='50px' mb='40px' mx='24px' style={{ display: 'flex', flexDirection: 'column' }}>
+          <Text fontSize={24}>Set your library Location.</Text>
+          <Text>Set it now or updtae in your profile</Text>
+        </VStack>
+        <View style={fieldSet} mx='24px' my={0}>
+          <Text style={legend}>Your zip code</Text>
+          <Input
+            variant='unstyled'
+            placeholder='XXX-XXX'
+            value={zipCode}
+            returnKeyType='done'
+            onChangeText={handleZipCodeChange}
+            onSubmitEditing={() => {
+              let lat = '';
+              let long = '';
+              let address = zipCode;
+
+              Loc.geocodeAsync(address)
+                .then(res => {
+                  console.log(res);
+                  lat = res[0]['latitude'];
+                  long = res[0]['longitude'];
+                  setLocation({ latitude: lat, longitude: long });
+                })
+                .catch(err => {
+                  console.log(err);
+                  alert("Couldn't find the location");
+                });
+            }}
+          ></Input>
+        </View>
         <View
           style={{
-            position: 'absolute',
-            width: '100%',
-            dsplay: 'flex',
-            bottom: 100,
+            display: 'flex',
+            alignItems: 'center',
             flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center',
+            marginBottom: 32,
+            marginTop: 12,
           }}
         >
-          <Button bg={BlueShades.primaryBlue} style={{ width: '80%', borderRadius: 10 }} onPress={handleSaveLocation}>
-            Next
-          </Button>
+          <FontAwesome name='location-arrow' size={24} color='black' />
+          <Text> Use my current location</Text>
+        </View>
+        <View style={{ display: 'flex', flexDirection: 'column', flex: '1', position: 'relative', height: '100%' }}>
+          {location ? (
+            <Map longitude={location.longitude} latitude={location.latitude} />
+          ) : (
+            <Spinner visible={isSpinnerVisible} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />
+          )}
+          <View
+            style={{
+              position: 'absolute',
+              width: '100%',
+              dsplay: 'flex',
+              bottom: 50,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button bg={BlueShades.primaryBlue} style={{ width: '80%', borderRadius: 10 }} onPress={handleSaveLocation}>
+              Next
+            </Button>
+          </View>
         </View>
       </View>
     </View>

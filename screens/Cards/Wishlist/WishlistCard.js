@@ -1,25 +1,31 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Box, Image, VStack, Text, Pressable, Button, HStack, Link } from 'native-base';
-import { InUseColor, OnHoldColor, SuccessColor } from '../../../assets/style/color';
+import { InUseColor, OnHoldColor, SuccessColor, BlueShades } from '../../../assets/style/color';
 import { requestToBorrow, requestCancelHold } from '../../../services/notifications-services';
 import WishlistButton from '../../Assets/WishlistButton';
-import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
+import { deleteWishlistByBookId } from '../../../services/wishlists-service';
 import { OrangeShades } from '../../../assets/style/color';
+import { AuthContext } from '../../../contexts/AuthContext';
 
-const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab, handleInput }) => {
+const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData }) => {
   const [isWishlisted, setIsWishlisted] = useState(true);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const { book } = data;
 
   let curStyle = {};
 
-  const handleWishlistPress = () => {
+  const handleWishlistPress = async () => {
     if (isWishlisted) {
-      setIsWishlisted(false);
-      deleteWishlistByBookId(data.book._id);
+      const deletedWishlist = await deleteWishlistByBookId(data.book._id);
+      const filteredWishlists = currentUser.wishlists.filter(item => item._id !== deletedWishlist._id);
+      setCurrentUser({ ...currentUser, wishlists: filteredWishlists });
+      await fetchData();
     }
   };
 
   async function handleRequestToBorrow() {
+    if (book.borrowingStatus !== 'Available') return;
+
     const requestedObject = {
       wishlist: data._id,
       triggerType: 'request_to_borrow',
@@ -97,7 +103,7 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab,
               }}
               alt={book.title}
             />
-            <Box style={{ position: 'absolute', right: 0, width: 64 }}>
+            <Box style={{ position: 'absolute', right: 0, width: 50 }}>
               <WishlistButton isWishlisted={isWishlisted} handleWishlistPress={handleWishlistPress} onHeader={false} />
             </Box>
           </Box>
@@ -137,11 +143,16 @@ const WishlistCard = ({ data, navigation, showWishListIcon = false, selectedTab,
         </HStack>
       </Pressable>
       {selectedTab == 'ForLater' ? (
-        <Button mt='15px' onPress={handleRequestToBorrow}>
+        <Button
+          disabled={book.borrowingStatus !== 'Available'}
+          backgroundColor={BlueShades.primaryBlue}
+          mt='15px'
+          onPress={handleRequestToBorrow}
+        >
           Request to Borrow
         </Button>
       ) : (
-        <Button mt='15px' onPress={handleCancelHold}>
+        <Button mt='15px' onPress={handleCancelHold} backgroundColor={BlueShades.primaryBlue}>
           Cancel Hold
         </Button>
       )}

@@ -5,30 +5,14 @@ import { LibraryData } from '../../constants/LibraryData';
 import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
-import { BlueShades } from '../../assets/style/color';
-import {
-  Button,
-  ScrollView,
-  View,
-  Text,
-  Image,
-  Box,
-  VStack,
-  HStack,
-  Link,
-  Icon,
-  ChevronRightIcon,
-  FavouriteIcon,
-} from 'native-base';
-import { NotificationContext } from '../../contexts/NotificationContext';
+import { Button, ScrollView, Text, Image, Box, VStack, HStack, Link, ChevronRightIcon } from 'native-base';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
   const { currentUser } = useContext(AuthContext);
-  const { totalUnreadNotifications } = useContext(NotificationContext);
 
   useEffect(() => {
-    GetNotificationHeader(navigation, totalUnreadNotifications);
+    GetNotificationHeader(navigation);
   }, []);
 
   const handleLogout = async () => {

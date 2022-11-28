@@ -1,17 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
+import { LogBox } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 
-// import { Provider } from 'react-redux';
 import { AuthContextProvider } from './contexts/AuthContext';
 import { NotificationContextProvider } from './contexts/NotificationContext';
 import { ChatContextProvider } from './contexts/ChatContext';
 import AppStack from './stacks/AppStack';
-// const reduxStore = configureStore();
 
 export default function App() {
+  LogBox.ignoreAllLogs();
+
   return (
-    // disabling the redux for now
-    // <Provider store={reduxStore}>
     <AuthContextProvider>
       <NotificationContextProvider>
         <ChatContextProvider>
@@ -22,6 +21,5 @@ export default function App() {
         </ChatContextProvider>
       </NotificationContextProvider>
     </AuthContextProvider>
-    // </Provider>
   );
 }
