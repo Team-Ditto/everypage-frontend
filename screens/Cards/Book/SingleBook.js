@@ -69,7 +69,15 @@ const SingleBook = ({ navigation, route }) => {
   const handleBorrowingStatusSelected = async status => {
     setSpinnerVisible(true);
     setBorrowingStatusButton(status);
-    await updateBookStatusById(bookId, { borrowingStatus: status });
+    if (status === 'Available') {
+      await updateBookStatusById(bookId, {
+        borrowingStatus: status,
+        requestor: null,
+        bearer: null,
+        bookReturnRequest: false,
+      });
+    } else await updateBookStatusById(bookId, { borrowingStatus: status });
+
     setBookData({ ...bookData, borrowingStatus: status });
     // setBookData(updatedBook.data);
     setSpinnerVisible(false);
