@@ -106,12 +106,7 @@ export default function Community({ navigation }) {
             view all <ChevronRightIcon name='arrow-right' size={5} />
           </Link>
         </HStack>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          borderBottomWidth={1}
-          borderBottomColor={BlueShades.primaryBlue}
-        >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <Box style={styles.communites}>
             <Image source={require('../../assets/libImage3.png')} alt='community' style={styles.image} />
             <VStack>
@@ -141,26 +136,31 @@ export default function Community({ navigation }) {
               <Text style={styles.text}>190 members</Text>
             </VStack>
           </Box>
-         
-        </ScrollView >
-        
-        <HStack justifyContent='space-between' mx={30} 
-        my={5}>
+        </ScrollView>
+
+        <HStack
+          justifyContent='space-between'
+          mx={30}
+          my={5}
+          paddingTop={6}
+          borderTopWidth={1}
+          borderTopColor={BlueShades.primaryBlue}
+        >
           <Text fontWeight='bold'>Books you might like</Text>
           <Link>
             view all <ChevronRightIcon name='arrow-right' size={5} />
           </Link>
         </HStack>
         <VStack mx={5}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <Box py={3} w='15%' flexDirection='row' justifyContent='space-between' borderRadius={4}>
-            {/* <FontAwesome name='favorite' size={24} color='black' /> */}
-            {libData.map((data, id) => {
-              return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
-            })}
-          </Box>
-        </ScrollView>
-      </VStack>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Box py={3} w='15%' flexDirection='row' justifyContent='space-between' borderRadius={4}>
+              {/* <FontAwesome name='favorite' size={24} color='black' /> */}
+              {libData.map((data, id) => {
+                return <MyLibraryCard key={id} data={data} navigation={navigation} showWishListIcon={true} />;
+              })}
+            </Box>
+          </ScrollView>
+        </VStack>
       </ScrollView>
     </VStack>
   );
@@ -173,6 +173,8 @@ const styles = StyleSheet.create({
   image: {
     width: 200, //change here
     height: 90,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   communites: {
     backgroundColor: OrangeShades.quaternaryOrange,
