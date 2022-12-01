@@ -12,8 +12,15 @@ export default function TabStack() {
   const TabNavigator = createBottomTabNavigator();
   const screenOptions = {
     tabBarStyle: {
-      padding: 5,
-      height: 90,
+      paddingTop: 20,
+      height: 80,
+    },
+    tabBarItemStyle: {
+      paddingTop: 18,
+    },
+    tabBarLabelStyle: {
+      paddingTop: 18,
+      paddingBottom: 13,
     },
     tabBarActiveTintColor: OrangeShades.primaryOrange,
     tabBarInactiveTintColor: BlueShades.primaryBlue,
@@ -28,12 +35,12 @@ export default function TabStack() {
           tabBarIcon: ({ focused }) => (
             <MyLibrarIcon color={focused ? OrangeShades.primaryOrange : BlueShades.primaryBlue} />
           ),
+          tabBarLabel: 'Library',
         })}
       />
 
       <TabNavigator.Screen
         name='Wishlist'
-        style={style.buttonClick}
         component={Wishlist}
         options={({ route }) => ({
           tabBarIcon: ({ focused }) => (
