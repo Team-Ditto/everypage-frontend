@@ -29,10 +29,10 @@ export default function Scanner({ navigation }) {
       ) {
         var book = response.data.items[0];
 
-        console.log('BOOK DATA FROM GOOGLE : ', book); // eslint-disable-line no-console
+        // console.log('BOOK DATA FROM GOOGLE : ', book); // eslint-disable-line no-console
         navigation.navigate('AddBook', { book: book, ISBN: data });
       } else {
-        console.log('BOOK NOT FOUND'); // eslint-disable-line no-console
+        // console.log('BOOK NOT FOUND'); // eslint-disable-line no-console
       }
     });
   };

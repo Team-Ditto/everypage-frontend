@@ -14,7 +14,7 @@ function GetSortedFilterSetting(sort) {
 }
 
 export async function GetFilteredResults(filterSetting, keyword, isFromDiscover = false) {
-  console.log(filterSetting);
+  // console.log(filterSetting);
   let SortMethodolgy = GetSortedFilterSetting(filterSetting.sort);
 
   let queryParams = `?page=1&perPage=${isFromDiscover ? '30' : '5'}&sortBy=${SortMethodolgy.SortBy}&sortOrder=${

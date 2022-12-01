@@ -79,7 +79,7 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
       break;
 
     default:
-      console.log('Book status not available');
+    // console.log('Book status not available');
   }
 
   return (

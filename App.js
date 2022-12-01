@@ -24,8 +24,6 @@ export default function App() {
     Quicksand: require('./assets/fonts/Quicksand-Bold.ttf'),
   });
 
-  console.log(fontsLoaded);
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -50,7 +48,7 @@ export default function App() {
       Quicksand: 'Quicksand',
     },
     fonts: {
-      heading: 'SofiaPro',
+      heading: 'Quicksand',
       body: 'SofiaPro',
       mono: 'SofiaPro',
     },

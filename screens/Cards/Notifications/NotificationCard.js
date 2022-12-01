@@ -14,7 +14,7 @@ const NotificationCard = ({ notification, navigation, handleInput }) => {
     await markNotificationRead(_id);
 
     if (!chatRedirect) {
-      console.log('Notification', notification);
+      // console.log('Notification', notification);
 
       if (notification.bookOwner === currentUser._id) {
         navigation.navigate('SingleBook', {
@@ -34,7 +34,12 @@ const NotificationCard = ({ notification, navigation, handleInput }) => {
     }
   };
 
-  const getFormattedDate = date => date.toDate().toISOString().substring(0, 10).replaceAll('-', '/');
+  const getFormattedDate = date =>
+    date
+      .toDate()
+      .toISOString()
+      .substring(0, 10)
+      .replaceAll('-', '/');
 
   return (
     <VStack>
