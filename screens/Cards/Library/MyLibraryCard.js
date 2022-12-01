@@ -124,7 +124,7 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
             >
               {title}
             </Text>
-            <Text numberOfLines={2} fontSize='14px' ellipsizeMode='tail'>
+            <Text numberOfLines={2} fontSize='14px' textTransform='capitalize' ellipsizeMode='tail'>
               {author}
             </Text>
           </VStack>

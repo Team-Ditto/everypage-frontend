@@ -118,7 +118,7 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
             >
               {book.title}
             </Text>
-            <Text fontSize='md' numberOfLines={2} ellipsizeMode='tail'>
+            <Text fontSize='md' numberOfLines={2} ellipsizeMode='tail' textTransform='capitalize'>
               {book.author}
             </Text>
             <Box
