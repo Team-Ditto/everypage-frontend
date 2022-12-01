@@ -5,7 +5,7 @@ import { BlueShades } from '../../assets/style/color';
 export const CommunIcon = ({ color }) => {
   return (
     <Center>
-      <Icon size='4xl' viewBox='0 0 870 873'>
+      <Icon size='3xl' viewBox='0 0 870 873'>
         <G fillRule='nonzero' stroke='none' strokeWidth={1} fill={color}>
           <Path d='M833.178 735.283c0.594-6.164 0.911-12.401 0.911-18.719 0-109.844-91.628-198.881-204.657-198.881s-204.657 89.047-204.657 198.881c0 6.308 0.317 12.554 0.911 18.719h407.501z' />
           <Path d='M748.401 373.504c0 65.71-53.269 118.979-118.979 118.979s-118.979-53.269-118.979-118.979c0-65.71 53.269-118.979 118.979-118.979s118.979 53.269 118.979 118.979z' />
@@ -24,7 +24,7 @@ export const CommunIcon = ({ color }) => {
 export const DiscovIcon = ({ color }) => {
   return (
     <Center>
-      <Icon size='4xl' viewBox='0 0 870 873'>
+      <Icon size='3xl' viewBox='0 0 870 873'>
         <G fillRule='nonzero' stroke='red' strokeWidth={1} fill={color}>
           <Path d='M336,257c-19.88,0-36-16.12-36-36h0c0-19.88,16.12-36,36-36h428v-38H349c-55.23,0-100,44.77-100,100v500c0,55.23,44.77,100,100,100h415V257H336Z' />
           <Line
@@ -89,7 +89,7 @@ export const DiscovIcon = ({ color }) => {
 export const MyLibrarIcon = ({ color }) => {
   return (
     <Center>
-      <Icon size='4xl' viewBox='0 0 870 873'>
+      <Icon size='3xl' viewBox='0 0 870 873'>
         <G>
           <Rect x='142.07' y='146' width='181.88' height='699' rx='31.31' ry='31.31' fill={color} />
           <Line
@@ -225,7 +225,7 @@ export const MyLibrarIcon = ({ color }) => {
 export const SendIcon = () => {
   return (
     <Center>
-      <Icon size='4xl' viewBox='0 0 870 873'>
+      <Icon size='3xl' viewBox='0 0 870 873'>
         <G fillRule='nonzero' stroke='none' strokeWidth={1} fill={BlueShades.primaryBlue}>
           <Path d='M705.239 152.576h-386.478c-91.781 0-166.185 74.404-166.185 166.185v386.478c0 91.781 74.404 166.185 166.185 166.185h386.478c91.781 0 166.185-74.404 166.185-166.185v-386.478c0-91.781-74.404-166.185-166.185-166.185zM676.086 517.325l-289.27 167.004c-4.096 2.365-9.226-0.594-9.226-5.325v-132.577c0-3.666 2.673-6.779 6.298-7.342l162.642-25.006c2.376-0.369 2.376-3.789 0-4.157l-162.642-25.006c-3.625-0.553-6.298-3.676-6.298-7.342v-132.577c0-4.731 5.12-7.69 9.226-5.325l289.27 167.004c4.096 2.365 4.096 8.284 0 10.65z' />
         </G>
@@ -237,7 +237,7 @@ export const SendIcon = () => {
 export const WishlIcon = ({ color }) => {
   return (
     <Center>
-      <Icon size='4xl' viewBox='0 0 870 873'>
+      <Icon size='3xl' viewBox='0 0 870 873'>
         <G fillRule='nonzero' stroke='none' strokeWidth={1} fill={color}>
           <Path d='M744.806 148.48h-464.968c-11.315 0-20.48 9.165-20.48 20.48v676.26c0 17.234 19.046 27.156 32.573 16.988l220.385-165.714 220.385 165.714c13.527 10.168 32.573 0.246 32.573-16.988v-676.26c0-11.315-9.165-20.48-20.48-20.48zM591.36 505.16l-79.043-41.554-79.043 41.554 15.094-88.013-63.949-62.331 88.371-12.841 39.516-80.077 39.516 80.077 88.371 12.841-63.949 62.331 15.094 88.013z' />
         </G>
@@ -249,7 +249,7 @@ export const WishlIcon = ({ color }) => {
 export const ProfIcon = ({ color }) => {
   return (
     <Center>
-      <Icon size='4xl' viewBox='0 0 870 873'>
+      <Icon size='3xl' viewBox='0 0 870 873'>
         <G fillRule='nonzero' stroke='none' strokeWidth={1}>
           <Path
             d='M641.147 401.572c0 71.603-58.046 129.649-129.649 129.649s-129.649-58.046-129.649-129.649c0-71.603 58.046-129.649 129.649-129.649s129.649 58.046 129.649 129.649z'

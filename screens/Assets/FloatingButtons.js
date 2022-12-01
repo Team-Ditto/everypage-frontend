@@ -114,7 +114,7 @@ const FloatingButtons = ({ navigation, libDataLength }) => {
           </Animated.View>
         </>
       )}
-      {libDataLength < 0 || !isPressed ? (
+      {libDataLength == 0 && !isPressed ? (
         <Image style={Styles.downArrow} alt='Down arrow' source={require('../../assets/DownwardArrow.png')} />
       ) : (
         <></>
@@ -131,10 +131,10 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    bottom: 85,
+    bottom: 100,
     width: 70,
     height: 70,
-    right: 25,
+    right: 10,
     borderColor: 'grey',
     borderRadius: 100,
     shadowColor: '#000',
@@ -154,8 +154,8 @@ const Styles = StyleSheet.create({
   },
   downArrow: {
     position: 'absolute',
-    bottom: 150,
-    right: 37,
+    bottom: 170,
+    right: 20,
   },
 });
 

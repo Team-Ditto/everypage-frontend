@@ -69,7 +69,15 @@ const SingleBook = ({ navigation, route }) => {
   const handleBorrowingStatusSelected = async status => {
     setSpinnerVisible(true);
     setBorrowingStatusButton(status);
-    await updateBookStatusById(bookId, { borrowingStatus: status });
+    if (status === 'Available') {
+      await updateBookStatusById(bookId, {
+        borrowingStatus: status,
+        requestor: null,
+        bearer: null,
+        bookReturnRequest: false,
+      });
+    } else await updateBookStatusById(bookId, { borrowingStatus: status });
+
     setBookData({ ...bookData, borrowingStatus: status });
     // setBookData(updatedBook.data);
     setSpinnerVisible(false);
@@ -282,7 +290,6 @@ const SingleBook = ({ navigation, route }) => {
                 shadow={2}
                 m={5}
                 shadowOffset={{ width: '-20px', height: '-20px' }}
-                onPress={handleCancelHold}
               >
                 Delete
               </Button>
@@ -292,7 +299,6 @@ const SingleBook = ({ navigation, route }) => {
                 shadow={2}
                 m={5}
                 shadowOffset={{ width: '-20px', height: '-20px' }}
-                onPress={handleCancelHold}
               >
                 Edit
               </Button>

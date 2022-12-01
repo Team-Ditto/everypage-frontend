@@ -35,7 +35,6 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     SetTopScreenTitle();
     fetchData();
-
     GetNotificationHeader(navigation);
   }, []);
 
