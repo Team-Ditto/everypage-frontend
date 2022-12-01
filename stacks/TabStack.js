@@ -12,7 +12,6 @@ export default function TabStack() {
   const TabNavigator = createBottomTabNavigator();
   const screenOptions = {
     tabBarStyle: {
-      paddingTop: 20,
       height: 80,
     },
     tabBarItemStyle: {
