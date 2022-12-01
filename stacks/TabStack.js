@@ -20,9 +20,13 @@ export default function TabStack() {
     tabBarLabelStyle: {
       paddingTop: 18,
       paddingBottom: 13,
+      // fontFamily: 'heading',
     },
     tabBarActiveTintColor: OrangeShades.primaryOrange,
     tabBarInactiveTintColor: BlueShades.primaryBlue,
+    headerTitleStyle: {
+      fontFamily: 'Quicksand',
+    },
   };
 
   return (
