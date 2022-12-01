@@ -171,7 +171,7 @@ const SingleBook = ({ navigation, route }) => {
                       <></>
                     )}
                   </HStack>
-                  {bookData.bearer === currentUser._id ? (
+                  {bookData.bearer !== currentUser._id ? (
                     <HStack my={3} alignItems='center'>
                       <Text fontSize='16px'>Borrowed from </Text>
                       {bookData.owner !== undefined ? (
@@ -191,7 +191,27 @@ const SingleBook = ({ navigation, route }) => {
                       </Link>
                     </HStack>
                   ) : (
-                    <></>
+                    <HStack mb={5} alignItems='center'>
+                      {requestor && Object.keys(requestor).length > 0 && (
+                        <>
+                          <Text fontSize='16px'>Requested by </Text>
+                          <Avatar
+                            size='sm'
+                            w='30px'
+                            mx={1}
+                            borderColor={BlueShades.primaryBlue}
+                            borderStyle='solid'
+                            borderWidth={1}
+                            source={{
+                              uri: requestor.photoURL,
+                            }}
+                          />
+                          <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
+                            {requestor.displayName}
+                          </Link>
+                        </>
+                      )}
+                    </HStack>
                   )}
                   <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
                     <Text fontWeight='bold' fontSize='18px'>
