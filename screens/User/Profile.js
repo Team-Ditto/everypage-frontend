@@ -6,6 +6,7 @@ import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { Button, ScrollView, Text, Image, Box, VStack, HStack, Link, ChevronRightIcon } from 'native-base';
+import { BlueShades } from '../../assets/style/color';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -78,7 +79,7 @@ export default function Profile({ navigation }) {
           </Box>
         </ScrollView>
       </VStack>
-      <Button mt='2' colorScheme='gray' onPress={handleLogout}>
+      <Button m='4' bg={BlueShades.primaryBlue} onPress={handleLogout}>
         Logout
       </Button>
     </ScrollView>
