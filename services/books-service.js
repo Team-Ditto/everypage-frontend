@@ -4,9 +4,9 @@ import axiosRequest from './api';
 export const addBook = async book => {
   try {
     book.ISBN = parseInt(book.ISBN, 10);
-    console.log('addBook', book);
+    // console.log('addBook', book);
     let addedBook = await axiosRequest.post('books', book);
-    console.log('RESPONSE From Server:- BOOK : ', addedBook.data); // eslint-disable-line no-console
+    // console.log('RESPONSE From Server:- BOOK : ', addedBook.data); // eslint-disable-line no-console
     return addedBook;
   } catch (error) {
     console.log('ERROR: ', error);
@@ -17,7 +17,7 @@ export const addBook = async book => {
 export const updateBookStatusById = async (bookId, bookObj) => {
   try {
     let updatedBook = await axiosRequest.put(`books/${bookId}`, bookObj);
-    console.log('RESPONSE From Server:- BOOK : ', updatedBook.data); // eslint-disable-line no-console
+    // console.log('RESPONSE From Server:- BOOK : ', updatedBook.data); // eslint-disable-line no-console
   } catch (error) {
     console.log('ERROR: ', error);
   }
@@ -54,7 +54,7 @@ export async function getUsersBook(
     } else {
       url = 'books/mine';
     }
-    console.log(`URL: ${url}${queryParams}`);
+    // console.log(`URL: ${url}${queryParams}`);
     return await axiosRequest.get(`${url}${queryParams}`);
   } catch (err) {
     console.log(err);

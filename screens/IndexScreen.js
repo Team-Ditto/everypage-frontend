@@ -47,7 +47,7 @@ const IndexScreen = ({ navigation }) => {
         });
 
         return () => {
-          console.log('Unsubscribe from notifications listener');
+          // console.log('Unsubscribe from notifications listener');
           unsubscribe();
         };
       } catch (error) {
@@ -67,7 +67,7 @@ const IndexScreen = ({ navigation }) => {
         });
 
         return () => {
-          console.log('Unsubscribe from chats listener');
+          // console.log('Unsubscribe from chats listener');
           unsubscribe();
         };
       } catch (error) {

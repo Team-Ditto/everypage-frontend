@@ -58,7 +58,7 @@ const Messages = () => {
         return statusStyle[2];
 
       default:
-        console.log('Book status not available');
+      // console.log('Book status not available');
     }
   };
 
@@ -86,7 +86,9 @@ const Messages = () => {
                 <Text flex='1' fontWeight='semibold' fontSize='md' numberOfLines={2}>
                   {latestBook.title}
                 </Text>
-                <Text fontSize='md' numberOfLines={2}>{latestBook.author}</Text>
+                <Text fontSize='md' numberOfLines={2}>
+                  {latestBook.author}
+                </Text>
                 <Box
                   bgColor={getStyling().backgroundColor}
                   borderRadius='4px'

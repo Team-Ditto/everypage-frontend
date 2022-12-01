@@ -86,7 +86,7 @@ const Home = ({ navigation }) => {
     if (searchText.length > 0) {
       let filterData = await GetFilteredResults(filterSetting, searchText);
       if (filterData !== undefined) {
-        console.log('filterData', filterData.data.results.length);
+        // console.log('filterData', filterData.data.results.length);
         setLibData(filterData.data.results);
         setFilteredData(filterData.data.results);
         setSearchResultLabel(`Search Results for "${searchText}"`);

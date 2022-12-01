@@ -169,13 +169,16 @@ const SingleView = ({ navigation, route }) => {
                   </Badge>
                 </Box>
               </HStack>
-              <HStack mt={3} alignItems='center'>
+              <HStack my={3} alignItems='center'>
                 <Text fontSize='16px'>Owned by </Text>
                 {bookData.owner !== undefined ? (
                   <Avatar
                     size='sm'
                     w='30px'
                     mx={1}
+                    borderColor={BlueShades.primaryBlue}
+                    borderStyle='solid'
+                    borderWidth={1}
                     source={{
                       uri: bookData.owner.photoURL,
                     }}
@@ -186,22 +189,6 @@ const SingleView = ({ navigation, route }) => {
                 <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
                   {bookData.owner !== undefined ? bookData.owner.displayName : ''}
                 </Link>
-              </HStack>
-              <HStack mb={5} alignItems='center'>
-                {requestor && Object.keys(requestor).length > 0 && (
-                  <>
-                    <Text fontSize='16px'>Requested by </Text>
-                    <Avatar
-                      size='sm'
-                      w='30px'
-                      mx={1}
-                      source={{
-                        uri: requestor.photoURL,
-                      }}
-                    />
-                    <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>{requestor.displayName}</Link>
-                  </>
-                )}
               </HStack>
 
               <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4}>

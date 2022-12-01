@@ -63,7 +63,7 @@ export default function Location({ navigation }) {
         coordinates: [location.longitude, location.latitude],
       },
     });
-    console.log('res', res);
+    // console.log('res', res);
     navigation.navigate('ReaderInfo');
   };
 
@@ -92,7 +92,7 @@ export default function Location({ navigation }) {
 
               Loc.geocodeAsync(address)
                 .then(res => {
-                  console.log(res);
+                  // console.log(res);
                   lat = res[0]['latitude'];
                   long = res[0]['longitude'];
                   setLocation({ latitude: lat, longitude: long });

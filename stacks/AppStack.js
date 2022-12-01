@@ -38,6 +38,7 @@ const AppStack = () => {
                 options={{
                   headerStyle: {
                     backgroundColor: BlueShades.primaryBlue,
+                    fontFamily: 'Quicksand',
                   },
                   cardStyle: { backgroundColor: BlueShades.primaryBlue },
                   headerTintColor: WhiteShades.primaryWhite,
@@ -49,6 +50,7 @@ const AppStack = () => {
                 options={{
                   headerStyle: {
                     backgroundColor: BlueShades.primaryBlue,
+                    fontFamily: 'Quicksand',
                   },
                   cardStyle: { backgroundColor: BlueShades.primaryBlue },
                   headerTintColor: WhiteShades.primaryWhite,
@@ -72,19 +74,30 @@ const AppStack = () => {
                 component={SearchResult}
                 options={({ route }) => ({
                   headerTitle: 'Search Result',
+                  headerTintStyle: {
+                    fontFamily: 'Quicksand',
+                  },
                 })}
               />
               <Stack.Screen name='Genres' component={Genres} />
               <Stack.Screen
                 name='SingleGenre'
                 component={SingleGenre}
-                options={({ route }) => ({ title: route.params.genre })}
+                options={({ route }) => ({
+                  title: route.params.genre,
+                  headerTitleStyle: {
+                    fontFamily: 'Quicksand',
+                  },
+                })}
               />
               <Stack.Screen
                 name='SingleView'
                 component={SingleView}
                 options={({ route }) => ({
                   headerTitle: 'Discover',
+                  headerTitleStyle: {
+                    fontFamily: 'Quicksand',
+                  },
                   headerRight: () => <WishlistTopIcon data={{ _id: route.params.bookId }} />,
                 })}
               />
@@ -92,6 +105,9 @@ const AppStack = () => {
                 name='Notifications'
                 component={Notifications}
                 options={({ route }) => ({
+                  headerTitleStyle: {
+                    fontFamily: 'Quicksand',
+                  },
                   tabBarIcon: ({ color, size }) => <AntDesign name='user' size={34} color='black' />,
                 })}
               />
@@ -101,6 +117,9 @@ const AppStack = () => {
                 options={{
                   headerBackTitleVisible: false,
                   headerStyle: { height: 96 },
+                  headerTitleStyle: {
+                    fontFamily: 'Quicksand',
+                  },
                   headerTitle: props => <ChatHeaderTitle {...props} />,
                 }}
               />
@@ -117,6 +136,9 @@ const AppStack = () => {
                 },
                 cardStyle: { backgroundColor: BlueShades.primaryBlue },
                 headerTintColor: WhiteShades.primaryWhite,
+                headerTitleStyle: {
+                  fontFamily: 'Quicksand',
+                },
               }}
             />
             <Stack.Screen
@@ -128,6 +150,9 @@ const AppStack = () => {
                 },
                 cardStyle: { backgroundColor: BlueShades.primaryBlue },
                 headerTintColor: WhiteShades.primaryWhite,
+                headerTitleStyle: {
+                  fontFamily: 'Quicksand',
+                },
               }}
             />
           </>

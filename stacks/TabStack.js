@@ -12,7 +12,6 @@ export default function TabStack() {
   const TabNavigator = createBottomTabNavigator();
   const screenOptions = {
     tabBarStyle: {
-      paddingTop: 20,
       height: 80,
     },
     tabBarItemStyle: {
@@ -21,9 +20,13 @@ export default function TabStack() {
     tabBarLabelStyle: {
       paddingTop: 18,
       paddingBottom: 13,
+      // fontFamily: 'heading',
     },
     tabBarActiveTintColor: OrangeShades.primaryOrange,
     tabBarInactiveTintColor: BlueShades.primaryBlue,
+    headerTitleStyle: {
+      fontFamily: 'Quicksand',
+    },
   };
 
   return (

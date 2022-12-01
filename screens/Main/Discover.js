@@ -53,7 +53,7 @@ export default function Discover({ navigation }) {
   const ApplyFilterSettings = async () => {
     let filterData = await GetFilteredResults(filterSetting, searchText, true);
     if (filterData !== undefined && filterData.data !== undefined) {
-      console.log('filterData', filterData.data.results.length);
+      // console.log('filterData', filterData.data.results.length);
       setSimilarBookData(filterData.data.results);
     }
     setSpinnerVisible(false);
@@ -62,7 +62,7 @@ export default function Discover({ navigation }) {
   const onSearchSubmitted = async () => {
     let filterData = await GetFilteredResults(filterSetting, searchText, true);
     if (filterData !== undefined && filterData.data !== undefined) {
-      console.log('filterData', filterData.data.results.length);
+      // console.log('filterData', filterData.data.results.length);
       setSimilarBookData(filterData.data.results);
     }
     setSpinnerVisible(false);

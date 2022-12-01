@@ -6,6 +6,7 @@ import MyLibraryCard from '../Cards/Library/MyLibraryCard';
 import { AuthContext } from '../../contexts/AuthContext';
 import { GetNotificationHeader } from '../../constants/GetNotificationHeader';
 import { Button, ScrollView, Text, Image, Box, VStack, HStack, Link, ChevronRightIcon } from 'native-base';
+import { BlueShades } from '../../assets/style/color';
 
 export default function Profile({ navigation }) {
   const [libData, setLibData] = useState(LibraryData);
@@ -27,7 +28,11 @@ export default function Profile({ navigation }) {
           <Text fontWeight='semibold'>{currentUser.displayName}</Text>
           <Text>{currentUser.readerType}</Text>
           <Text fontStyle='italic' fontSize='sm'>
-            joined {new Date(currentUser.createdAt).toISOString().substring(0, 10).replaceAll('-', '/')}
+            joined{' '}
+            {new Date(currentUser.createdAt)
+              .toISOString()
+              .substring(0, 10)
+              .replaceAll('-', '/')}
           </Text>
         </VStack>
         <Image source={require('../../assets/pen.png')} alt='edit-icon' style={styles.penIcon} />
@@ -74,7 +79,7 @@ export default function Profile({ navigation }) {
           </Box>
         </ScrollView>
       </VStack>
-      <Button mt='2' colorScheme='gray' onPress={handleLogout}>
+      <Button m='4' bg={BlueShades.primaryBlue} onPress={handleLogout}>
         Logout
       </Button>
     </ScrollView>
@@ -87,10 +92,10 @@ const styles = StyleSheet.create({
     height: 16,
   },
   personImage: {
-    width: '20%',
-    height: '100%',
-    borderRadius: 30,
-    marginRight: -80,
+    width: 72,
+    height: 72,
+    borderRadius: '100%',
+    marginRight: -20,
   },
   userData: {
     backgroundColor: '#EBF3F8',

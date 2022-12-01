@@ -14,9 +14,9 @@ export const createNewUser = async user => {
 
 export const getUserById = async id => {
   try {
-    console.log('userId', id);
+    // console.log('userId', id);
     const res = await axiosRequest.get(`users/Me6dqCin5bUpXzdmNk6QIwAUhvk2`);
-    console.log('res', res);
+    // console.log('res', res);
     return res;
   } catch (error) {
     console.log(error);
@@ -39,7 +39,7 @@ export const getMyUserProfile = async () => {
     const user = axiosRequest.get('users/me');
     return user;
   } catch (error) {
-    console.log('is it coming from here');
+    // console.log('is it coming from here');
     console.log(error);
   }
 };
