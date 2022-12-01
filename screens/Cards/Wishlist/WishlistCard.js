@@ -108,10 +108,19 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
             </Box>
           </Box>
           <Box w='55%' ml='3%' display='flex'>
-            <Text flex='1' fontWeight='semibold' fontSize='md'>
+            <Text
+              flex='1'
+              fontWeight='semibold'
+              fontSize='md'
+              textTransform='capitalize'
+              numberOfLines={2}
+              ellipsizeMode='tail'
+            >
               {book.title}
             </Text>
-            <Text fontSize='md'>{book.author}</Text>
+            <Text fontSize='md' numberOfLines={2} ellipsizeMode='tail'>
+              {book.author}
+            </Text>
             <Box
               bgColor={curStyle.backgroundColor}
               borderRadius='4px'
@@ -130,6 +139,9 @@ const WishlistCard = ({ data, navigation, selectedTab, handleInput, fetchData })
                 w='30px'
                 h='30px'
                 borderRadius='50%'
+                borderColor={BlueShades.primaryBlue}
+                borderStyle='solid'
+                borderWidth={1}
                 source={{
                   uri: book.owner.photoURL,
                 }}
