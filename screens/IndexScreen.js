@@ -42,7 +42,11 @@ const IndexScreen = ({ navigation }) => {
             notifications.push(singleNotification);
           });
 
-          setNotifications(notifications);
+          setNotifications(
+            notifications.sort((x, y) => {
+              return ('' + y.status).localeCompare(x.status);
+            }),
+          );
           setTotalUnreadNotifications(totalUnreadNotifications);
         });
 

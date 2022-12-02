@@ -34,17 +34,14 @@ const NotificationCard = ({ notification, navigation, handleInput }) => {
     }
   };
 
-  const getFormattedDate = date =>
-    date
-      .toDate()
-      .toISOString()
-      .substring(0, 10)
-      .replaceAll('-', '/');
+  const getFormattedDate = date => date.toDate().toISOString().substring(0, 10).replaceAll('-', '/');
 
   return (
     <VStack>
       <Pressable onPress={handleCardPress} mx={1}>
-        <Text style={[styles.heading, status === 'unread' ? styles.headingBold : '']}>{title}</Text>
+        <Text bold={status === 'unread'} style={[styles.heading]}>
+          {title}
+        </Text>
         <Text style={styles.content}>{description}</Text>
         <Text style={styles.date}>{getFormattedDate(created)}</Text>
       </Pressable>
@@ -54,16 +51,16 @@ const NotificationCard = ({ notification, navigation, handleInput }) => {
 
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 22,
+    fontSize: 20,
     color: BlueShades.secondaryBlue,
-    marginTop: 10,
+    marginTop: 8,
   },
   headingBold: {
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   content: {
     color: BlackShades.secondaryBlack,
-    fontSize: 18,
+    fontSize: 14,
     marginVertical: 10,
   },
   date: {
