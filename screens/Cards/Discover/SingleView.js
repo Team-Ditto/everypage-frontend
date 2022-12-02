@@ -122,7 +122,7 @@ const SingleView = ({ navigation, route }) => {
             onPress={handleReturnRequest}
             disabled={bookReturnRequest}
           >
-            Return
+            {bookReturnRequest ? 'Already Requested' : 'Return'}
           </Button>
         );
       case 'On-Hold':

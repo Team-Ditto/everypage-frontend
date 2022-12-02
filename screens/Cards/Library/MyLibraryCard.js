@@ -7,7 +7,7 @@ import { SuccessColor, InUseColor, OnHoldColor } from '../../../assets/style/col
 import { createNewWishlist, deleteWishlistByBookId } from '../../../services/wishlists-service';
 
 const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadge = true }) => {
-  const { title, author, images, borrowingStatus, _id } = data;
+  const { title, author, images, borrowingStatus, _id, owner } = data;
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
@@ -70,8 +70,14 @@ const MyLibraryCard = ({ data, navigation, showWishListIcon = false, displayBadg
               bookId: data._id,
               isWishlisted,
             })
-          : navigation.navigate('SingleBook', {
+          : currentUser._id === owner._id
+          ? navigation.navigate('SingleBook', {
               bookId: data._id,
+            })
+          : navigation.navigate('SingleView', {
+              bookData: data,
+              bookId: data._id,
+              isWishlisted,
             });
       }}
       alignItems='center'

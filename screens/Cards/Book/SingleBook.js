@@ -171,48 +171,49 @@ const SingleBook = ({ navigation, route }) => {
                       <></>
                     )}
                   </HStack>
-                  {bookData.bearer !== currentUser._id ? (
+
+                  {bookData.bearer && Object.keys(bookData.bearer).length > 0 && (
                     <HStack my={3} alignItems='center'>
-                      <Text fontSize='16px'>Borrowed from </Text>
-                      {bookData.owner !== undefined ? (
+                      <>
+                        <Text fontSize='16px'>Borrowed by </Text>
                         <Avatar
                           size='sm'
                           w='30px'
                           mx={1}
                           source={{
-                            uri: bookData.owner.photoURL,
+                            uri: bookData.bearer.photoURL,
                           }}
                         />
-                      ) : (
-                        <></>
-                      )}
+                      </>
+
                       <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
-                        {bookData.owner !== undefined ? bookData.owner.displayName : ''}
+                        {bookData.bearer ? bookData.bearer.displayName : ''}
                       </Link>
                     </HStack>
-                  ) : (
+                  )}
+
+                  {bookData.requestor && Object.keys(bookData.requestor).length > 0 && (
                     <HStack mb={5} alignItems='center'>
-                      {requestor && Object.keys(requestor).length > 0 && (
-                        <>
-                          <Text fontSize='16px'>Requested by </Text>
-                          <Avatar
-                            size='sm'
-                            w='30px'
-                            mx={1}
-                            borderColor={BlueShades.primaryBlue}
-                            borderStyle='solid'
-                            borderWidth={1}
-                            source={{
-                              uri: requestor.photoURL,
-                            }}
-                          />
-                          <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
-                            {requestor.displayName}
-                          </Link>
-                        </>
-                      )}
+                      <>
+                        <Text fontSize='16px'>Requested by </Text>
+                        <Avatar
+                          size='sm'
+                          w='30px'
+                          mx={1}
+                          borderColor={BlueShades.primaryBlue}
+                          borderStyle='solid'
+                          borderWidth={1}
+                          source={{
+                            uri: bookData.requestor.photoURL,
+                          }}
+                        />
+                        <Link _text={{ color: OrangeShades.primaryOrange, fontSize: '16px' }}>
+                          {bookData.requestor.displayName}
+                        </Link>
+                      </>
                     </HStack>
                   )}
+
                   <Box borderRadius='10px' backgroundColor={BlueShades.tertiaryBlue} px={5} py={4} my={3}>
                     <Text fontWeight='bold' fontSize='18px'>
                       Details
